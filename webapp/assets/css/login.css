@@ -187,3 +187,119 @@ button {
 	right: 25px;
     margin-top: 5px;
 }
+/*sign up*/
+legend {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    font-size: 1px;
+    line-height: 0;
+    text-indent: -999em;
+    white-space: nowrap;
+}
+#title1 {
+    padding-top: 70px;
+    font-size: 35px;
+    color: #222;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+#title1_p {
+    margin: 25px 0 70px;
+    font-size: 16px;
+    color: #666;
+    line-height: 24px;
+}
+#emphasis{
+	color: #d04001 !important;
+}
+#tlt2_p0 {
+    font-size: 30px;
+    color: #222;
+    font-weight: bold;
+    margin-top: 50px !important;
+}
+#signup {
+    position: relative;
+    margin: 0 auto;
+    width: 960px;
+    padding: 0;
+    height:650px;
+}
+.banner{
+	margin-left:10px;
+}
+#tit {
+    margin-bottom: 30px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background: url("/gs25/assets/images/icon_signup.png") 0 -274px no-repeat;
+}
+#tit2 {
+    padding-left: 20px;
+    border-left: 1px solid #dfdfdf;
+    text-align: left;
+}
+.tbl_wtype1 {
+    border-top: 1px solid #666;
+    color: #222;
+    font-size: 13px;
+    width:960px;
+}
+.tbl_wtype1 th {
+    width: 160px;
+    padding: 17px 0 16px 20px;
+    line-height: 16px;
+    background: #fbfbfb;
+    border-bottom: 1px solid #dfdfdf;
+    text-align: left;
+    vertical-align: top;
+}
+.tbl_wtype1 td {
+    padding: 7px 10px;
+    height: 30px;
+    color: #444;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+}
+#brdwrap2 {
+    position: relative;
+    margin: 0 auto;
+    width: 960px;
+    padding: 50px 0 0 0;
+}
+.tblwrap .reqd_box {
+    position: absolute;
+    top: -200px;
+    right: 0;
+    font-size: 13px;
+    color: #444;
+}
+.reqd {
+	float: left;
+    padding-right: 10px;
+    color: #d04001;
+}
+input[type=text], input[type=password] {
+    text-indent: 10px;
+    border: 1px solid #dfdfdf;
+    height: 29px;
+    line-height: 31px;
+    color: #444;
+    font-size: 13px;
+}
+#address{
+	width:250px;
+}
+.btn-register{
+	float:right;
+	margin-top:50px;
+}
+#passCheck{
+	margin-left:10px;
+	font-size:13px;
+	color:red;
+}

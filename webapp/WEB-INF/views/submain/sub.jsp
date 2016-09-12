@@ -13,7 +13,7 @@
 	<div class="container">
 		<div id="contents">
 			<div class="img">
-				<img src="/convenience/img/gs25Main.png" width="600px">
+				<img src="/gs25/assets/imgages/gs25Main.png" width="600px">
 			</div>
 			<div class="login">
 				<div id="login1">

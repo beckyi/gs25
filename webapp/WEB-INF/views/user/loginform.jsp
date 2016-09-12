@@ -32,7 +32,7 @@
 					<li><input id="email" name="email" class="form-control" type="text" value="" placeholder="이메일"></li>
 					<li><input name="password" type="password" class="form-control" value="" placeholder="비밀번호"></li>
 				</ul>
-					<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+					<button class="btn btn-primary btn-block" type="submit">로그인</button>
 				</form>
 				</div>
 			</div>
