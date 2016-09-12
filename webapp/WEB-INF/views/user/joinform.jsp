@@ -5,10 +5,8 @@
 <!doctype html>
 <html>
 <head>
-<title>mysite</title>
+<title>GS25</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/login.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/convenience/js/jquery/jquery-1.9.0.js"></script>
@@ -21,7 +19,7 @@
 		</div>
 		<div id ="title1_p">
 			<p>고객과 함께 내일을 꿈꾸며, 새로운 삶의 가치를 창조하는 GS25 편의점 회원가입을 환영합니다.</p>
-			<p>GS리테일 회원에 가입하시면, <em id="emphasis">GS25</em> 홈페이지를 하나의 아이디와 비밀번호로 이용하실 수 있습니다.</p>
+			<p>GS25편의점 회원에 가입하시면, <em id="emphasis">GS25</em> 홈페이지를 하나의 아이디와 비밀번호로 이용하실 수 있습니다.</p>
 		</div>
 		<div id="block">
 			<h4 id="tlt2_p0">입력 사항</h4>
