@@ -43,4 +43,8 @@ public class UserService {
 		String email = usersdao.find(vo);
 		return email;
 	}
+	
+	public void passfind(UserVo vo){	//회원정보 수정 시 정보 출력
+		usersdao.find(vo);
+	}
 }

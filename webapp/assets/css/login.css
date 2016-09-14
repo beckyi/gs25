@@ -350,13 +350,18 @@ input[type=text], input[type=password] {
 }
 #goLogin{
 	float:right;
-	margin:85px 300px 0 0;
+	margin:65px 260px 0 0;
 }
 #line{
-	margin:10px 0;
+	margin:0;
 }
 .lineM{
 	background:url("/gs25/assets/images/home.png") no-repeat 25px 20px;
-	padding:15px 0px 20px 40px;
+	padding: 21px 0px 20px 57px;
+	color:#fff;
+}
+.lineL{
+	background:url("/gs25/assets/images/unlock.png") no-repeat 25px 20px;
+	padding: 22px 0px 20px 57px;
 	color:#fff;
 }

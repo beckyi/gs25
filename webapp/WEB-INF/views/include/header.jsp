@@ -44,7 +44,7 @@
 							<ul>
 								<li><h2><a href="javascript:void(0);" class="on">고객센터</a></h2>
 								</li>
-								<li><h2><a href="javascript:void(0);">맴버십</a></h2>
+								<li><h2><a href="javascript:void(0);">멥버십</a></h2>
 								</li>
 								<li><h2><a href="javascript:void(0);">매장검색</a></h2>
 								</li>

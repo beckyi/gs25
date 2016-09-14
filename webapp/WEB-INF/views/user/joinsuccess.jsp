@@ -9,7 +9,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/login.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/convenience/js/jquery/jquery-1.9.0.js"></script>
+<script type="text/javascript" src="/gs25/js/jquery/jquery-1.9.0.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
@@ -26,7 +26,7 @@
 				<div id="goLogin">
 					<ul>
 						<li id="line"><h3 class="lineM"><a href="/gs25/main">메인페이지 이동</a></h3></li>
-						<li id="line"><a href="/gs25/user/loginform">로그인하기</a></li>
+						<li id="line"><h3 class="lineL"><a href="/gs25/user/loginform">로그인하기</a></h3></li>
 					</ul>
 				</div>	
 			</div>

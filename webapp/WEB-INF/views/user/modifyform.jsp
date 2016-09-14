@@ -30,7 +30,7 @@
 							<table class="tbl_wtype1">
 								<tbody>
 									<tr>
-										<th scope="row">이름</th>
+										<th scope="row">이름 </th>
 										<td><input id="name" name="name" type="text" value="${userVo.name }"></td>
 										<th scope="row" id="tit2">성별</th>
 										<td>

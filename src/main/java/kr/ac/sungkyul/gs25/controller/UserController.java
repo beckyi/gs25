@@ -97,14 +97,18 @@ public class UserController {
 	}
 
 	@RequestMapping("/idFind")
-	public String idFind(@ModelAttribute UserVo vo){
+	public String idFind(@ModelAttribute UserVo vo,Model model){
+//		System.out.println("1.controll "+vo.toString());
 		String email = userService.idfind(vo);
-		
-		return "redirect:/user/findInfo";
+//		System.out.println("controll "+email);
+		model.addAttribute("email",email);
+		return "user/idresult";
 	}
 
 	@RequestMapping("/passFind")
-	public String passFind(){
-		return "user/passFind";
+	public String passFind(@ModelAttribute UserVo vo){
+		userService.passfind(vo);
+		
+		return "user/passresult";
 	}
 }

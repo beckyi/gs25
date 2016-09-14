@@ -257,7 +257,7 @@ public class UserDao {
 		   return vo;
 	   }
 	   
-	   public String find(UserVo vo) {	//login
+	   public String find(UserVo vo) {	//id find
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -267,23 +267,70 @@ public class UserDao {
 				conn = getConnection();
 				
 				String name = vo.getName();
+				String gender = vo.getGender();
 				String birth = vo.getBirth();
 				String phone = vo.getPhone();
 
-				String sql = "select email from users where name=? and birth= to_date(?,'yyyy-mm-dd') and phone=?;";
+				String sql = "select email from users where name=? and gender=? and birth= to_date(?,'yyyy-mm-dd') and phone=?";
 				pstmt = conn.prepareStatement(sql);
 
 				pstmt.setString(1, name);
-				pstmt.setString(2, birth);
-				pstmt.setString(3, phone);
+				pstmt.setString(2, gender);
+				pstmt.setString(3, birth);
+				pstmt.setString(4, phone);
 
 				rs = pstmt.executeQuery();
 
 				if (rs.next()) {
 					email = rs.getString(1);
+//					System.out.println(email);
+				}
 
-					System.out.println(email);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 
+			return email;
+		}
+	   
+	   public String findP(UserVo vo) {	//password find
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String email = null;
+
+			try {
+				conn = getConnection();
+				
+				String name = vo.getName();
+				String gender = vo.getGender();
+				String birth = vo.getBirth();
+				String phone = vo.getPhone();
+
+				String sql = "select password from users where email=? and name=? and birth= to_date(?,'yyyy-mm-dd') and phone=?";
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, email);
+				pstmt.setString(2, name);
+				pstmt.setString(3, birth);
+				pstmt.setString(4, phone);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					String password = rs.getString(1);
+					System.out.println(password);
 				}
 
 			} catch (SQLException e) {
