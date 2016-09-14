@@ -35,8 +35,8 @@
 										<td><input id="name" name="name" type="text" value=""></td>
 										<th scope="row" id="tit2"><strong class="reqd" title="필수항목">*</strong>성별</th>
 										<td>
-											<label>여</label> <input type="radio" name="gender" value="FEMALE" checked="checked">
-											<label>남</label> <input type="radio" name="gender" value="MALE">
+											<label>남</label> <input type="radio" name="gender" value="MALE" checked="checked">
+											<label>여</label> <input type="radio" name="gender" value="FEMALE">
 										</td>
 									</tr>
 									<tr>

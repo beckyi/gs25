@@ -18,6 +18,10 @@ form, select, input, textarea {
 	height: 400px;
 	margin-bottom: 30px;
 }
+#contenta{
+	position:relative;
+	height: 600px;
+}
 #user{
 	height:250px;
     padding: 25px 0 40px;
@@ -149,6 +153,13 @@ form, select, input, textarea {
     color: #fff;
     background-color: #337ab7;
     border-color: #2e6da4;
+}
+.btn-find{
+	 color: #fff;
+    background-color: #66afe9;
+	border-radius:1px;
+	float:right;
+	margin: 30px 0 0 0;
 }
 button {
     overflow: visible;
@@ -305,5 +316,47 @@ input[type=text], input[type=password] {
 }
 /*findInfo*/
 .smaller{
-	width:480px;
+	width:450px;
+}
+.both{
+	height:380px;
+    border-bottom: 1px solid #999;
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.popwrap {
+	position:relative;
+	background:#444;
+	border: 1px solid #5e5e5e;
+	margin-bottom: 20px;
+}
+.popwrap .pop_tlt1 {
+	background:url("/gs25/assets/images/ico_popt.gif") no-repeat 25px 20px;
+	padding:15px 0px 20px 40px;
+	color:#fff;
+	font-size:18px;
+}
+/*joinSuccess*/
+#join-succ{
+	height:250px;
+    padding: 25px 0 40px;
+    border-top: 1px solid #6c6c6c;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fbfbfb url("/gs25/assets/images/gs25_store.png") 88px no-repeat;
+}
+#goLogin{
+	float:right;
+	margin:85px 300px 0 0;
+}
+#line{
+	margin:10px 0;
+}
+.lineM{
+	background:url("/gs25/assets/images/home.png") no-repeat 25px 20px;
+	padding:15px 0px 20px 40px;
+	color:#fff;
 }
