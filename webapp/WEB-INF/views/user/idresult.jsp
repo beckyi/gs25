@@ -22,7 +22,7 @@
 			<div id="join-succ">
 				<div id="goLogin">
 					<ul>
-						<li id="line">회원님의 아이디(이메일은) 다음과 같습니다.</li>
+						<li id="line">회원님의 아이디(이메일)는 다음과 같습니다.</li>
 						<li id="line"><em>${email }</em>&nbsp;입니다.</li>
 					</ul>
 				</div>	

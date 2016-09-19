@@ -105,10 +105,22 @@ public class UserController {
 		return "user/idresult";
 	}
 
-	@RequestMapping("/passFind")
-	public String passFind(@ModelAttribute UserVo vo){
-		userService.passfind(vo);
-		System.out.println("passfind");
+//	@RequestMapping("/passFind")
+//	public String passFind(@ModelAttribute UserVo vo){
+////		userService.passfind(vo);
+////		System.out.println("passfind");
+//		System.out.println("user: "+vo.toString());
+//		return "email/send";
+//	}
+	
+	@RequestMapping("/repassword")
+	public String repasswordForm(){
+		return "user/repassword";
+	}
+	
+	@RequestMapping("/setPass")
+	public String setPassword(@ModelAttribute UserVo vo){
+		userService.setpass(vo);
 		
 		return "email/send";
 	}

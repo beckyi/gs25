@@ -57,7 +57,7 @@
 			<div class="popwrap">
 			<h4 class="pop_tlt1">비밀번호 찾기</h4>
 			</div>
-			<form id="password-form" name="passForm" method="post" action="/gs25/user/passFind">
+			<form id="password-form" name="passForm" method="post" action="/gs25/email/send">
 				<table class="tbl_wtype1 smaller">
 					<tbody>
 						<tr>
