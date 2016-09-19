@@ -23,7 +23,7 @@
 				<div id="goLogin">
 					<ul>
 						<li id="line">회원님의 아이디(이메일은) 다음과 같습니다.</li>
-						<li id="line">${email }<p> 입니다.</p></li>
+						<li id="line"><em>${email }</em>&nbsp;입니다.</li>
 					</ul>
 				</div>	
 			</div>

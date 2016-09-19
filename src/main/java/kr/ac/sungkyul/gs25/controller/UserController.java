@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import kr.ac.sungkyul.gs25.service.UserService;
+
 import kr.ac.sungkyul.gs25.vo.UserVo;
 
 @Controller
@@ -108,7 +108,8 @@ public class UserController {
 	@RequestMapping("/passFind")
 	public String passFind(@ModelAttribute UserVo vo){
 		userService.passfind(vo);
+		System.out.println("passfind");
 		
-		return "user/passresult";
+		return "email/send";
 	}
 }

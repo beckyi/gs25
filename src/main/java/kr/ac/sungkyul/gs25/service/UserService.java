@@ -45,6 +45,7 @@ public class UserService {
 	}
 	
 	public void passfind(UserVo vo){	//회원정보 수정 시 정보 출력
-		usersdao.find(vo);
+		Boolean abc = usersdao.findP(vo);
+		System.out.println(abc);
 	}
 }

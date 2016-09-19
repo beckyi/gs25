@@ -37,8 +37,16 @@
 		<qualifier value="main-db" />
 	</bean>
 
-
-
-
+	<bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+	    <property name="host" value="smtp.naver.com" />
+	    <property name="port" value="465" />
+	    <property name="username" value="beckyi@naver.com" />
+	    <property name="password" value="!wodms0726" />
+	    <property name="javaMailProperties">
+	    <props>
+	        <prop key="mail.smtp.starttls.enable">true</prop>
+	    </props>
+	    </property>
+	</bean>
 
 </beans> 

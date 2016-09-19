@@ -304,17 +304,16 @@ public class UserDao {
 			return email;
 		}
 	   
-	   public String findP(UserVo vo) {	//password find
+	   public boolean findP(UserVo vo) {	//password find
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String email = null;
 
 			try {
 				conn = getConnection();
 				
+				String email = vo.getEmail();
 				String name = vo.getName();
-				String gender = vo.getGender();
 				String birth = vo.getBirth();
 				String phone = vo.getPhone();
 
@@ -348,6 +347,6 @@ public class UserDao {
 				}
 			}
 
-			return email;
+			return true;
 		}
 }
