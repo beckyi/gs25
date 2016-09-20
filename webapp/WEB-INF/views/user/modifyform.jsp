@@ -36,12 +36,12 @@
 										<td>
 											<c:choose>
 												<c:when test='${"FEMALE" == userVo.gender }'>
-													<label>여</label> <input type="radio" name="gender" value="FEMALE" checked="checked">
 													<label>남</label> <input type="radio" name="gender" value="MALE">
+													<label>여</label> <input type="radio" name="gender" value="FEMALE" checked="checked">
 												</c:when>
 												<c:otherwise>
-													<label>여</label> <input type="radio" name="gender" value="FEMALE">
 													<label>남</label> <input type="radio" name="gender" value="MALE"  checked="checked">
+													<label>여</label> <input type="radio" name="gender" value="FEMALE">
 												</c:otherwise>
 											</c:choose>
 										</td>

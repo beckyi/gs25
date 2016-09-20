@@ -19,7 +19,7 @@ public class UserDao {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection(url, "choi", "choi");
+			conn = DriverManager.getConnection(url, "gs25", "gs25");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +34,7 @@ public class UserDao {
 		try {
 			conn = getConnection();
 			String sql = "insert into users "
-					+ "values(seq_users.nextval, ?, ?, ?, to_date(?,'yyyy-mm-dd'), ?, ?, ?, 0)";
+					+ "values(seq_users.nextval, ?, ?, ?, to_date(?,'yyyy-mm-dd'), ?, ?, ?, 0, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
@@ -44,6 +44,8 @@ public class UserDao {
 			pstmt.setString(5, vo.getGender());
 			pstmt.setString(6, vo.getAddress());
 			pstmt.setString(7, vo.getPhone());
+			pstmt.setString(8, vo.getPosition());
+			pstmt.setLong(9, vo.getStore_no());
 
 			pstmt.executeUpdate();
 
@@ -316,7 +318,6 @@ public class UserDao {
 
 			if (rs.next()) {
 				email = rs.getString(1);
-				// System.out.println(email);
 			}
 
 		} catch (SQLException e) {
@@ -382,15 +383,12 @@ public class UserDao {
 		return true;
 	}
 
-	public void setPass(UserVo vo) { // password 재설정
+	public void setPass(String email,String password) { // password 재설정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			conn = getConnection();
-
-			String email = vo.getEmail();
-			String password = vo.getPassword();
 
 			String sql = null;
 			sql = "update users set password = ? where email = ?";

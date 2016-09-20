@@ -53,7 +53,7 @@ public class UserService {
 //		System.out.println(abc);
 //	}
 	
-	public void setpass(UserVo vo){	//비밀번호 찾기 후 재설정
-		usersdao.setPass(vo);
+	public void setpass(String email,String password){	//비밀번호 찾기 후 재설정
+		usersdao.setPass(email,password);
 	}
 }

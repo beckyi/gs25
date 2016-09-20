@@ -27,7 +27,7 @@ public class UserController {
 	
 	@RequestMapping("/join")
 	public String join(@ModelAttribute UserVo vo){
-		System.out.println(vo);
+		System.out.println("join: "+vo.toString());
 		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
@@ -119,9 +119,17 @@ public class UserController {
 	}
 	
 	@RequestMapping("/setPass")
-	public String setPassword(@ModelAttribute UserVo vo){
-		userService.setpass(vo);
+	public String setPassword
+			(@RequestParam(value= "email", required=false, defaultValue="") String email,
+			 @RequestParam(value= "password", required=false, defaultValue="") String password){
 		
-		return "email/send";
+		userService.setpass(email,password);
+		
+		return "user/send";
+	}
+	
+	@RequestMapping("/passresult")
+	public String passResult(){
+		return "user/passresult";
 	}
 }
