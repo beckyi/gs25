@@ -83,6 +83,7 @@
 									<td>
 										<input type="text" id="email" name="email" value="" />
 										<input type="button" class="btn banner" id="btn-checkEmail" value="ID 중복확인"/>
+										<img id="image-checked"  style="width:16px; display: none" src="/mysite/assets/images/check.png"/>
 									</td>
 								</tr>
 								<tr>
@@ -226,8 +227,8 @@
 				$("#address").focus();
 				return false;
 				}
-			//이메일
-			var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;   			  
+			//이메일 유효성 검사
+			var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;		  
 			if(regex.test($("#email")) === false) {  
 			    alert("잘못된 이메일 형식입니다.");
 			    $("#email").focus();
