@@ -48,12 +48,13 @@ public class UserService {
 		return email;
 	}
 	
-//	public void passfind(UserVo vo){	//비밀번호 찾기 - 회원여부
-//		Boolean abc = usersdao.findP(vo);
-//		System.out.println(abc);
-//	}
-	
 	public void setpass(String email,String password){	//비밀번호 찾기 후 재설정
 		usersdao.setPass(email,password);
 	}
+	
+	public String checkEmail(String email){	//아이디 찾기
+		usersdao.checkEmail(email);
+		return email;
+	}
+	
 }

@@ -22,7 +22,7 @@ select {
     border: 1px solid #d6d6d6;
     padding: 6px 8px;
 }
-#labelM{
+.labelM{
 	margin-right: 10px;
 }
 #contents{
@@ -265,6 +265,13 @@ legend {
     padding: 0;
     height: 1050px;
 }
+#modiForm {
+    position: relative;
+    margin: 0 auto;
+    width: 960px;
+    padding: 0;
+    height: 700px;
+}
 .banner{
 	margin-left:10px;
 }
@@ -408,23 +415,24 @@ input[type=text], input[type=password] {
     padding: 25px 0 40px;
     border-top: 1px solid #6c6c6c;
     border-bottom: 1px solid #e0e0e0;
-    background: #fbfbfb url("/gs25/assets/images/gs25_store.png") 88px no-repeat;
+    background: #fbfbfb url("/gs25/assets/images/gs25_store.png") 60px no-repeat;
 }
 #goLogin{
-	float:right;
-	margin:65px 260px 0 0;
+	margin: 75px 0 0 410px;
 }
 #line{
 	margin:0;
+	font-size: 18px;
+	padding: 10px 0;
 }
 .lineM{
 	background:url("/gs25/assets/images/home.png") no-repeat 25px 20px;
-	padding: 21px 0px 20px 57px;
+	padding: 17px 0px 20px 57px;
 	color:#fff;
 }
 .lineL{
 	background:url("/gs25/assets/images/unlock.png") no-repeat 25px 20px;
-	padding: 22px 0px 20px 57px;
+	padding: 17px 0px 20px 57px;
 	color:#fff;
 }
 /*repassword*/

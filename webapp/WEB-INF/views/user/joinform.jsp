@@ -62,11 +62,11 @@
 									<td>
 										<div id="sel2_lt">
 											<input type="radio" name="position" value="CUSTOMER" checked />
-											<label id="labelM" class="mr20">고객</label>
+											<label class="labelM" class="mr20">고객</label>
 											<input type="radio" name="position" value="HEADQUARTERS"/>
-											<label id="labelM">본사 관리자</label>
+											<label class="labelM">본사 관리자</label>
 											<input type="radio" name="position" value="BRANCH" >
-											<label id="labelM">지점 관리자</label>
+											<label class="labelM" id="branch">지점 관리자</label>
 										</div>
 										<div id="sel2_rt">
 											<select id="storeDrop" name="store_no">
@@ -82,7 +82,7 @@
 									<th scope="row"><label>아이디 (이메일)<strong class="reqd" title="필수항목">*</strong></label></th>
 									<td>
 										<input type="text" id="email" name="email" value="" />
-										<input type="button" class="btn banner" value="ID 중복확인" onclick="customerInfoWebIdCheck('#intgrWebId', this);"/>
+										<input type="button" class="btn banner" id="btn-checkEmail" value="ID 중복확인"/>
 									</td>
 								</tr>
 								<tr>
@@ -229,7 +229,8 @@
 			//이메일
 			var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;   			  
 			if(regex.test($("#email")) === false) {  
-			    alert("잘못된 이메일 형식입니다.");  
+			    alert("잘못된 이메일 형식입니다.");
+			    $("#email").focus();
 			    return false;  
 			} else {  
 			    alert('ok');
@@ -238,12 +239,11 @@
 			if($("#agree-prov").is(':checked') == false ) {
 		         alert("약관 동의가 필요합니다.");
 		         return false;
-		      }
+		     }
 		console.log("submit!!");
 		return true;
 		
 		});
-		
 		$("#email").change(function(){
 			$("#image-checked").hide();
 			$("#btn-checkEmail").show();
@@ -254,6 +254,40 @@
 			if(email == ""){
 				return;
 			}
+		});
+		
+		$("#btn-checkEmail").click(function(){
+			var email = $("#email").val();
+			if(email == ""){
+				return;
+			}
+			$.ajax({
+				url: "CheckEmail",
+				type: "POST",
+				data: JSON.stringify(email),
+				dataType: "json",
+				contentType: "application/json",
+				"success": function(response){
+					//console.log(response);
+					if(response.result == "fail"){
+						console.error("error:"+response.message);
+						return ;
+					}
+					
+					if(response.data == true){
+						alert("이미 존재하는 이메일입니다. 다른 이메일을 사용해 주세요.");
+						$("#email").val("").focus();
+						return;
+					}
+					//console.log("사용할 수 있음!");
+					$("#image-checked").show();
+					$("#btn-checkEmail").hide();
+				},
+				
+				"error": function(jsXHR, status, e){
+					console.error("error:"+status+":"+e);
+				}
+			});
 		});
 	});
 </script>

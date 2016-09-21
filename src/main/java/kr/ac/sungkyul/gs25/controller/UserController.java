@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import kr.ac.sungkyul.gs25.service.UserService;
 
 import kr.ac.sungkyul.gs25.vo.UserVo;
@@ -131,5 +134,13 @@ public class UserController {
 	@RequestMapping("/passresult")
 	public String passResult(){
 		return "user/passresult";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "CheckEmail", method = RequestMethod.POST)
+	public String checkEmail(@RequestBody String email) {	//Request 객체받음, script or DB 객체 분별
+		System.out.println(email);
+		userService.checkEmail(email);
+		return "";
 	}
 }

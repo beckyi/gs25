@@ -75,7 +75,7 @@ public class UserDao {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
 
-				System.out.println(no + " " + name);
+				System.out.println(no + " " + name+"님이 로그인하셨습니다.");
 
 				vo = new UserVo();
 
@@ -337,52 +337,7 @@ public class UserDao {
 
 		return email;
 	}
-
-	public boolean findP(UserVo vo) { // password find - 회원여부
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			conn = getConnection();
-
-			String email = vo.getEmail();
-			String name = vo.getName();
-			String birth = vo.getBirth();
-			String phone = vo.getPhone();
-
-			String sql = "select email from users where email=? and name=? and birth= to_date(?,'yyyy-mm-dd') and phone=?";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, email);
-			pstmt.setString(2, name);
-			pstmt.setString(3, birth);
-			pstmt.setString(4, phone);
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				email = rs.getString(1);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return true;
-	}
-
+	
 	public void setPass(String email,String password) { // password 재설정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -414,5 +369,42 @@ public class UserDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public String checkEmail(String email) { // id find
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "select no from users where email=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				email = rs.getString(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return email;
 	}
 }

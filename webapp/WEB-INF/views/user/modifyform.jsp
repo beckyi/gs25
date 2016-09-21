@@ -22,7 +22,7 @@
 		</div>
 		<div id="block">
 			<h4 id="tlt2_p0">수정 사항</h4>
-			<div id="signup">
+			<div id="modiForm">
 				<form id="join-form" name="joinForm" method="post" action="/gs25/user/modify">
 					<div id="brdwrap2">
 						<h5 id="tit">기본사항</h5>
@@ -99,15 +99,47 @@ $(function(){
 		   $('font[name=passCheck]').text('');
 		  }); //#password.keyup
 
-		  $('#repassword').keyup(function(){
-		   if($('#password').val()!=$('#repassword').val()){
-		    $('font[name=passCheck]').text('');
-		    $('font[name=passCheck]').html("암호틀림");
-		   }else{
-		    $('font[name=passCheck]').text('');
-		    $('font[name=passCheck]').html("암호맞음");
-		   }
-		  }); 
+	  $('#repassword').keyup(function(){
+	   if($('#password').val()!=$('#repassword').val()){
+	    $('font[name=passCheck]').text('');
+	    $('font[name=passCheck]').html("암호틀림");
+	   }else{
+	    $('font[name=passCheck]').text('');
+	    $('font[name=passCheck]').html("암호맞음");
+	   }
+	  }); 
+	$("#join-form").submit(function(){
+		//이름
+		if($("name").val() == ""){
+			alert("생년월일은 필수 입력 항목입니다.");
+			$("#name").focus();
+			return false;
+		}
+		//생년월일
+		if($("#birth").val() == ""){
+			alert("생년월일은 필수 입력 항목입니다.");
+			$("#birth").focus();
+			return false;
+		}
+		//휴대폰
+		if($("#phone").val() == ""){
+			alert("전화번호는 필수 입력 항목입니다.");
+			$("#phone").focus();
+			return false;
+		}
+		//이메일
+		if($("#email").val() == ""){
+			alert("아이디 필수 입력 항목입니다.");
+			$("#email").focus();
+			return false;
+		}
+		//주소
+		if($("#address").val() == ""){
+			alert("주소는 필수 입력 항목입니다.");
+			$("#address").focus();
+			return false;
+		}
+	});
 });
 </script>
 </body>
