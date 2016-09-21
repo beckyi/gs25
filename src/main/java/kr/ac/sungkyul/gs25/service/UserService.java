@@ -1,5 +1,8 @@
 package kr.ac.sungkyul.gs25.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,9 +55,14 @@ public class UserService {
 		usersdao.setPass(email,password);
 	}
 	
-	public String checkEmail(String email){	//아이디 찾기
-		usersdao.checkEmail(email);
-		return email;
+	public Map<String, Object> checkEmail(String email){	//아이디 유효성 검사
+		Long no = usersdao.checkEmail(email);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", "success");
+		map.put("data", no != null);
+		
+		return map;
 	}
 	
 }

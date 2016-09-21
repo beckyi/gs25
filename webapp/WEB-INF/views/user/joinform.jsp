@@ -81,9 +81,10 @@
 								<tr>
 									<th scope="row"><label>아이디 (이메일)<strong class="reqd" title="필수항목">*</strong></label></th>
 									<td>
-										<input type="text" id="email" name="email" value="" />
+										<input type="text" id="email" name="email" value=""  onKeyup="validation(this.name,this.value);"/>
 										<input type="button" class="btn banner" id="btn-checkEmail" value="ID 중복확인"/>
-										<img id="image-checked"  style="width:16px; display: none" src="/mysite/assets/images/check.png"/>
+										<font id="msg_email"></font>
+										<font  id="emailCheck"></font>
 									</td>
 								</tr>
 								<tr>
@@ -170,7 +171,7 @@
 </body>
 <script>
 	$(function() {
-		$('#password').click(function() {
+		$('#password').change(function() {
 			$('font[name=passCheck]').text('');
 			$('#repassword').val('');
 		}); //#password.keyup
@@ -227,11 +228,12 @@
 				$("#address").focus();
 				return false;
 				}
-			//이메일 유효성 검사
-			var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;		  
-			if(regex.test($("#email")) === false) {  
-			    alert("잘못된 이메일 형식입니다.");
-			    $("#email").focus();
+			
+			//전화번호 유효성 검사
+			var regPhone = /^((01[0|1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+			if(regPhone.test($("#phone")) === false) {  
+			    alert("잘못된 형식입니다.");
+			    $("#phone").focus();
 			    return false;  
 			} else {  
 			    alert('ok');
@@ -246,7 +248,8 @@
 		
 		});
 		$("#email").change(function(){
-			$("#image-checked").hide();
+			$("#emailCheck").text('');
+			$("#emailCheck").val('');
 			$("#btn-checkEmail").show();
 		});
 		
@@ -265,9 +268,8 @@
 			$.ajax({
 				url: "CheckEmail",
 				type: "POST",
-				data: JSON.stringify(email),
+				data: {"email":email},
 				dataType: "json",
-				contentType: "application/json",
 				"success": function(response){
 					//console.log(response);
 					if(response.result == "fail"){
@@ -281,7 +283,7 @@
 						return;
 					}
 					//console.log("사용할 수 있음!");
-					$("#image-checked").show();
+					$("#emailCheck").html("[사용 가능]");
 					$("#btn-checkEmail").hide();
 				},
 				
@@ -290,6 +292,28 @@
 				}
 			});
 		});
+		
+		function validation(name,val){	//alert("validation");
+			var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;  // 이메일 유효성 검사식
+			 if( name == 'email' ){
+		        	if( !val ){
+		        		$("#msg_email").text('이메일을 입력해 주세요.');
+			        	$("#flag_validation").val('N');
+			        	$("#email").focus();
+			            return false;
+		        	} else {
+		        		if( !regEmail.test(val) ) {
+				        	$("#msg_email").text('이메일 형식에 맞게 입력해 주세요.');
+				        	$("#flag_validation").val('N');
+				        	$("#EMAIL").focus();
+				            return false;
+		        		} else {
+		        			$("#msg_email").text('사용 가능한 이메일입니다.');
+		        			$("#flag_validation").val('Y');
+		        		}
+		        	}
+		        }	        
+		}
 	});
 </script>
 </html>

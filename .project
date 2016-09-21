@@ -39,11 +39,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>webapp/assets/images/check.png</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Downloads/check.png</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

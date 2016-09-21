@@ -347,7 +347,6 @@ public class UserDao {
 
 			String sql = null;
 			sql = "update users set password = ? where email = ?";
-
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, password);
@@ -371,23 +370,26 @@ public class UserDao {
 		}
 	}
 	
-	public String checkEmail(String email) { // id find
+	public Long checkEmail(String email) { // email 유효성 검사
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		Long no = null;
+		
+		
 		try {
 			conn = getConnection();
-
-			String sql = "select no from users where email=?";
+			
+			String sql = null;
+			sql = "select no from users where email = ?";
+			
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, email);
 			
 			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				email = rs.getString(1);
+			
+			if(rs.next()){
+				no = rs.getLong(1);
 			}
 
 		} catch (SQLException e) {
@@ -404,7 +406,6 @@ public class UserDao {
 				e.printStackTrace();
 			}
 		}
-
-		return email;
+		return no;
 	}
 }

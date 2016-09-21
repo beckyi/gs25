@@ -347,6 +347,11 @@ input[type=text], input[type=password] {
 	font-size:13px;
 	color:red;
 }
+#msg_email{
+	margin-left:10px;
+	font-size:13px;
+	color:red;
+}
 .scl_box {
     overflow-x: hidden;
     overflow-y: scroll;
@@ -382,6 +387,11 @@ input[type=text], input[type=password] {
 }
 #agreeF{
 	margin: 30px 0 0 10px;
+}
+#emailCheck{
+	margin-left:10px;
+	font-size:13px;
+	color:red;
 }
 /*findInfo*/
 .smaller{

@@ -1,5 +1,7 @@
 package kr.ac.sungkyul.gs25.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,9 +140,10 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value = "CheckEmail", method = RequestMethod.POST)
-	public String checkEmail(@RequestBody String email) {	//Request 객체받음, script or DB 객체 분별
-		System.out.println(email);
-		userService.checkEmail(email);
-		return "";
+	public Map<String, Object> checkEmail(String email) {	//Request 객체받음, script or DB 객체 분별
+		
+		Map<String, Object> map = userService.checkEmail(email);
+		
+		return map;
 	}
 }
