@@ -33,7 +33,7 @@ public class UserController {
 	@RequestMapping("/join")
 	public String join(@ModelAttribute UserVo vo){
 		System.out.println("join: "+vo.toString());
-//		userService.join(vo);
+		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
 	
@@ -103,20 +103,10 @@ public class UserController {
 
 	@RequestMapping("/idFind")
 	public String idFind(@ModelAttribute UserVo vo,Model model){
-//		System.out.println("1.controll "+vo.toString());
 		String email = userService.idfind(vo);
-//		System.out.println("controll "+email);
 		model.addAttribute("email",email);
 		return "user/idresult";
 	}
-
-//	@RequestMapping("/passFind")
-//	public String passFind(@ModelAttribute UserVo vo){
-////		userService.passfind(vo);
-////		System.out.println("passfind");
-//		System.out.println("user: "+vo.toString());
-//		return "email/send";
-//	}
 	
 	@RequestMapping("/repassword")
 	public String repasswordForm(){

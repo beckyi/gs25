@@ -208,7 +208,7 @@
 			return false;
 			}
 			//생년월일
-			var regBirth = /^(19|20)\d{2}([0][1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;
+			var regBirth = /^(19|20)\d{2}([0][1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;	//정규식
 			if($("#birth").val() == ""){
 				alert("생년월일은 필수 입력 항목입니다.");
 				$("#birth").focus();
@@ -234,19 +234,27 @@
 				}
 			}
 			//이메일
-			var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+			//var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 			if($("#email").val() == ""){
 				alert("아이디 필수 입력 항목입니다.");
 				$("#email").focus();
 				return false;
-			} else {  //이메일 유효성 검사
-			   	if(!regEmail.test($("#email").val())) { 
-			      alert("이메일 주소가 유효하지 않습니다"); 
-			      $("#email").focus(); 
-			      return false; 
-				}
+			} 
+			//else {  //이메일 유효성 검사
+			 //  	if(!regEmail.test($("#email").val())) { 
+			  //    alert("이메일 주소가 유효하지 않습니다"); 
+			   //   $("#email").focus(); 
+			    //  return false; 
+				//}
+			//}
+			//중복검사
+			if($("#emailCheck").val('') == "check"){
+				alert("중복검사를 해주세요");
+				console.log($("#emailCheck").val(''));
+				//$("#btn-checkEmail").focus();
+				return false;
 			}
-	
+		
 			//패스워드
 			if($("#password").val() == ""){
 				alert("비밀번호는 필수 입력 항목입니다.");
@@ -289,11 +297,18 @@
 			}
 		});
 		//이메일 유효성 검사
+		var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 		$("#btn-checkEmail").click(function(){
 			var email = $("#email").val();
 			if(email == ""){
 				alert("이메일을 입력하시지 않으셨습니다.");
-				return;
+				return false;
+			} else {  //이메일 유효성 검사
+			   	if(!regEmail.test($("#email").val())) { 
+				      alert("이메일 주소가 유효하지 않습니다"); 
+				      $("#email").focus(); 
+				      return false; 
+				}
 			}
 			$.ajax({
 				url: "CheckEmail",
@@ -313,6 +328,7 @@
 						return;
 					}
 					//console.log("사용할 수 있음!");
+					$("#emailCheck").text('check');
 					$("#emailCheck").html("[사용 가능]");
 					$("#btn-checkEmail").hide();
 				},

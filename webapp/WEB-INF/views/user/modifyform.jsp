@@ -111,27 +111,35 @@ $(function(){
 	$("#join-form").submit(function(){
 		//이름
 		if($("name").val() == ""){
-			alert("생년월일은 필수 입력 항목입니다.");
+			alert("이름은 필수 입력 항목입니다.");
 			$("#name").focus();
 			return false;
 		}
 		//생년월일
+		var regBirth = /^(19|20)\d{2}([0][1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;	//정규식
 		if($("#birth").val() == ""){
 			alert("생년월일은 필수 입력 항목입니다.");
 			$("#birth").focus();
 			return false;
+		} else {
+			if(!regBirth.test($("#birth").val())) {  
+			    alert("생년월일 입력 형식이 잘못되었습니다.");
+			    $("#birth").focus();
+			    return false;  
+			}
 		}
 		//휴대폰
+		var regPhone = /^((01[0|1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 		if($("#phone").val() == ""){
-			alert("전화번호는 필수 입력 항목입니다.");
+			alert("휴대폰 번호는 필수 입력 항목입니다.");
 			$("#phone").focus();
 			return false;
-		}
-		//이메일
-		if($("#email").val() == ""){
-			alert("아이디 필수 입력 항목입니다.");
-			$("#email").focus();
-			return false;
+		}else { 	//휴대폰 유효성 검사
+			if(!regPhone.test($("#phone").val())) {  
+			    alert("휴대폰 번호 입력된 내용이 잘못된 형식입니다.");
+			    $("#phone").focus();
+			    return false;  
+			}
 		}
 		//주소
 		if($("#address").val() == ""){
