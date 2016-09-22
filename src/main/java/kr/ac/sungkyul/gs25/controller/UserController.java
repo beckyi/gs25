@@ -33,7 +33,7 @@ public class UserController {
 	@RequestMapping("/join")
 	public String join(@ModelAttribute UserVo vo){
 		System.out.println("join: "+vo.toString());
-		userService.join(vo);
+//		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
 	

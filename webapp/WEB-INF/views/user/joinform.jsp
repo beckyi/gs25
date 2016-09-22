@@ -170,7 +170,9 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 <script>
-	$(function() {
+$(function() {
+		var flag_validation = false;
+		
 		$('#password').change(function() {
 			$('font[name=passCheck]').text('');
 			$('#repassword').val('');
@@ -248,10 +250,10 @@
 				//}
 			//}
 			//중복검사
-			if($("#emailCheck").val('') == "check"){
+			if(flag_validation == false){
+				console.log(flag_validation);
 				alert("중복검사를 해주세요");
-				console.log($("#emailCheck").val(''));
-				//$("#btn-checkEmail").focus();
+				$("#btn-checkEmail").focus();
 				return false;
 			}
 		
@@ -327,8 +329,11 @@
 						$("#email").val("").focus();
 						return;
 					}
+					
 					//console.log("사용할 수 있음!");
-					$("#emailCheck").text('check');
+					console.log(flag_validation);
+					flag_validation = true;
+					console.log(flag_validation);
 					$("#emailCheck").html("[사용 가능]");
 					$("#btn-checkEmail").hide();
 				},
@@ -338,6 +343,6 @@
 				}
 			});
 		});
-	});
+});
 </script>
 </html>
