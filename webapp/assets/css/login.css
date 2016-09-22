@@ -90,6 +90,7 @@ select {
 }
 #storeDrop{
 	margin-left: 10px;
+	display:none;
 }
 #findcan{
 	width:500px;

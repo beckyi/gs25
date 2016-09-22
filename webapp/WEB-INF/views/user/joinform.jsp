@@ -61,12 +61,12 @@
 									<th scope="row"><label for="web_pwd1">이용등급 <strong class="reqd" title="필수항목">*</strong></label></th>
 									<td>
 										<div id="sel2_lt">
-											<input type="radio" name="position" value="CUSTOMER" checked />
+											<input type="radio" name="position" id="customer" value="CUSTOMER" checked />
 											<label class="labelM" class="mr20">고객</label>
-											<input type="radio" name="position" value="HEADQUARTERS"/>
+											<input type="radio" name="position" id="header" value="HEADQUARTERS"/>
 											<label class="labelM">본사 관리자</label>
-											<input type="radio" name="position" value="BRANCH" >
-											<label class="labelM" id="branch">지점 관리자</label>
+											<input type="radio" name="position" id="branch" value="BRANCH" >
+											<label class="labelM">지점 관리자</label>
 										</div>
 										<div id="sel2_rt">
 											<select id="storeDrop" name="store_no">
@@ -81,7 +81,7 @@
 								<tr>
 									<th scope="row"><label>아이디 (이메일)<strong class="reqd" title="필수항목">*</strong></label></th>
 									<td>
-										<input type="text" id="email" name="email" value=""  onKeyup="validation(this.name,this.value);"/>
+										<input type="text" id="email" name="email" value=""/>
 										<input type="button" class="btn banner" id="btn-checkEmail" value="ID 중복확인"/>
 										<font id="msg_email"></font>
 										<font  id="emailCheck"></font>
@@ -111,7 +111,7 @@
 					</div>
 					</div>
 					<div id="brdwrap2">
-						<h5 id="tit">[필수]개인정보 수집, 이용 동의</h5>
+						<h5 id="tit">개인정보 수집, 이용 동의</h5>
 						<div class="brdwrap scl_box" tabindex="0">
 							<div class="agree_tbox ch_view">
 								<div>
@@ -159,7 +159,7 @@
 						<fieldset id="agreeF">
 							<legend>약관동의</legend>
 							<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
-							<label>서비스 약관에 동의합니다.</label>
+							<label>서비스 약관에 동의합니다.(필수)</label>
 						</fieldset>
 					</div>
 					<input class="btn btn-primary btn-register" type="submit" value="가입하기">
@@ -184,6 +184,21 @@
 				$('font[name=passCheck]').html("암호맞음");
 			}
 		});
+		
+		//$('input[name=position]').click(function() {
+		//	$('#storeDrop').hide();
+		//});
+		$('#storeDrop').hide();
+		$('#customer').click(function() {
+			$('#storeDrop').hide();
+		});
+		$('#header').click(function() {
+			$('#storeDrop').hide();
+		});
+		$('#branch').click(function() {
+			$('#storeDrop').show();
+		});
+		
 		$("#join-form").submit(function(){
 			console.log("form check");
 			//이름 체크
@@ -193,29 +208,52 @@
 			return false;
 			}
 			//생년월일
+			var regBirth = /^(19|20)\d{2}([0][1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;
 			if($("#birth").val() == ""){
 				alert("생년월일은 필수 입력 항목입니다.");
 				$("#birth").focus();
 				return false;
+			} else {
+				if(!regBirth.test($("#birth").val())) {  
+				    alert("생년월일 입력 형식이 잘못되었습니다.");
+				    $("#birth").focus();
+				    return false;  
 				}
+			}
 			//휴대폰
+			var regPhone = /^((01[0|1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 			if($("#phone").val() == ""){
-				alert("전화번호는 필수 입력 항목입니다.");
+				alert("휴대폰 번호는 필수 입력 항목입니다.");
 				$("#phone").focus();
 				return false;
+			} else { 	//휴대폰 유효성 검사
+				if(!regPhone.test($("#phone").val())) {  
+				    alert("휴대폰 번호 입력된 내용이 잘못된 형식입니다.");
+				    $("#phone").focus();
+				    return false;  
 				}
+			}
 			//이메일
+			var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 			if($("#email").val() == ""){
 				alert("아이디 필수 입력 항목입니다.");
 				$("#email").focus();
 				return false;
+			} else {  //이메일 유효성 검사
+			   	if(!regEmail.test($("#email").val())) { 
+			      alert("이메일 주소가 유효하지 않습니다"); 
+			      $("#email").focus(); 
+			      return false; 
 				}
+			}
+	
 			//패스워드
 			if($("#password").val() == ""){
 				alert("비밀번호는 필수 입력 항목입니다.");
 				$("#password").focus();
 				return false;
 				}
+			
 			//재 패스워드
 			if($("#repassword").val() == ""){
 				alert("비밀번호 재입력은 필수 입력 항목입니다.");
@@ -229,21 +267,12 @@
 				return false;
 				}
 			
-			//전화번호 유효성 검사
-			var regPhone = /^((01[0|1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
-			if(regPhone.test($("#phone")) === false) {  
-			    alert("잘못된 형식입니다.");
-			    $("#phone").focus();
-			    return false;  
-			} else {  
-			    alert('ok');
-			}  
 			//약관동의
 			if($("#agree-prov").is(':checked') == false ) {
 		         alert("약관 동의가 필요합니다.");
 		         return false;
 		     }
-		console.log("submit!!");
+
 		return true;
 		
 		});
@@ -259,10 +288,11 @@
 				return;
 			}
 		});
-		
+		//이메일 유효성 검사
 		$("#btn-checkEmail").click(function(){
 			var email = $("#email").val();
 			if(email == ""){
+				alert("이메일을 입력하시지 않으셨습니다.");
 				return;
 			}
 			$.ajax({
@@ -292,28 +322,6 @@
 				}
 			});
 		});
-		
-		function validation(name,val){	//alert("validation");
-			var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;  // 이메일 유효성 검사식
-			 if( name == 'email' ){
-		        	if( !val ){
-		        		$("#msg_email").text('이메일을 입력해 주세요.');
-			        	$("#flag_validation").val('N');
-			        	$("#email").focus();
-			            return false;
-		        	} else {
-		        		if( !regEmail.test(val) ) {
-				        	$("#msg_email").text('이메일 형식에 맞게 입력해 주세요.');
-				        	$("#flag_validation").val('N');
-				        	$("#EMAIL").focus();
-				            return false;
-		        		} else {
-		        			$("#msg_email").text('사용 가능한 이메일입니다.');
-		        			$("#flag_validation").val('Y');
-		        		}
-		        	}
-		        }	        
-		}
 	});
 </script>
 </html>
