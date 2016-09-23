@@ -428,6 +428,9 @@ input[type=text], input[type=password] {
     border-bottom: 1px solid #e0e0e0;
     background: #fbfbfb url("/gs25/assets/images/gs25_store.png") 60px no-repeat;
 }
+#goMain{
+	margin: 40px 0 0 480px;	
+}
 #goLogin{
 	margin: 75px 0 0 410px;
 }

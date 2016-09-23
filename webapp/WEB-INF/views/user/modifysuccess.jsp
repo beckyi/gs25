@@ -15,11 +15,11 @@
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
 	<div class="container">
 		<div id="title1">
-			<h3>GS25 편의점 회원가입 완료</h3>
+			<h3>GS25 편의점 회원정보 수정 완료</h3>
 		</div>
 		<div id ="title1_p">
-			<p><em id="emphasis">회원가입을 축하합니다.</em>&nbsp;고객과 함께 내일을 꿈꾸며,
-			<br>새로운 삶의 가치를 창조하는 GS25 편의점 회원이 되신걸 환영합니다.</p>
+			<p><em id="emphasis">회원정보가 성공적으로 수정되었습니다.</em>&nbsp;고객과 함께 내일을 꿈꾸며,
+			<br>새로운 삶의 가치를 창조하는 GS25 편의점은 회원님을 위해 보다 열심히 일하겠습니다.</p>
 		</div>
 		<div id="contents">
 			<div id="join-succ">

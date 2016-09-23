@@ -7,7 +7,7 @@
 <head>
 <title>GS25</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
+<link href="/gs25/assets/css/gs25site.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/login.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
 </head>
@@ -173,10 +173,10 @@
 $(function() {
 		var flag_validation = false;
 		
-		$('#password').change(function() {
-			$('font[name=passCheck]').text('');
+		$('#password').keydown(function() {
+			$('font[name=passCheck]').html('');
 			$('#repassword').val('');
-		}); //#password.keyup
+		});
 		$('#repassword').keyup(function() {
 			if ($('#password').val() != $('#repassword').val()) {
 				$('font[name=passCheck]').text('');
@@ -235,20 +235,12 @@ $(function() {
 				    return false;  
 				}
 			}
-			//이메일
-			//var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 			if($("#email").val() == ""){
 				alert("아이디 필수 입력 항목입니다.");
 				$("#email").focus();
 				return false;
 			} 
-			//else {  //이메일 유효성 검사
-			 //  	if(!regEmail.test($("#email").val())) { 
-			  //    alert("이메일 주소가 유효하지 않습니다"); 
-			   //   $("#email").focus(); 
-			    //  return false; 
-				//}
-			//}
+			
 			//중복검사
 			if(flag_validation == false){
 				console.log(flag_validation);
@@ -270,6 +262,14 @@ $(function() {
 				$("#repassword").focus();
 				return false;
 				}
+			
+			//패스워드 일치 여부
+			if($("#password").val() != $("#repassword").val()){
+				alert("비밀번호가 일치하지 않습니다.");
+				$("#password").focus();
+				return false;
+			}
+			
 			//주소
 			if($("#address").val() == ""){
 				alert("주소는 필수 입력 항목입니다.");
@@ -303,11 +303,11 @@ $(function() {
 		$("#btn-checkEmail").click(function(){
 			var email = $("#email").val();
 			if(email == ""){
-				alert("이메일을 입력하시지 않으셨습니다.");
+				alert("아이디를 입력하시지 않으셨습니다.");
 				return false;
 			} else {  //이메일 유효성 검사
 			   	if(!regEmail.test($("#email").val())) { 
-				      alert("이메일 주소가 유효하지 않습니다"); 
+				      alert("입력된 아이디 형식이 유효하지 않습니다"); 
 				      $("#email").focus(); 
 				      return false; 
 				}
@@ -331,9 +331,7 @@ $(function() {
 					}
 					
 					//console.log("사용할 수 있음!");
-					console.log(flag_validation);
 					flag_validation = true;
-					console.log(flag_validation);
 					$("#emailCheck").html("[사용 가능]");
 					$("#btn-checkEmail").hide();
 				},

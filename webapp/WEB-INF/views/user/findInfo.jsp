@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
+<link href="/gs25/assets/css/gs25site.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/login.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
 <title>Insert title here</title>
@@ -34,8 +34,8 @@
 						<tr>
 							<th scope="row">성별</th>
 							<td>
-								<label>남</label> <input type="radio" name="gender" value="MALE" checked="checked">
-								<label>여</label> <input type="radio" name="gender" value="FEMALE">
+								<label>남</label> <input type="radio" id="gemder" name="gender" value="MALE" checked="checked">
+								<label>여</label> <input type="radio" id="gemder" name="gender" value="FEMALE">
 							</td>
 						</tr>
 						<tr>
@@ -89,4 +89,126 @@
 	</div>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
+<script>
+$(function() {
+	//입력 사항   일치 여부)
+	var tmp = '${result }';
+	
+	if(tmp != '') {	//받은 값이 없으므로 공백으로 받아짐
+		alert('입력하신 내용과 일치하는 계정이 없습니다. 다시 입력하여 시도하시거나 회원가입해주세요.');
+	}
+	
+	//비밀번호 입력시 일치 여부
+	$('#password').keydown(function() {
+		$('font[name=passCheck]').html('');
+		$('#repassword').val('');
+	});
+	$('#repassword').keyup(function() {
+		if ($('#password').val() != $('#repassword').val()) {
+			$('font[name=passCheck]').text('');
+			$('font[name=passCheck]').html("암호틀림");
+		} else {
+			$('font[name=passCheck]').text('');
+			$('font[name=passCheck]').html("암호맞음");
+		}
+	});
+	//입력하지 않았을 경우(아이디 찾기 폼)
+	$("#id-form").submit(function(){
+		//이름 체크
+		if($("#name").val() == ""){
+		alert("이름은 필수 입력 항목입니다.");
+		$("#name").focus();
+		return false;
+		}
+		//생년월일
+		var regBirth = /^(19|20)\d{2}([0][1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;	//정규식
+		if($("#birth").val() == ""){
+			alert("생년월일은 필수 입력 항목입니다.");
+			$("#birth").focus();
+			return false;
+		} else {
+			if(!regBirth.test($("#birth").val())) {  
+			    alert("생년월일 입력 형식이 잘못되었습니다.");
+			    $("#birth").focus();
+			    return false;  
+			}
+		}
+		//휴대폰
+		var regPhone = /^((01[0|1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+		if($("#phone").val() == ""){
+			alert("휴대폰 번호는 필수 입력 항목입니다.");
+			$("#phone").focus();
+			return false;
+		} else { 	//휴대폰 유효성 검사
+			if(!regPhone.test($("#phone").val())) {  
+			    alert("휴대폰 번호 입력된 내용이 잘못된 형식입니다.");
+			    $("#phone").focus();
+			    return false;  
+			}
+		}
+		
+	return true;
+	
+	});
+	
+	//입력하지 않았을 경우(비밀번호 찾기 폼)
+	$("#password-form").submit(function(){
+		//입력 사항   일치 여부)
+		var tmp = '${result }';
+		
+		if(tmp != '') {	//받은 값이 없으므로 공백으로 받아짐
+			alert('입력하신 내용과 일치하는 계정이 없습니다. 다시 입력하여 시도하시거나 회원가입해주세요.');
+		}
+		
+		//이메일 체크
+		var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		if($("#email").val() == ""){
+			alert("아이디를 입력하시지 않으셨습니다.");
+			$("#email").focus();
+			return false;
+		} else { 	//휴대폰 유효성 검사
+			if(!regPhone.test($("#email").val())) {  
+				alert("입력된 아이디 형식이 유효하지 않습니다");
+			    $("#email").focus();
+			    return false;  
+			}
+		}
+		//이름 체크
+		if($("#name").val() == ""){
+		alert("이름은 필수 입력 항목입니다.");
+		$("#name").focus();
+		return false;
+		}
+		//생년월일
+		var regBirth = /^(19|20)\d{2}([0][1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;	//정규식
+		if($("#birth").val() == ""){
+			alert("생년월일은 필수 입력 항목입니다.");
+			$("#birth").focus();
+			return false;
+		} else {
+			if(!regBirth.test($("#birth").val())) {  
+			    alert("생년월일 입력 형식이 잘못되었습니다.");
+			    $("#birth").focus();
+			    return false;  
+			}
+		}
+		//휴대폰
+		var regPhone = /^((01[0|1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+		if($("#phone").val() == ""){
+			alert("휴대폰 번호는 필수 입력 항목입니다.");
+			$("#phone").focus();
+			return false;
+		} else { 	//휴대폰 유효성 검사
+			if(!regPhone.test($("#phone").val())) {  
+			    alert("휴대폰 번호 입력된 내용이 잘못된 형식입니다.");
+			    $("#phone").focus();
+			    return false;  
+			}
+		}
+	
+	return true;
+	
+	});
+});
+</script>
 </html>

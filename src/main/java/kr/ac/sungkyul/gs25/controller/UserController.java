@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,21 +48,35 @@ public class UserController {
 		return "user/loginform";
 	}
 	
-	@RequestMapping(value= "/login", method= RequestMethod.POST)
-	public String login(
-			HttpSession session,
-			@RequestParam(value= "email", required=false, defaultValue="") String email,
-			@RequestParam(value="password", required=false, defaultValue="") String password){
-		
-		UserVo authUser =  userService.login(email,  password);
-		
-		if(authUser == null){
-			return "redirect:/user/loginform";
-		}
-		
-		//인증성공
-		session.setAttribute("authUser",authUser);
-		return "redirect:/main";
+//	@RequestMapping(value= "/login")
+//	public String login(
+//			HttpSession session, Model model,
+//			@RequestParam(value= "email", required=false, defaultValue="") String email,
+//			@RequestParam(value="password", required=false, defaultValue="") String password){
+//
+//		UserVo authUser =  userService.login(email,  password);
+//
+//		if(authUser == null){
+//			Boolean result = true;
+//			model.addAttribute("result",result);
+//			return "user/loginform";	//html(jsp)화면만 
+//		}
+//		
+//		//인증성공
+//		session.setAttribute("authUser",authUser);
+//		return "redirect:/main";
+//	}
+	
+	//1. Ajax 사용 시 - DB (로그인 정보 비교)
+	//2. Ajax 사용 시 - 인증 완료 (세션&redirect)
+	
+	@ResponseBody
+	@RequestMapping(value= "loginCheck", method = RequestMethod.POST)
+	public Boolean loginCheck(String email, String password){
+		System.out.println("controll email: "+email);
+		Boolean result =  userService.loginCheck(email,  password);
+		System.out.println("controll: "+result);
+		return result;
 	}
 	
 	@RequestMapping("/logout")
@@ -93,7 +108,7 @@ public class UserController {
 		vo.setNo(no);
 		
 		userService.update(vo);
-		return "redirect:/user/modifyform";
+		return "user/modifysuccess";
 	}
 	
 	@RequestMapping("/findInfo")
@@ -103,7 +118,15 @@ public class UserController {
 
 	@RequestMapping("/idFind")
 	public String idFind(@ModelAttribute UserVo vo,Model model){
+		System.out.println(vo);
 		String email = userService.idfind(vo);
+		System.out.println("idfind: "+email);
+		if(email == null){
+			Boolean result = false;
+			model.addAttribute("result", result);
+			return "user/findInfo";
+		}
+		
 		model.addAttribute("email",email);
 		return "user/idresult";
 	}
@@ -135,5 +158,22 @@ public class UserController {
 		Map<String, Object> map = userService.checkEmail(email);
 		
 		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "checkLogin", method = RequestMethod.POST)
+	public Boolean checkId(String email, String password, HttpSession session) {	//Request 객체받음, script or DB 객체 분별
+		
+		UserVo authUser =  userService.login(email,  password);
+		Boolean result = true;
+		
+		if(authUser == null){
+			result = false;
+			return result;
+		}
+		//인증성공
+		session.setAttribute("authUser",authUser);
+		
+		return result;
 	}
 }

@@ -16,6 +16,10 @@ public class SenderEmail {
 	 @Autowired
      protected JavaMailSender  mailSender;
 	 
+//	  @Autowired
+//	   private MailSender mailsender;
+
+	 
      public void SendEmail(EmailVo email) throws Exception {
           
          MimeMessage msg = mailSender.createMimeMessage();
