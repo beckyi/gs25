@@ -34,7 +34,7 @@ public class EmailController {
 	
     @RequestMapping("/send")
     public String sendEmailAction(@ModelAttribute UserVo vo, HttpSession session) throws Exception {
-//    	System.out.println("emailController: "+vo.toString());;
+    	System.out.println("emailController: "+vo.toString());;
     	
     	String id = vo.getEmail();
     	String ranNum= random();

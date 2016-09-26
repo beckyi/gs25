@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,15 +70,24 @@ public class UserController {
 //	}
 	
 	//1. Ajax 사용 시 - DB (로그인 정보 비교)
-	//2. Ajax 사용 시 - 인증 완료 (세션&redirect)
-	
 	@ResponseBody
-	@RequestMapping(value= "loginCheck", method = RequestMethod.POST)
-	public Boolean loginCheck(String email, String password){
-		System.out.println("controll email: "+email);
-		Boolean result =  userService.loginCheck(email,  password);
-		System.out.println("controll: "+result);
+	@RequestMapping(value = "checkLogin", method = RequestMethod.POST)
+	public String checkId(String email, String password, HttpSession session) {	//Request 객체받음, script or DB 객체 분별
+
+		UserVo authUser =  userService.login(email,  password);
+
+		String result = "true";
+		
+		if(authUser == null){
+			result = "false";
+		}
+		else {
+			//인증성공
+			session.setAttribute("authUser",authUser);
+			result = "true";
+		}
 		return result;
+		
 	}
 	
 	@RequestMapping("/logout")
@@ -117,11 +128,11 @@ public class UserController {
 	}
 
 	@RequestMapping("/idFind")
-	public String idFind(@ModelAttribute UserVo vo,Model model){
-		System.out.println(vo);
+	public String idFind(@ModelAttribute UserVo vo, Model model){
+
 		String email = userService.idfind(vo);
-		System.out.println("idfind: "+email);
-		if(email == null){
+
+		if(email == null){	//계정 정보가 없을 경우
 			Boolean result = false;
 			model.addAttribute("result", result);
 			return "user/findInfo";
@@ -129,6 +140,46 @@ public class UserController {
 		
 		model.addAttribute("email",email);
 		return "user/idresult";
+	}
+	
+//	@RequestMapping("/{domain}/abc")
+//	public String abc(@PathVariable String domain){
+//		//사전에
+//		//비밀번호 찾기하면 erjkrjekrjekrjekrjekrjkerjkididididid를 사용자한데 메일로 전송
+//		
+//		
+//		domain = 존재 하는 값인가?;
+//		
+//		비밀번호 변경창으로 보냄 (어떤 멤버인지는 알아야 함)
+//		
+//		return null;
+//		
+//	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "checkPass", method = RequestMethod.POST)
+	public String checkPass(@RequestBody UserVo userVo, HttpSession session) {	//Request 객체받음, script or DB 객체 분별
+//		System.out.println(userVo.toString());
+		String email = userService.checkPass(userVo);
+		String result = "true";
+		
+		if(email == null){
+//			System.out.println("바뀌지 전 입성 "+result);
+			result = "false";
+//			System.out.println("바뀐 후 "+result);
+		}
+		else {
+			result = "true";
+			try {
+				userService.sendEmail(email);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("finally?"+result);
+		return result;
 	}
 	
 	@RequestMapping("/repassword")
@@ -158,22 +209,5 @@ public class UserController {
 		Map<String, Object> map = userService.checkEmail(email);
 		
 		return map;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "checkLogin", method = RequestMethod.POST)
-	public Boolean checkId(String email, String password, HttpSession session) {	//Request 객체받음, script or DB 객체 분별
-		
-		UserVo authUser =  userService.login(email,  password);
-		Boolean result = true;
-		
-		if(authUser == null){
-			result = false;
-			return result;
-		}
-		//인증성공
-		session.setAttribute("authUser",authUser);
-		
-		return result;
 	}
 }

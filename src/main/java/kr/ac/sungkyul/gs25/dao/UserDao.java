@@ -338,6 +338,53 @@ public class UserDao {
 		return email;
 	}
 	
+	public String passfind(UserVo vo) { // id find
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String email = null;
+
+		try {
+			conn = getConnection();
+
+			String email1 = vo.getEmail();
+			String name = vo.getName();
+			String birth = vo.getBirth();
+			String phone = vo.getPhone();
+
+			String sql = "select email from users where email=? and name=? and birth= to_date(?,'yyyy-mm-dd') and phone=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, email1);
+			pstmt.setString(2, name);
+			pstmt.setString(3, birth);
+			pstmt.setString(4, phone);
+
+			rs = pstmt.executeQuery();
+			System.out.println("dao: "+email);
+			if (rs.next()) {
+				email = rs.getString(1);
+				System.out.println("dao2: "+email);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return email;
+	}
+	
 	public void setPass(String email,String password) { // password 재설정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
