@@ -9,6 +9,9 @@
 <link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/login.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+console.log('${param.userno}');
+</script>
 </head>
 <body id="gsBack">
 	<div id="wrapper">
@@ -18,14 +21,14 @@
 				<h3>GS편의점 회원 비밀번호 재설정</h3>
 			</div>
 		<c:choose>
-			<c:when test='${rannum eq param.ranNum and userid eq param.userid}'>
+			<c:when test='${param.userno != 0}'>
 				<div id ="title1_p">
 					<p><em id="emphasis">회원임을 인증되었습니다.</em></p>
 					<p>비밀번호를 새로 설정하여 서비스를 이용하시기 바랍니다.</p>
 				</div>
 				<div id="repass">
 					<form id="id-form" name="idForm" method="post" action="/gs25/user/setPass">
-						<input type = "hidden" name = "email" value="${userid }">
+						<input type = "hidden" name = "no" value="${userno }">
 					 	<table class="tbl_wtype2">
 							<tbody>
 								<tr>

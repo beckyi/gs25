@@ -292,33 +292,29 @@ $(function() {
 			$("#btn-checkEmail").show();
 		});
 		
-		$("#btn-checkEmail").click(function(){
-			var email = $("#email").val();
-			if(email == ""){
-				return;
-			}
-		});
 		//이메일 유효성 검사
-		var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-		$("#btn-checkEmail").click(function(){
+		$("#btn-checkEmail").click(function(){			
 			var email = $("#email").val();
+			var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+			
 			if(email == ""){
 				alert("아이디를 입력하시지 않으셨습니다.");
 				return false;
 			} else {  //이메일 유효성 검사
-			   	if(!regEmail.test($("#email").val())) { 
+			   	if(!regEmail.test(email)) { 
 				      alert("입력된 아이디 형식이 유효하지 않습니다"); 
 				      $("#email").focus(); 
 				      return false; 
 				}
 			}
+			
 			$.ajax({
 				url: "CheckEmail",
 				type: "POST",
 				data: {"email":email},
 				dataType: "json",
-				"success": function(response){
-					//console.log(response);
+				success: function(response){
+					console.log(response);
 					if(response.result == "fail"){
 						console.error("error:"+response.message);
 						return ;
@@ -336,7 +332,7 @@ $(function() {
 					$("#btn-checkEmail").hide();
 				},
 				
-				"error": function(jsXHR, status, e){
+				error: function(jsXHR, status, e){
 					console.error("error:"+status+":"+e);
 				}
 			});

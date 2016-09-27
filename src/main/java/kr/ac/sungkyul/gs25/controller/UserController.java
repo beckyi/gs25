@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.sungkyul.gs25.service.UserService;
-
+import kr.ac.sungkyul.gs25.vo.PassLinkVo;
 import kr.ac.sungkyul.gs25.vo.UserVo;
 
 @Controller
@@ -122,12 +122,12 @@ public class UserController {
 		return "user/modifysuccess";
 	}
 	
-	@RequestMapping("/findInfo")
+	@RequestMapping("/findInfo")	//찾기 폼
 	public String findInfo(){
 		return "user/findInfo";
 	}
 
-	@RequestMapping("/idFind")
+	@RequestMapping("/idFind")	// 아이디 찾기
 	public String idFind(@ModelAttribute UserVo vo, Model model){
 
 		String email = userService.idfind(vo);
@@ -141,33 +141,15 @@ public class UserController {
 		model.addAttribute("email",email);
 		return "user/idresult";
 	}
-	
-//	@RequestMapping("/{domain}/abc")
-//	public String abc(@PathVariable String domain){
-//		//사전에
-//		//비밀번호 찾기하면 erjkrjekrjekrjekrjekrjkerjkididididid를 사용자한데 메일로 전송
-//		
-//		
-//		domain = 존재 하는 값인가?;
-//		
-//		비밀번호 변경창으로 보냄 (어떤 멤버인지는 알아야 함)
-//		
-//		return null;
-//		
-//	}
-	
-	
+		
 	@ResponseBody
-	@RequestMapping(value = "checkPass", method = RequestMethod.POST)
+	@RequestMapping(value = "checkPass", method = RequestMethod.POST)	//비밀번호 찾기 검사
 	public String checkPass(@RequestBody UserVo userVo, HttpSession session) {	//Request 객체받음, script or DB 객체 분별
-//		System.out.println(userVo.toString());
 		String email = userService.checkPass(userVo);
 		String result = "true";
 		
 		if(email == null){
-//			System.out.println("바뀌지 전 입성 "+result);
 			result = "false";
-//			System.out.println("바뀐 후 "+result);
 		}
 		else {
 			result = "true";
@@ -178,31 +160,44 @@ public class UserController {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("finally?"+result);
+
 		return result;
 	}
 	
-	@RequestMapping("/repassword")
+	@RequestMapping(value = "/{domain}/repassword", method = RequestMethod.GET)
+	public String abc(@PathVariable String domain, Model model){
+		Long no = userService.passlink(domain);
+		
+		
+//		domain = 존재 하는 값인가?;
+		
+//		비밀번호 변경창으로 보냄 (어떤 멤버인지는 알아야 함)
+		model.addAttribute("userno", no);
+		
+		return "user/repassword";
+	}
+	
+	@RequestMapping("/repassword")	//비밀번호 재설정 폼
 	public String repasswordForm(){
 		return "user/repassword";
 	}
 	
-	@RequestMapping("/setPass")
+	@RequestMapping("/setPass")	//재설정 비번 저장
 	public String setPassword
-			(@RequestParam(value= "email", required=false, defaultValue="") String email,
+			(@RequestParam(value= "no", required=false, defaultValue="") Long no,
 			 @RequestParam(value= "password", required=false, defaultValue="") String password){
 		
-		userService.setpass(email,password);
+		userService.setpass(no,password);
 		
 		return "user/send";
 	}
 	
-	@RequestMapping("/passresult")
+	@RequestMapping("/passresult")	//메일 전송 완료
 	public String passResult(){
 		return "user/passresult";
 	}
 	
-	@ResponseBody
+	@ResponseBody	// 아이디 중복 검사
 	@RequestMapping(value = "CheckEmail", method = RequestMethod.POST)
 	public Map<String, Object> checkEmail(String email) {	//Request 객체받음, script or DB 객체 분별
 		

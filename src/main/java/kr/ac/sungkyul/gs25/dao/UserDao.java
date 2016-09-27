@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.sungkyul.gs25.vo.PassLinkVo;
 import kr.ac.sungkyul.gs25.vo.UserVo;
 
 @Repository
@@ -75,7 +76,7 @@ public class UserDao {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
 
-				System.out.println(no + " " + name+"님이 로그인하셨습니다.");
+				System.out.println(no + " " + name + "님이 로그인하셨습니다.");
 
 				vo = new UserVo();
 
@@ -337,7 +338,7 @@ public class UserDao {
 
 		return email;
 	}
-	
+
 	public String passfind(UserVo vo) { // id find
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -361,10 +362,10 @@ public class UserDao {
 			pstmt.setString(4, phone);
 
 			rs = pstmt.executeQuery();
-			System.out.println("dao: "+email);
+			System.out.println("dao: " + email);
 			if (rs.next()) {
 				email = rs.getString(1);
-				System.out.println("dao2: "+email);
+				System.out.println("dao2: " + email);
 			}
 
 		} catch (SQLException e) {
@@ -384,8 +385,8 @@ public class UserDao {
 
 		return email;
 	}
-	
-	public void setPass(String email,String password) { // password 재설정
+
+	public void setPass(Long no, String password) { // password 재설정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -393,11 +394,11 @@ public class UserDao {
 			conn = getConnection();
 
 			String sql = null;
-			sql = "update users set password = ? where email = ?";
+			sql = "update users set password = ? where no = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, password);
-			pstmt.setString(2, email);
+			pstmt.setLong(2, no);
 
 			pstmt.executeUpdate();
 
@@ -416,26 +417,25 @@ public class UserDao {
 			}
 		}
 	}
-	
+
 	public Long checkEmail(String email) { // email 유효성 검사
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Long no = null;
-		
-		
+
 		try {
 			conn = getConnection();
-			
+
 			String sql = null;
 			sql = "select no from users where email = ?";
-			
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
+
+			if (rs.next()) {
 				no = rs.getLong(1);
 			}
 
@@ -454,5 +454,75 @@ public class UserDao {
 			}
 		}
 		return no;
+	}
+	
+	public void savelink(String link, String email) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+
+			String sql = null;
+
+			Long no = checkEmail(email); // no 가져옴
+
+			Integer state = 0; // 사용 전
+		
+			sql = "insert into passlink values(seq_passlink.nextval, ?, ?, ?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, link);
+			pstmt.setInt(2, state);
+			pstmt.setLong(3, no);
+			
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public PassLinkVo passlink(String domain) {
+		PassLinkVo plVo = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = null;
+			
+			sql = "select no, link, state, user_no from passlink where link = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, domain);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				plVo = new PassLinkVo();
+				plVo.setNo(rs.getLong(1));
+				plVo.setLink(rs.getString(2));
+				plVo.setState(rs.getString(3));
+				plVo.setUser_no(rs.getLong(4));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return plVo;
 	}
 }
