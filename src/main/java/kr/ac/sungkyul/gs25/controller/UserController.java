@@ -36,7 +36,7 @@ public class UserController {
 	@RequestMapping("/join")
 	public String join(@ModelAttribute UserVo vo){
 		System.out.println("join: "+vo.toString());
-//		userService.join(vo);
+		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
 	
@@ -152,49 +152,43 @@ public class UserController {
 			result = "false";
 		}
 		else {
-			result = "true";
 			try {
-				userService.sendEmail(email);
+				result = userService.sendEmail(email);
+				System.out.println(result);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		return result;
 	}
 	
 	@RequestMapping(value = "/{domain}/repassword", method = RequestMethod.GET)
 	public String abc(@PathVariable String domain, Model model){
 		Long no = userService.passlink(domain);
-		
-		
-//		domain = 존재 하는 값인가?;
-		
+		System.out.println(no);
 //		비밀번호 변경창으로 보냄 (어떤 멤버인지는 알아야 함)
 		model.addAttribute("userno", no);
 		
 		return "user/repassword";
 	}
 	
-	@RequestMapping("/repassword")	//비밀번호 재설정 폼
-	public String repasswordForm(){
-		return "user/repassword";
-	}
-	
-	@RequestMapping("/setPass")	//재설정 비번 저장
-	public String setPassword
-			(@RequestParam(value= "no", required=false, defaultValue="") Long no,
-			 @RequestParam(value= "password", required=false, defaultValue="") String password){
-		
-		userService.setpass(no,password);
-		
-		return "user/send";
+	@RequestMapping(value ="/setPass", method = RequestMethod.POST)	//재설정 비번 저장
+	public String setPassword(Long no, String password){
+		//state 1로 변경
+		String result = userService.setpass(no,password);
+		System.out.println("controller: "+result);
+		return result;
 	}
 	
 	@RequestMapping("/passresult")	//메일 전송 완료
 	public String passResult(){
 		return "user/passresult";
+	}
+	
+	@RequestMapping("/repasswordSuccess")	//비번 재설정 완료
+	public String repasswordSuccess(){
+		return "user/repasswordSuccess";
 	}
 	
 	@ResponseBody	// 아이디 중복 검사

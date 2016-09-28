@@ -386,10 +386,11 @@ public class UserDao {
 		return email;
 	}
 
-	public void setPass(Long no, String password) { // password 재설정
+	public Integer setPass(Long no, String password) { // password 재설정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
+		Integer result = null;
+		
 		try {
 			conn = getConnection();
 
@@ -398,6 +399,40 @@ public class UserDao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, password);
+			pstmt.setLong(2, no);
+
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public void setState(Long no, Integer state) { // password 재설정
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = null;
+			sql = "update passlink set state = ? where user_no = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, state);
 			pstmt.setLong(2, no);
 
 			pstmt.executeUpdate();
@@ -505,7 +540,7 @@ public class UserDao {
 				plVo = new PassLinkVo();
 				plVo.setNo(rs.getLong(1));
 				plVo.setLink(rs.getString(2));
-				plVo.setState(rs.getString(3));
+				plVo.setState(rs.getInt(3));
 				plVo.setUser_no(rs.getLong(4));
 			}
 

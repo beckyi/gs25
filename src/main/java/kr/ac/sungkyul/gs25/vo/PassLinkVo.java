@@ -3,7 +3,7 @@ package kr.ac.sungkyul.gs25.vo;
 public class PassLinkVo {
 	private Long no;
 	private String link;
-	private String state;
+	private Integer state;
 	private Long user_no;
 	
 	public Long getNo() {
@@ -18,10 +18,10 @@ public class PassLinkVo {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	public String getState() {
+	public Integer getState() {
 		return state;
 	}
-	public void setState(String state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 	public Long getUser_no() {

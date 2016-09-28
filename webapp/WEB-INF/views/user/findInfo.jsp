@@ -228,7 +228,7 @@ $(function() {
 				}
 				
 				 if(result == true){
-					console.log(result);
+					 location.href='passresult';
 				} 
 			},
 			

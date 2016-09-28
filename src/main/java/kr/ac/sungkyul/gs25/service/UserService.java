@@ -79,8 +79,13 @@ public class UserService {
 		return email;
 	}
 	
-	public void setpass(Long no,String password){	//비밀번호 찾기 후 재설정
-		usersdao.setPass(no,password);
+	public String setpass(Long no,String password){	//비밀번호 찾기 후 재설정
+		Integer resultInt = usersdao.setPass(no,password);
+		Integer state = 1; 
+		usersdao.setState(no, state);
+		String result = String.valueOf(resultInt);
+		System.out.println("Service: "+result);
+		return result;
 	}
 	
 	public String checkPass(UserVo uservo){	//비밀번호 찾기 시 검사
@@ -132,7 +137,11 @@ public class UserService {
 	        message.setSubject(subject);
 	        message.setText(content);
 	        mailSender.send(message);
-	        return "";
+	        
+	        System.out.println("이메일 전송");
+	        
+	        String result = "true";
+	        return result;
 //	        return "redirect:/user/passresult";
 	 }
 	 
@@ -174,19 +183,23 @@ public class UserService {
 	 
 	 public Long passlink(String domain){	//비밀번호 찾기 후 재설정
 		 System.out.println(domain);
-//		 String ranNum = domain.substring(0, 20);
-//		 System.out.println(ranNum);
-//		 String email = domain.substring(20, domain.length());
+
 		 PassLinkVo plvo = usersdao.passlink(domain);
 		 Long no = null;
+		 System.out.println("plvo: "+plvo);
 		 
 		 if(plvo == null){
+			 System.out.println("plvo null");
 			 return 0L;
 		 } else{
-			 String state = plvo.getState();
-			 if(state == "0"){
+			 System.out.println("plvo not null");
+			 Integer state = plvo.getState();
+			 System.out.println(state);
+			 if(state == 0){
+				 System.out.println("State 0");
 				 no = plvo.getUser_no();
 			 } else {
+				 System.out.println("State 1");
 				 return 0L;
 			 }
 		 }
