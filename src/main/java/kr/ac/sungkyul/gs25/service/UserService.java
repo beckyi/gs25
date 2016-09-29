@@ -80,9 +80,14 @@ public class UserService {
 	}
 	
 	public String setpass(Long no,String password){	//비밀번호 찾기 후 재설정
-		Integer resultInt = usersdao.setPass(no,password);
+		System.out.println(no);
+		System.out.println("s: "+password);
+		
+		//state 설정
 		Integer state = 1; 
 		usersdao.setState(no, state);
+		//result 반환
+		Integer resultInt = usersdao.setPass(no,password);
 		String result = String.valueOf(resultInt);
 		System.out.println("Service: "+result);
 		return result;

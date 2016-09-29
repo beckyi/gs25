@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.sungkyul.gs25.service.UserService;
-import kr.ac.sungkyul.gs25.vo.PassLinkVo;
 import kr.ac.sungkyul.gs25.vo.UserVo;
 
 @Controller
@@ -173,7 +171,8 @@ public class UserController {
 		return "user/repassword";
 	}
 	
-	@RequestMapping(value ="/setPass", method = RequestMethod.POST)	//재설정 비번 저장
+	@ResponseBody
+	@RequestMapping(value ="/setPass", method = {RequestMethod.GET, RequestMethod.POST})	//재설정 비번 저장
 	public String setPassword(Long no, String password){
 		//state 1로 변경
 		String result = userService.setpass(no,password);

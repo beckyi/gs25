@@ -33,8 +33,8 @@
 					<p>비밀번호를 새로 설정하여 서비스를 이용하시기 바랍니다.</p>
 				</div>
 				<div id="repass">
-					<form id="id-form" name="idForm" method="post" >
-						<input type = "hidden" name = "no" value="${userno }">
+					<div id="id-form" >
+						<%-- <input type = "hidden" name = "no" value="${userno }"> --%>
 					 	<table class="tbl_wtype2">
 							<tbody>
 								<tr>
@@ -53,7 +53,7 @@
 							</tbody>
 						</table>
 						<input class="btn btn-find marRight" id = "btn_complete" type="button" value="수정완료">
-					</form>
+					</div>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -114,14 +114,13 @@ $(function(){
 			dataType: "text",
 			success: function(result){	//비동기식으로 진행되어 결과와 상관 없이 submit되므로 계속 refres됨(따로 동기식으로 변경해야함)
 				console.log(result);
-				if(result == 0){
+					
+				 if(result == "1"){
+					location.href='/gs25/user/repasswordSuccess';
+				} else {
 					console.log(result);
 					alert("죄송합니다. 비밀번호 재설정을 실패했습니다. \n 다시 시도해주세요.")
-					window.close();
-				}
-				
-				 if(result == 1){
-					location.href='/gs25/user/repasswordSuccess';
+					//window.close();
 				}
 			},
 			

@@ -400,7 +400,7 @@ public class UserDao {
 
 			pstmt.setString(1, password);
 			pstmt.setLong(2, no);
-
+			
 			result = pstmt.executeUpdate();
 			System.out.println(result);
 
@@ -427,7 +427,8 @@ public class UserDao {
 
 		try {
 			conn = getConnection();
-
+			System.out.println("dao1: "+no);
+			System.out.println("dao2: "+state);
 			String sql = null;
 			sql = "update passlink set state = ? where user_no = ?";
 			pstmt = conn.prepareStatement(sql);
