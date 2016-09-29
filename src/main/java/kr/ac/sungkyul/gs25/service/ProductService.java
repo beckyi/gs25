@@ -13,7 +13,7 @@ import kr.ac.sungkyul.gs25.vo.ProductVo;
 @Service
 public class ProductService {
 	
-	private static final int LIST_PAGESIZE = 5; // 리스팅 되는 게시물 수
+	private static final int LIST_PAGESIZE = 15; // 리스팅 되는 게시물 수
 	private static final int LIST_BLOCKSIZE = 5; // 페이지 리스트에 표시되는 페이지 수
 	
 	@Autowired
@@ -65,5 +65,28 @@ public class ProductService {
 		
 		return map;
 	}
-
+    
+    public List<ProductVo> getSubDate(){
+    	List<ProductVo> list = productdao.getSubDate();
+    	System.out.println("service: "+list.toString());
+    	return list;
+	}
+    
+//    public List<ProductVo> getSubPopular(){
+//    	List<ProductVo> list = productdao.getSubPopular();
+//    	System.out.println("service: "+list.toString());
+//    	return list;
+//	}
+    
+    public List<ProductVo> getSubNew(){
+    	List<ProductVo> list = productdao.getSubNew();
+    	System.out.println("service: "+list.toString());
+    	return list;
+	}
+    
+    public List<ProductVo> getSubReco(){
+    	List<ProductVo> list = productdao.getSubReco();
+    	System.out.println("service: "+list.toString());
+    	return list;
+	}
 }

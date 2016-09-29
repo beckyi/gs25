@@ -39,7 +39,7 @@ select {
     padding: 25px 0 40px;
     border-top: 1px solid #6c6c6c;
     border-bottom: 1px solid #e0e0e0;
-    background: #fbfbfb url("/gs25/assets/images/gsMember.png") 88px 0 no-repeat;
+    background: #fbfbfb url("/gs25/assets/images/login/gsMember.png") 88px 0 no-repeat;
 }
 #tlt1 {
     padding: 50px 0;
@@ -70,7 +70,6 @@ select {
     padding: 50px 0 40px;
     border-top: 1px solid #6c6c6c;
     border-bottom: 1px solid #e0e0e0;
-    background: #fbfbfb url("/_ui/desktop/common/images/gsretail/membership/join_img1.png") 88px 0 no-repeat;
 }
 #joincan{
 	float:left;
@@ -281,7 +280,7 @@ legend {
     height: 30px;
     font-size: 18px;
     font-weight: bold;
-    background: url("/gs25/assets/images/icon_signup.png") 0 -274px no-repeat;
+    background: url("/gs25/assets/images/login/icon_signup.png") 0 -274px no-repeat;
 }
 #tit2 {
     padding-left: 20px;
@@ -388,6 +387,7 @@ input[type=text], input[type=password] {
 }
 #agreeF{
 	margin: 30px 0 0 10px;
+	border: solid 0px white;
 }
 #emailCheck{
 	margin-left:10px;
@@ -415,7 +415,7 @@ input[type=text], input[type=password] {
 	margin-bottom: 20px;
 }
 .popwrap .pop_tlt1 {
-	background:url("/gs25/assets/images/ico_popt.gif") no-repeat 25px 20px;
+	background:url("/gs25/assets/images/login/ico_popt.gif") no-repeat 25px 20px;
 	padding:15px 0px 20px 40px;
 	color:#fff;
 	font-size:18px;
@@ -426,7 +426,7 @@ input[type=text], input[type=password] {
     padding: 25px 0 40px;
     border-top: 1px solid #6c6c6c;
     border-bottom: 1px solid #e0e0e0;
-    background: #fbfbfb url("/gs25/assets/images/gs25_store.png") 60px no-repeat;
+    background: #fbfbfb url("/gs25/assets/images/login/gs25_store.png") 60px no-repeat;
 }
 #goMain{
 	margin: 40px 0 0 480px;	
@@ -440,18 +440,18 @@ input[type=text], input[type=password] {
 	padding: 10px 0;
 }
 .lineM{
-	background:url("/gs25/assets/images/home.png") no-repeat 25px 20px;
+	background:url("/gs25/assets/images/login/home.png") no-repeat 25px 20px;
 	padding: 17px 0px 20px 57px;
 	color:#fff;
 }
 .lineL{
-	background:url("/gs25/assets/images/unlock.png") no-repeat 25px 20px;
+	background:url("/gs25/assets/images/login/unlock.png") no-repeat 25px 20px;
 	padding: 17px 0px 20px 57px;
 	color:#fff;
 }
 /*repassword*/
 #gsBack{
-	background: url("/gs25/assets/images/gs25store.jpg") center #cdd2c4 no-repeat;
+	background: url("/gs25/assets/images/login/gs25store.jpg") center #cdd2c4 no-repeat;
     background-size: cover;
 }
 #wrapper {
@@ -514,10 +514,10 @@ input[type=text], input[type=password] {
 #sorryman{
 	height: 150px;
     padding: 25px 0 40px;
-    background: url(/gs25/assets/images/sorryman.png) 400px 0 no-repeat;
+    background: url(/gs25/assets/images/login/sorryman.png) 400px 0 no-repeat;
 }
 #iDcard{
 	height: 150px;
     padding: 25px 0 40px;
-    background: url(/gs25/assets/images/gsMember.png) 300px no-repeat;
+    background: url(/gs25/assets/images/login/gsMember.png) 300px no-repeat;
 }
