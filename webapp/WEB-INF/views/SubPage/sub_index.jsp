@@ -91,7 +91,7 @@
 						<li>
 							<div class='sbbox pro'>
 								<span class='tip typ1'><span>${countList }</span></span>
-								<a href='#'><img src='${vo.imageurl }'></a>
+								<a href="/gs25/product/view?no=${vo.no }&name=${vo.name}"><img src='${vo.imageurl }'></a>
 								<span class='title'>
 								<em class='mt'>${vo.maker})${vo.name }</em><em>${vo.price }원</em>
 								</span>
@@ -123,7 +123,7 @@
 						<li>
 							<div class='sbbox pro'>
 								<span class='tip typ1'><span>${countList }</span></span>
-								<a href='#'><img src='${vo3.imageurl }'></a>
+								<a href="/gs25/product/view?no=${vo3.no }&name=${vo3.name}"><img src='${vo3.imageurl }'></a>
 								<span class='title'>
 								<em class='mt'>${vo3.maker})${vo3.name }</em><em>${vo3.price }원</em>
 								</span>
@@ -139,7 +139,7 @@
 						<li>
 							<div class='sbbox pro'>
 								<span class='tip typ1'><span>${countList }</span></span>
-								<a href='#'><img src='${vo.imageurl }'></a>
+								<a href="/gs25/product/view?no=${vo.no }&name=${vo.name}"><img src='${vo.imageurl }'></a>
 								<span class='title'>
 								<em class='mt'>${vo.maker})${vo.name }</em><em>${vo.price }원</em>
 								</span>

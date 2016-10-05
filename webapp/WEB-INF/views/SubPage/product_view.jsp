@@ -32,39 +32,28 @@
 			<div class="inner">
 			<div class="product_view">
 				<div class="product_img">
-					<span> <img id="pro_img"
-						src="http://gs25appimg.gsretail.com/imgsvr/item/GD_8801056076719_002.jpg"
-						alt="덴마크)요거트킹자몽오렌지" />
+					<span><img id="pro_img" src="${vo.imageurl }">
 					</span>
 
 					<ul class="tag_list_02">
-						<li class='ico_tag_06'>1+1</li>
+						<li class='ico_tag_07'>1+1</li>
 					</ul>
 					
 				</div>
 				<div class="productView_content">
 					<dl>
 						<dt>
-							<!-- D: 제목 서브 내용 길이 1줄 - 51byte -->
-							<span class="tit_3depth"></span>
-							<!-- D: 제목 타이틀 길이 1줄 - 25byte -->
-							<strong class="tit_product_view">덴마크)요거트킹자몽오렌지</strong>
-							<!-- D: 메이커 길이 1줄 - 51byte -->
-							<span class="tit_3depth">동원에프앤비 덴마크</span>
+							<strong class="tit_product_view">${prodvo.name }</strong>
 						</dt>
-
 						<dd class="productView_content_dd_01">
-						
 							<ul class="productView_content_ul">
-								<li><strong>유통기한</strong> : <span>230ml</span></li>
-								<li></li>
+								<li><strong>제조사</strong> : <span>${prodvo.maker }</span></li>
+								<li><strong>유통기한</strong> : <span>${prodvo.expiry_date }</span></li>
 							</ul>
-							
-							<span class="txt"> 덴마크)요거트킹자몽오렌지230ml </span>
-						
+							<span id="txt1">고객님 위 제품은 어떠세요?아래 후기를 통해 참고하실 수 있습니다.^^</span>
 						</dd>
 						<dd class="productView_content_dd_02">
-							<span class="product_price"> <strong>2,200</strong><span>원</span></span>
+							<span class="product_price"> <strong>${prodvo.price }</strong><span>원</span></span>
 						</dd>
 					</dl>
 					</div>
@@ -79,32 +68,39 @@
 			<table class="tbl_wtype1">
 				<tr>
 					<td id="table_head">
-						<image src="https://ssl.pstatic.net/sstatic/search/2015/h_logo.png" width="99" height="18" alt="NAVER"></image>
+						<img src="https://ssl.pstatic.net/sstatic/search/2015/h_logo.png" width="99" height="18" alt="NAVER"/>
 					</td>
 				</tr>
-				<tr align="center">
-					<td>
-						<item>
-				                <title>메고/<b>SAMPLE</b> SALE</title>
-				                <link> http://openapi.naver.com/l?AAABWISw6DIBgGT/OzNAoWVyygsffg8VGSalWKJtxeOpnFZI4TuSqaDWlJ+vkPM5HpWak7lFu2N/ugKj+4sZdO8OAaAB6RWyFD8EP7U2QpI6pUyk5CE381f7DZp+5rL+TOb+sNWgbE7WoAAAA=
-				            	</link>
-				                <description>
-							                   장마라더니 비가 잠시 소강 상태네요~~~ 패브릭 가방 <b>SAMPLE</b> SALE 들어갑니다. 
-							                   한 개씩만 있는 제품이구요~~ 재고 소진 후에 주문시에는 SALE 가격 적용 안 되네요~~~^^* 
-							                   찜콩 안 되구요~ 반품,교환 안되니깐...
-				                </description>
-				                <bloggername>MEGO</bloggername>
-				                <bloggerlink>http://blog.naver.com/mego72</bloggerlink>
-				        </item>
+				<c:choose>
+				<c:when test='${empty nvo }'>
+				<c:set var='countList' value='${fn:length(nvo)}'/>
+               	<c:forEach var='nvo' items='${nvo }' varStatus='status'>
+				<tr>
+					<td id="nbloger">
+						<img id="NBear" src="/gs25/assets/images/product/naverIcon.png"/>
+						<a href="${nvo.bloggerlink }"><p id="blogerName">${nvo.bloggername }</p></a>
+						<div id="ballonIn">
+						<ul>
+							<li><a href="${nvo.link }"><strong>${nvo.title }</strong></a></li>
+							<li><span>${nvo.description }</span></li>
+						</ul>
+						</div>
 					</td>
 				</tr>
-				<tr align="center">
-					<td>2행 1열</td>
-				</tr> 	
+				</c:forEach>
+				</c:when>
+				<c:otherwise>
+				<tr>
+					<td id="nbloger">
+						<img id="NBear" src="/gs25/assets/images/product/naverIcon.png"/>
+							<h5>죄송합니다.. 네이버 검색 결과가 없습니다.ㅠㅜ</h5>
+					</td>
+				</tr>
+				</c:otherwise>
+				</c:choose>
 			</table>
 		</div>
 	</div>
-
 
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>

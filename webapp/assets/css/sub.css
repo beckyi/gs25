@@ -112,7 +112,7 @@ input[type=text], input[type=password] {
    padding-bottom:5px;
 }
 
-.prod_wrap{ background-color: #cbeef3; width: 100%; height: 290px;}
+.prod_wrap{ background-color: #cbeef3; width: 100%; height: 290px; margin-bottom: 50px;}
 
 .prod_tab{width: 240px; float:left;}
 .prod_tab #tab4{border-bottom: 0px;}

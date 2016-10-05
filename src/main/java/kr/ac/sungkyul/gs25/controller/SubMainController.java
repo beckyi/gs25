@@ -21,6 +21,7 @@ public class SubMainController {
 	public String SubMain(Model model){
 		List<ProductVo> vo = productservice.getSubDate();
 //		System.out.println("vo: "+vo.toString());
+		model.addAttribute("vo",vo);
 		
 //		List<ProductVo> vo2 = productservice.getSubPopular();
 //		System.out.println(vo2.toString());
@@ -28,8 +29,6 @@ public class SubMainController {
 		
 		List<ProductVo> vo3 = productservice.getSubNew();
 //		System.out.println("vo3: "+vo3.toString());
-		
-		model.addAttribute("vo",vo);
 		model.addAttribute("vo3",vo3);
 		
 		List<ProductVo> vo4 = productservice.getSubReco();

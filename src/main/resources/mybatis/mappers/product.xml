@@ -106,8 +106,8 @@
 	<!-- 상품 서브리스트 (유통기한) -->
 	<select id="getSubDate" resultType="productvo">
 		<![CDATA[
-		SELECT c.name, c.price, c.reg_date, c.expiry_date, c.maker, c.IMAGEURL 
-		FROM (SELECT a.name, a.price, a.reg_date, a.expiry_date, a.maker, b.IMAGEURL
+		SELECT c.no, c.name, c.price, c.reg_date, c.expiry_date, c.maker, c.IMAGEURL 
+		FROM (SELECT a.no, a.name, a.price, a.reg_date, a.expiry_date, a.maker, b.IMAGEURL
   		FROM product a, boardsfilepr b where a.no = b.no and expiry_date > sysdate ORDER BY expiry_date) c WHERE rownum < 5
 		]]>
 	</select>
@@ -115,8 +115,8 @@
 	<!-- 상품 서브리스트 (신상품) -->
 	<select id="getSubNew" resultType="productvo">
 		<![CDATA[
-		 SELECT c.name, c.price, c.reg_date, c.expiry_date, c.maker, c.IMAGEURL 
-		 FROM (SELECT a.name, a.price, a.reg_date, a.expiry_date, a.maker, b.IMAGEURL 
+		 SELECT c.no,c.name, c.price, c.reg_date, c.expiry_date, c.maker, c.IMAGEURL 
+		 FROM (SELECT a.no, a.name, a.price, a.reg_date, a.expiry_date, a.maker, b.IMAGEURL 
   		 FROM product a, boardsfilepr b  where a.no = b.no ORDER BY reg_date desc) c WHERE rownum < 5
 		]]>
 	</select>
@@ -124,11 +124,18 @@
 	<!-- 상품 서브리스트 (랜덤추천) -->
 	<select id="getSubReco" resultType="productvo">
 		<![CDATA[
-		 SELECT c.name, c.price, c.reg_date, c.expiry_date, c.maker, c.IMAGEURL
-  		 FROM(select a.name, a.price, a.reg_date, a.expiry_date, a.maker, b.IMAGEURL 
+		 SELECT c.no, c.name, c.price, c.reg_date, c.expiry_date, c.maker, c.IMAGEURL
+  		 FROM(select a.no, a.name, a.price, a.reg_date, a.expiry_date, a.maker, b.IMAGEURL 
  		 FROM product a, boardsfilepr b  where a.no = b.no order by DBMS_RANDOM.RANDOM) c WHERE rownum < 5
 		]]>
 	</select>
-
+	
+	<!-- 상품 상세정보 -->
+	<select id="searchproduct" parameterType="long" resultType="productvo">
+		<![CDATA[
+		 SELECT a.no, a.name, a.price,  to_char(a.expiry_date,'yyyy/mm/dd') as expiry_date, a.maker, b.IMAGEURL 
+		 FROM product a, boardsfilepr b  where a.no = b.no and a.no=#{no }
+		]]>
+	</select>
 
 </mapper>
