@@ -14,12 +14,9 @@
 <link href="/gs25/assets/css/gs25site.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/login.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
-<script type="text/javascript">
 
-</script>
 </head>
 <body>
-
 
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
 	<div class="container">

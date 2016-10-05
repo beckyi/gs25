@@ -20,26 +20,60 @@
 				<img src="/gs25/assets/images/subindex/gs25Main.png" width="600px">
 			</div>
 			<div class="login">
-				<div id="login1">
-				<p id="title"><em>GS편의점</em> <em style="color: blue">로그인</em></p>
-				<p id="intro">기존 GS편의점 사이트에 가입하신<br> 아이디와 비밀번호로 로그인 하실 수 있습니다.</p>
-				</div>
-				<div id="login2">
-					<form class="login-form" name="loginform" method="post" action="/convenience/user/login">
-						<ul>
-							<li><input id="email" name="email" class="form-control" type="text" value="" placeholder="이메일"></li>
-							<li><input name="password" type="password" class="form-control" value="" placeholder="비밀번호"></li>
-						</ul>
-							<input id="login-btn" type="submit" value="로그인">
-					</form>
-				</div>
-				<div id="login3">
-					<a href='/gs25/user/joinform' id="aleft">회원가입</a>
-					<a href="/gs25/user/findInfo" id="aright">아이디/비밀번호찾기</a>
+				<c:choose>
+					<c:when test='${empty sessionScope.authUser }'>
+						<div id="login1">
+						<p id="title"><em>GS편의점</em> <em style="color: blue">로그인</em></p>
+						<p id="intro">기존 GS편의점 사이트에 가입하신<br> 아이디와 비밀번호로 로그인 하실 수 있습니다.</p>
+						</div>
+						<div id="login2">
+							<form class="login-form" name="loginform" method="post" action="/gs25/user/login">
+								<ul>
+									<li><input id="email" name="email" class="form-control" type="text" value="" placeholder="이메일"></li>
+									<li><input id="password" name="password" type="password" class="form-control" value="" placeholder="비밀번호"></li>
+								</ul>
+									<input id="login-btn" type="button" value="로그인">
+							</form>
+						</div>
+						<div id="login3">
+							<a href='/gs25/user/joinform' id="aleft">회원가입</a>
+							<a href="/gs25/user/findInfo" id="aright">아이디/비밀번호찾기</a>
+						</div>
+						</c:when>
+						<c:otherwise>
+						<div class="login2">
+						<c:choose>
+							<c:when test='${"FEMALE" == authUser.gender }'>
+								<div id="login4_1">
+									<p id="username">${authUser.name } 님</p>
+									<div id = "login5">
+										<input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png">
+										<p id="point">포인트&nbsp;${authUser.point }점</p>
+										<input type="image" id="userbutton" src="/gs25/assets/images/login/cart.png">
+										<p id="point">찜목록&nbsp;${authUser.point }개</p>
+									</div>
+									<p id="endP">아무개 매장에 찾아 주셔서 감사합니다.</p>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div id="login4">
+									<p id="username">${authUser.name } 님</p>
+									<div id = "login5">
+										<input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png">
+										<p id="point">포인트&nbsp;${authUser.point } 점</p>
+										<input type="image" id="userbutton" src="/gs25/assets/images/login/cart.png">
+										<p id="point">찜목록&nbsp;${authUser.point } 개</p>
+									</div>
+									<p id="endP">아무개 매장에 찾아 주셔서 감사합니다.</p>
+								</div>
+							</c:otherwise>
+							</c:choose>
+							</div>
+							</c:otherwise>
+						</c:choose>
 				</div>
 			</div>
 		</div>
-	</div>
 		
 	<div class="prod_wrap">
 		<div class="container">
@@ -57,7 +91,7 @@
 						<li>
 							<div class='sbbox pro'>
 								<span class='tip typ1'><span>${countList }</span></span>
-								<a href='#'><img src='${vo.producturl }'></a>
+								<a href='#'><img src='${vo.imageurl }'></a>
 								<span class='title'>
 								<em class='mt'>${vo.maker})${vo.name }</em><em>${vo.price }원</em>
 								</span>
@@ -72,7 +106,7 @@
 								<li>
 								<div class='sbbox pro'>
 								<span class='tip typ1'><span>"+i+"</span></span>
-								<a href='/gscvs/ko/products/event-goods'><img src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8801056076719_002.jpg' alt='Y)오렌지스파클 상품'></a>
+								<a href='/gs25/product/view'><img src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8801056076719_002.jpg' alt='Y)오렌지스파클 상품'></a>
 								<span class='title'>
 								<em class='mt'>유어스)롯데오렌지스파클</em><em>1,700원</em>
 								</span>
@@ -89,7 +123,7 @@
 						<li>
 							<div class='sbbox pro'>
 								<span class='tip typ1'><span>${countList }</span></span>
-								<a href='#'><img src='${vo3.producturl }'></a>
+								<a href='#'><img src='${vo3.imageurl }'></a>
 								<span class='title'>
 								<em class='mt'>${vo3.maker})${vo3.name }</em><em>${vo3.price }원</em>
 								</span>
@@ -105,7 +139,7 @@
 						<li>
 							<div class='sbbox pro'>
 								<span class='tip typ1'><span>${countList }</span></span>
-								<a href='#'><img src='${vo.producturl }'></a>
+								<a href='#'><img src='${vo.imageurl }'></a>
 								<span class='title'>
 								<em class='mt'>${vo.maker})${vo.name }</em><em>${vo.price }원</em>
 								</span>
@@ -121,6 +155,47 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 <script>
+$(function() {	
+	 $("#login-btn").on("click", function(){
+		if($("#email").val() == ""){
+			alert("아이디를 입력해주십시오.");
+			$("#email").focus();
+			return false;
+			}
+		
+		if($("#password").val() == ""){
+			alert("비밀번호를 입력해주십시오.");
+			$("#password").focus();
+			return false;
+			}
+		
+		var email = $("#email").val();
+		var password = $("#password").val();	
+	
+		$.ajax({	
+			url: "/gs25/user/checkLogin",
+			type: "POST",
+			data: {"email": email, "password": password},
+			dataType: "text",
+			success: function(result){	//비동기식으로 진행되어 결과와 상관 없이 submit되므로 계속 refres됨(따로 동기식으로 변경해야함)
+				console.log(result);
+				if(result == "false"){
+					console.log(result);
+					alert("유효하지 않는 로그인입니다. 다시 시도해주세요.")
+					return false;
+				}
+				
+				 if(result == "true"){
+					location.href='/gs25/main';
+				} 
+			},
+			
+			error: function(jsXHR, status, e){
+				console.error("error:"+status+":"+e);
+			}
+		});
+	});
+});
 jQuery('.prod_tab').click(function (e) {
 	console.log('${list }');
 	var getId = e.target.getAttribute('id');

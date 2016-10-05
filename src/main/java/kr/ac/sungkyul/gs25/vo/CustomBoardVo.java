@@ -10,11 +10,16 @@ public class CustomBoardVo {
 	private Integer groupOrderNo;
 	private Integer depth;
 	private Long UserNo;
-	private String date;
+	private String regdate;
 	private String name;
 	private String UserName;
 	private Integer orderNo;
 	private String keyword;
+	private String category;
+	private String imageurl;
+
+	
+	
 	public Long getNo() {
 		return no;
 	}
@@ -63,11 +68,12 @@ public class CustomBoardVo {
 	public void setUserNo(Long userNo) {
 		UserNo = userNo;
 	}
-	public String getDate() {
-		return date;
+	
+	public String getRegdate() {
+		return regdate;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 	public String getName() {
 		return name;
@@ -93,13 +99,31 @@ public class CustomBoardVo {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	
+	public String getImageurl() {
+		return imageurl;
+	}
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
 	@Override
 	public String toString() {
 		return "CustomBoardVo [no=" + no + ", title=" + title + ", content=" + content + ", count=" + count
 				+ ", groupNo=" + groupNo + ", groupOrderNo=" + groupOrderNo + ", depth=" + depth + ", UserNo=" + UserNo
-				+ ", date=" + date + ", name=" + name + ", UserName=" + UserName + ", orderNo=" + orderNo + ", keyword="
-				+ keyword + "]";
+				+ ", regdate=" + regdate + ", name=" + name + ", UserName=" + UserName + ", orderNo=" + orderNo
+				+ ", keyword=" + keyword + ", category=" + category + ", imageurl=" + imageurl + "]";
 	}
+
+	
+
+	
 	
 	
 

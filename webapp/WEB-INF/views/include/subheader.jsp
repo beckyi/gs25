@@ -43,16 +43,16 @@
 					<div class="gnb" id="gnb_menu">
 						<ul>
 							<li><h2>
-									<a href="javascript:void(0);" class="on">방명록</a>
+									<a href="/gs25/guestbook/list" class="on">방명록</a>
 								</h2></li>
 							<li><h2>
-									<a href="javascript:void(0);">이벤트</a>
+									<a href="/gs25/event/eventlist">이벤트</a>
 								</h2></li>
 							<li><h2>
-									<a href="javascript:void(0);">매장검색</a>
+									<a href="/gs25/submap/sublist">매장검색</a>
 								</h2></li>
 							<li><h2>
-									<a href="javascript:void(0);">상품</a>
+									<a href="/gs25/product/list">상품</a>
 								</h2>
 						</ul>
 					</div>
