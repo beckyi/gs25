@@ -464,3 +464,9 @@ a.del	{
 #ballonIn ul li span{
 	font-size: 18px;
 }
+#sorryT {
+	margin-top: 70px;
+    margin-left: 350px;
+    font-size: 25px;
+    color: gray;
+}

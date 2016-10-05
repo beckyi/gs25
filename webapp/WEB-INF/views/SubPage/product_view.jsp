@@ -73,6 +73,14 @@
 				</tr>
 				<c:choose>
 				<c:when test='${empty nvo }'>
+					<tr>
+						<td id="nbloger">
+							<img id="NBear" src="/gs25/assets/images/product/naverIcon.png"/>
+							<p id="sorryT"><strong>죄송합니다.. 네이버 검색 결과가 없습니다...</strong></p>
+						</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
 				<c:set var='countList' value='${fn:length(nvo)}'/>
                	<c:forEach var='nvo' items='${nvo }' varStatus='status'>
 				<tr>
@@ -88,14 +96,6 @@
 					</td>
 				</tr>
 				</c:forEach>
-				</c:when>
-				<c:otherwise>
-				<tr>
-					<td id="nbloger">
-						<img id="NBear" src="/gs25/assets/images/product/naverIcon.png"/>
-							<h5>죄송합니다.. 네이버 검색 결과가 없습니다.ㅠㅜ</h5>
-					</td>
-				</tr>
 				</c:otherwise>
 				</c:choose>
 			</table>
