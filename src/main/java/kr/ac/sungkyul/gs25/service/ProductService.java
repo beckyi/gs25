@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,7 +137,7 @@ public class ProductService {
 
 		productdao.delete(no);
 	}
-
+	// 상품 유통기한별 리스트
 	public List<ProductVo> getSubDate() {
 		List<ProductVo> list = productdao.getSubDate();
 		// System.out.println("service: "+list.toString());
@@ -148,17 +149,36 @@ public class ProductService {
 	// System.out.println("service: "+list.toString());
 	// return list;
 	// }
-
+	
+	// 상품 신상품별 리스트
 	public List<ProductVo> getSubNew() {
 		List<ProductVo> list = productdao.getSubNew();
 		// System.out.println("service: "+list.toString());
 		return list;
 	}
-
+	
+	// 상품 랜덤추천별 리스트
 	public List<ProductVo> getSubReco() {
 		List<ProductVo> list = productdao.getSubReco();
 		// System.out.println("service: "+list.toString());
 		return list;
+	}
+	
+	// 유통기한 계산
+//	public void countDate() {
+//		List<ProductVo> list = productdao.getSubDate();
+//		String expiry_date = vo.getExpiry_date();
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+//		String todate = formatter.format(new Date());
+//		
+//		System.out.println(expiry_date);
+//		System.out.println(todate);
+//	}
+	
+	// 할인가격 계산
+	public ProductVo countPrice(Long no) {
+		ProductVo vo = productdao.productInfo(no);
+		return vo;
 	}
 	
 	// 상품 상세보기
@@ -176,6 +196,7 @@ public class ProductService {
         int display = 3;
         int start = 1;
         List<NblogVo> list = null;
+        
         keyword = "편의점 " + keyword;
         System.out.println(keyword);
         
@@ -194,6 +215,8 @@ public class ProductService {
  
             factory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = factory.newPullParser();
+            System.out.println("parser: "+parser.toString());
+            
             parser.setInput((new InputStreamReader(urlConn.getInputStream())));
 
             int eventType = parser.getEventType();
@@ -211,6 +234,8 @@ public class ProductService {
                     switch (tag) {
                     case "item":
                     	blogvo = new NblogVo();
+                    	
+                    	System.out.println("item : " + blogvo);
                         break;
                     case "title":
                         if (blogvo != null)
@@ -243,7 +268,6 @@ public class ProductService {
                         blogvo = null;
                         }
                     }
- 
                 }
                 eventType = parser.next();
             }
@@ -261,7 +285,14 @@ public class ProductService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(list);
+        String title =  list.get(0).getTitle();
+        try {
+        	title = URLDecoder.decode(title, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}        
+        
         return list;
     }
 }

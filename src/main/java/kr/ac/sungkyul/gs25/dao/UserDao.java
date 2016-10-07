@@ -27,7 +27,6 @@ public class UserDao {
 		userVo.setPassword(password);
 
 		UserVo vo = sqlSession.selectOne("user.login", userVo);
-		System.out.println("로그인 "+vo.toString());
 		
 		return vo;
 	}

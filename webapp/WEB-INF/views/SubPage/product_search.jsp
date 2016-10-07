@@ -61,7 +61,7 @@
 										<div id="del">
 										<a href="/gs25/product/delete?no=${vo.no }" class="del">삭제</a>
 										</div>
-											<img id="product" src="${vo.imageurl }" alt="형민)맛있는도시락">
+											<a href="/gs25/product/view?no=${vo.no }&name=${vo.name }"><img id="product" src="${vo.imageurl }" alt="형민)맛있는도시락"></a>
 											<div class="infowrap">
 												<div class="name">${vo.name }</div>
 												<div class="price">${vo.price }원</div>

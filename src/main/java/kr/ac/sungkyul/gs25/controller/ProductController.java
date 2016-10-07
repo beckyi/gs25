@@ -81,7 +81,7 @@ public class ProductController {
 	@RequestMapping(value="/view", method=RequestMethod.GET)
 	public String productView(Model model,
 			@RequestParam(value= "no") Long no,
-			@RequestParam(value="name") String name){
+			@RequestParam(value= "name") String name){
 		
 		ProductVo vo = productservice.productInfo(no);
 		model.addAttribute("prodvo", vo);

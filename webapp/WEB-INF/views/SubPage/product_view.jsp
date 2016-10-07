@@ -32,7 +32,7 @@
 			<div class="inner">
 			<div class="product_view">
 				<div class="product_img">
-					<span><img id="pro_img" src="${vo.imageurl }">
+					<span><img id="pro_img" src="${prodvo.imageurl }">
 					</span>
 
 					<ul class="tag_list_02">

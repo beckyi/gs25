@@ -60,11 +60,20 @@ $(function() {
 		
 	/* $(".login-form").submit(function(){ */
 	 $("#btn_Login").on("click", function(){ 	
+		
+		var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		
 		if($("#email").val() == ""){
 			alert("아이디를 입력해주십시오.");
 			$("#email").focus();
 			return false;
+		} else { 	//휴대폰 유효성 검사
+			if(!regEmail.test($("#email").val())) {  
+				    alert("아이디에 입력된 내용은 잘못된 형식입니다.");
+				    $("#email").focus();
+				    return false;  
 			}
+		}
 		
 		if($("#password").val() == ""){
 			alert("비밀번호를 입력해주십시오.");

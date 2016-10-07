@@ -20,14 +20,14 @@
 	   <property name="suffix" value=".jsp" />
 	   <property name="order" value="1" />
 	</bean>
-	
-	<bean	class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	<!-- json 방식 API 연동  -->
+	<!-- <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>application/json; charset=UTF-8</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 	
 	<!-- 첨부파일관련 -->
 	<bean id="multipartResolver"
