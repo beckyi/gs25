@@ -14,12 +14,6 @@
 
 </head>
 <body>
-	<form action="/gs25/event/test" method="POST">
-		<input type="text" name="1" id="test1">
-		<input type="text" name="2" id="test2">
-		<button type="submit">전송</button>
-	</form>
-
 	<jsp:include page="/WEB-INF/views/include/subheader.jsp" />
 	<div class="container">
 		<div class="title">
@@ -35,7 +29,7 @@
 				<div id="giftImg"></div>
 			</div>
 			<form class="event_cal">
-				<div class="count">나의 출석횟수:<em>${count }</em> &nbsp;회</div>
+				<div class="count">나의 출석횟수:<em id="count">${count }</em> &nbsp;회</div>
 			</form>
 		
 		<div class="float_clear"></div>
@@ -122,10 +116,9 @@ $(function() {
 	var d = today.getDate();
 	var i = 1;
 
-	console.log(d);
 	/* $("#"+d).append("<div id='toDbox'><p id='flag'></p><c:forEach var='checkeventvo' items='${checkeventvo }'><c:if test='+"dates"+ ne "+d+"'><input id='checkDate' type='button' value='출석체크'></c:if></c:forEach></div>"); */
 	
-	$("#"+d).append("<div id='toDbox'><p id='flag'></p><input id='checkDate' type='button' value='출석체크'></div>");
+	/* $("#"+d).append("<div id='toDbox'><p id='flag'></p><input id='checkDate' type='button' value='출석체크'></div>"); */
 	
 	//이전 date
 	if( i < d){
@@ -133,21 +126,31 @@ $(function() {
 			$("#"+k).append("<div id='black'></div>");
 		}
 	}
+	
+	//오늘 출첵 여부
+	var validation = false;
+	
 	//출석 체크 현황
 	<c:forEach var='checkeventvo' items='${checkeventvo }' varStatus='status'>
 		var dates = ${checkeventvo.dates };
 		$("#"+dates).append("<div id='stamp'></div>");
-		/* console.log('out');
-		console.log(dates);
-		console.log(d);
-		<c:if test="${d ne dates}">
-			console.log('in');
-			$("#"+d).append("<div id='toDbox'><p id='flag'></p><input id='checkDate' type='button' value='출석체크'></div>");
-		</c:if> */
 		
+		//오늘 출첵 여부 판단
+		if (dates == d ){
+			validation = true;
+		} else {
+			validation = false;
+		}
+
 	</c:forEach>
-	
-	
+		
+		//오늘 출첵 여부 결과 별 출력 
+		if(validation == true){
+			$("#"+d).append("<div id='toDbox'><p id='flag'></p></div>");
+		} else{
+			$("#"+d).append("<div id='toDbox'><p id='flag'></p><input id='checkDate' type='button' value='출석체크'></div>");
+		}
+		
 	//출석체크 클릭 시
 	 $("#checkDate").on("click", function(){
 		 console.log('click');
@@ -169,6 +172,7 @@ $(function() {
 					}
 					 
 					$("#checkDate").hide();
+					$("#count").html('${count + 1 }');
 					$("#"+d).append("<div id='stamp'></div>");
 				},
 				
