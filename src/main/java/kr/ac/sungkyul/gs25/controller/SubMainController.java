@@ -70,5 +70,5 @@ public class SubMainController {
 		String result = ceService.setCheck(user_no);
 		
 		return result;
-	}
+	}	
 }

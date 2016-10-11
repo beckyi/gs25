@@ -10,6 +10,10 @@
 <link href="/gs25/assets/css/attendance_check.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type='text/javascript' src='/gs25/assets/js/jquery.simplemodal.js'></script>
+
+
 <title>attendance_check</title>
 
 </head>
@@ -22,14 +26,15 @@
 		</div>
 			<div class="inform">
 				<ul>
-					<li><p><strong id="stro1">10</strong>일 이상일 경우 : <strong id="stro2">1000</strong>원 이하 랜덤으로 선물 기프티콘으로 증정</p></li>
-					<li><p><strong id="stro1">20</strong>일 이상일 경우 : <strong id="stro2">2000</strong>원 이하  랜덤으로 선물 기프티콘으로 증정</p></li>
-					<li><p><strong id="stro1">모두</strong> 출결할 경우 : <strong id="stro2">5000</strong>원 GS25 상품권 증정</p></li>
+					<li><p><strong id="stro1">10</strong>일 달성할 경우 : <strong id="stro2">1000</strong>원 이하 랜덤으로 선물 기프티콘으로 증정</p></li>
+					<li><p><strong id="stro1">20</strong>일 달성할 경우 : <strong id="stro2">2000</strong>원 이하  랜덤으로 선물 기프티콘으로 증정</p></li>
+					<li><p><strong id="stro1">30</strong>일 달성할 경우 : <strong id="stro2">5000</strong>원 GS25 상품권 증정</p></li>
 				</ul>
 				<div id="giftImg"></div>
 			</div>
 			<form class="event_cal">
 				<div class="count">나의 출석횟수:<em id="count">${count }</em> &nbsp;회</div>
+				<input type="button" id="goods" value="증정품">
 			</form>
 		
 		<div class="float_clear"></div>
@@ -183,7 +188,124 @@ $(function() {
 		 
 	 });
 	
-});
+		$("#goods").click(function(){
+			  $("#modal_content").modal(); 
+			  
+			  console.log('click');
+			  
+			  if('${count}' == 10){
+				  
+				  $.ajax({	
+						url: "/gs25/product/random1000",
+						type: "POST",
+						contentType: "application/json",
+						success: function( productvo ){	//비동기식으로 진행되어 결과와 상관 없이 submit되므로 계속 refres됨(따로 동기식으로 변경해야함)
+								console.log(productvo);
+								$("#goodsimg").attr('src',productvo.imageurl);
+								$("#goodsname").html(productvo.name);
+						},
+						
+						error: function(jsXHR, status, e){
+							console.error("error:"+status+":"+e);
+						}
+					});
+			  }
+			  
+			  if('${count}' == 20){
+				  console.log('20입성');
+				  
+				  $.ajax({	
+						url: "/gs25/product/random2000",
+						type: "POST",
+						contentType: "application/json",
+						success: function( productvo ){	//비동기식으로 진행되어 결과와 상관 없이 submit되므로 계속 refres됨(따로 동기식으로 변경해야함)
+								console.log(productvo);
+								$("#goodsimg").attr('src',productvo.imageurl);
+								$("#goodsname").html(productvo.name);
+						},
+						
+						error: function(jsXHR, status, e){
+							console.error("error:"+status+":"+e);
+						}
+					});
+			  }
+			});
+
+		$("#m_close").click(function(){
+			  $.modal.close();
+			 });
 	
+});
+
+/* var rtnValue= window.showModalDialog(url, args, option);
+
+function action_pop(url) {
+    //객체생성후 데이터 할당
+    var obj = new Object();
+    obj.msg1 = "test1";
+    obj.msg2 ="test2";
+    var rtnValue = window.showModalDialog(url, obj, "dialogWidth:980px;dialogHeight:600px;status:no;help:no;location:no");
+}  */
 </script>
-</ht>
+</html>
+<div id="modal_content">
+	<div class="Modal_head"	>
+		<h1 id="Mod_title">출석체크 랜덤 상자</h1>
+		<input type="button" id="m_close">
+	</div>
+	<div class="container">
+		<div id="m_giftImg"></div>
+		<div class="title">
+		<c:choose>
+			<c:when test='${count == 10}'>
+				<h1 class="mod_move"><em id="m_count">10회 </em> 달성!!!</h1>
+				<p class="mod_move2">10회 이상 달성하셨으므로 <em id="m_money">1000원 이하 상당의 상품</em>을 기프티콘으로 드립니다.</p>
+			</c:when>
+			<c:when test='${count == 20}'>
+				<h1 class="mod_move"><em id="m_count">20회</em> 달성!!!</h1>
+				<p class="mod_move2">20회 이상 달성하셨으므로 <em id="m_money">2000원 이하 상당의 상품</em>을 기프티콘으로 드립니다.</p>
+			</c:when>
+			<c:when test='${count ==30}'>
+				<h1 class="mod_move"><em id="m_count">30회</em> 달성!!!</h1>
+				<p class="mod_move2">거의 모두 달성하셨으므로  <em id="m_money">5000원 상당 상품권</em>을 드립니다.</p>
+			</c:when>
+			<c:otherwise>
+				<h1 class="mod_move">달성하지 못하셨습니다. ${count }</h1>
+				<p class="mod_move2">조금만 더 힘내서 많은 선물 받아가세요~ ^^</p>
+			</c:otherwise>
+		</c:choose>
+		</div>
+ 		<div class="giftInfo">
+ 			<c:choose>
+				<c:when test='${count == 10}'>
+					<img id="goodsimg" src="">
+			 		<h2 id="goodsname"></h2>
+			 		<p>GS25 편의점에서 사용 가능합니다. 매장 위치는 홈페이지를 참조해주세요.</p>
+				</c:when>
+				<c:when test='${count == 20}'>
+					<img id="goodsimg" src="">
+			 		<h2 id="goodsname"></h2>
+			 		<p>GS25 편의점에서 사용 가능합니다. 매장 위치는 홈페이지를 참조해주세요.</p>
+				</c:when>
+				<c:when test='${count == 30}'>
+					<img src="/gs25/assets/images/subindex/gs25Certi.png" style= "margin: 37px;">
+			 		<h2>GS25 - 5000원 상품권</h2>
+			 		<p>발급일로부터 3달 이내에 사용하시기 바랍니다. 자세한 내용은 홈페이지를 참조해주세요.</p>
+				</c:when>
+				<c:otherwise>
+					<img src="/gs25/assets/images/login/sorryman.png" style="margin: 65px 229px;">
+			 		<h3 style="margin: 11px 70px;">조금만 더 힘내서 출석체크하시며 다양한 선물을 챙겨가세요! 힘내세요!</h3>
+				</c:otherwise>
+			</c:choose>		
+ 		</div>
+ 		<c:if test='${count == 10}'>
+			<h2 id="mod_last">위 기프티콘은 <em id="m_empha">카트</em>에서 확인 가능합니다. 축하합니다. 고객님</h2>
+		</c:if>
+		<c:if test='${count == 20}'>
+			<h2 id="mod_last">위 기프티콘은 <em id="m_empha">카트</em>에서 확인 가능합니다. 축하합니다. 고객님</h2>
+		</c:if>
+		<c:if test='${count == 30}'>
+			<h2 id="mod_last">위 기프티콘은 <em id="m_empha">카트</em>에서 확인 가능합니다. 축하합니다. 고객님</h2>
+		</c:if>
+	</div>
+ </div>

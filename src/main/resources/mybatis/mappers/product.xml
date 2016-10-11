@@ -137,5 +137,23 @@
 		 FROM product a, boardsfilepr b  where a.no = b.no and a.no=#{no }
 		]]>
 	</select>
-
+	
+	<!-- 상품 1000원이하 랜덤 증정(출첵) -->
+	<select id="random1000" resultType="productvo">
+		<![CDATA[
+		  SELECT c.no, c.name, c.price, c.maker, c.IMAGEURL
+  		 FROM(select a.no, a.name, a.price, a.maker, b.IMAGEURL 
+ 		 FROM product a, boardsfilepr b  where a.no = b.no and a.price < 1000 order by DBMS_RANDOM.RANDOM) c WHERE rownum < 2
+		]]>
+	</select>
+	
+	<!-- 상품 2000원이하 랜덤 증정(출첵) -->
+	<select id="random2000" resultType="productvo">
+		<![CDATA[
+		  SELECT c.no, c.name, c.price, c.maker, c.IMAGEURL
+  		 FROM(select a.no, a.name, a.price, a.maker, b.IMAGEURL 
+ 		 FROM product a, boardsfilepr b  where a.no = b.no and a.price < 2000 and a.price > 1000 order by DBMS_RANDOM.RANDOM) c WHERE rownum < 2
+		]]>
+	</select>
+	
 </mapper>

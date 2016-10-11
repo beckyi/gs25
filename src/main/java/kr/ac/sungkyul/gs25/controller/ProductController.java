@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.sungkyul.gs25.service.ProductService;
@@ -90,6 +91,30 @@ public class ProductController {
 		model.addAttribute("nvo", nvo);
 		
 		return "/SubPage/product_view";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/random1000")	//출석체크 클릭 시
+	public ProductVo random1000(HttpSession session){
+		
+//		UserVo uservo = (UserVo)session.getAttribute("authUser");
+//		Long user_no = uservo.getNo();
+		
+		ProductVo productvo = productservice.random1000();
+		
+		return productvo;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/random2000")	//출석체크 클릭 시
+	public ProductVo random2000(HttpSession session){
+		
+//		UserVo uservo = (UserVo)session.getAttribute("authUser");
+//		Long user_no = uservo.getNo();
+		
+		ProductVo productvo = productservice.random2000();
+		
+		return productvo;
 	}
 	
 }

@@ -295,4 +295,15 @@ public class ProductService {
         
         return list;
     }
+    // 1000원 이하 랜덤 상품 (출석체크 상품 증정)
+ 	public ProductVo random1000() {
+ 		ProductVo vo = productdao.random1000();
+ 		return vo;
+ 	}	
+ 	
+ 	// 2000원 이하 랜덤 상품 (출석체크 상품 증정)
+  	public ProductVo random2000() {
+  		ProductVo vo = productdao.random2000();
+  		return vo;
+  	}
 }

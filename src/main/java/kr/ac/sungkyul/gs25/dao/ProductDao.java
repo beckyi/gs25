@@ -105,4 +105,18 @@ public class ProductDao {
 		System.out.println("상품상세정보: " + vo.toString());
 		return vo;
 	}
+	
+	// 1000원 이하 랜덤 상품 (출석체크 상품 증정)
+	public ProductVo random1000(){
+		
+		ProductVo vo = sqlSession.selectOne("product.random1000");
+		return vo;
+	}
+	
+	// 2000원 이하 랜덤 상품 (출석체크 상품 증정)
+	public ProductVo random2000(){
+		
+		ProductVo vo = sqlSession.selectOne("product.random2000");
+		return vo;
+	}
 }

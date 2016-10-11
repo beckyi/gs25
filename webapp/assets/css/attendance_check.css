@@ -114,3 +114,92 @@
 	    background: url(/gs25/assets/images/subindex/stamp.png) 0 2px no-repeat;
 	    left: 5px;
 	}
+	#goods{
+	    margin-left: 20px;
+	    width: 83px;
+	    height: 27px;
+	    background: #f27539;
+	    border: 0px solid;
+	    color: white;
+	    font-size: 16px;
+	    border-radius: 6px;
+	    cursor: pointer;
+	}
+	/*모달창 css*/
+	#simplemodal-overlay {background-color:#000;}
+	#modal_content{
+		display: none;
+    	margin: 41px -350px;
+    	width: 728px;
+    	height: 900px;
+    	background: #f7f7f7;
+    	color: #666;
+    }
+    #Mod_title{
+    	margin: 16px 18px;
+    }
+    .Modal_head{
+   	    height: 60px;
+	    color: #f7f7f7;
+	    padding: 10px 5px;
+	    background: #ff8b54;
+    }
+	#m_close{
+	    position: absolute;
+	    top: 59px;
+	    height: 39px;
+	    border: 1px solid #ff8b54;
+	    width: 35px;
+	    right: -321px;
+	    background: url(/gs25/assets/images/subindex/close_icon.png) 0 2px no-repeat;
+	    cursor: pointer;
+	}
+	#m_giftImg { 
+	    width: 103px;
+	    height: 103px;
+	    background: url(/gs25/assets/images/subindex/icon_event.png) 0 -301px no-repeat;
+	    position: absolute;
+	    top: 162px;
+	    right: 234px;
+	}
+	.mod_move{
+	    margin: 9px 162px;
+	}
+	.mod_move2{
+		margin: 28px 75px;
+	}
+	#mod_last {
+	    color: #929090;
+	    margin-left: 101px;
+	    margin-top: 55px;
+	}
+	#m_count{
+		color: #f9661f;
+		margin: 0 10px;
+	}
+	#m_empha{
+		color: #f9661f;
+	}
+	.giftInfo{
+	    border-top: 4px solid #615c5c;
+	    margin: 40px 50px;
+	    background: #fff;
+	    width: 620px;
+	    height: 440px;
+	    border-radius: 0px 0 16px 16px;
+	}
+	.giftInfo h2{
+		margin: 15px 40px; 
+	}
+	.giftInfo p{
+	    margin: 26px 40px;
+	}
+	#m_money{
+		color: green;
+		text-decoration: underline;
+	}
+	#goodsimg{
+        width: 268px;
+	    height: 310px;
+	    margin: 6px 173px;
+	}
