@@ -7,6 +7,7 @@
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.ProductVo" alias="productvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.EventBoardVo" alias="eventboardvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.GuestbookVo" alias="guestbookvo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.CheckeventVo" alias="checkeventvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
@@ -15,5 +16,6 @@
 		<mapper resource="mybatis/mappers/storesearch.xml" />			
 		<mapper resource="mybatis/mappers/eventboard.xml" />		
 		<mapper resource="mybatis/mappers/guestbook.xml" />
+		<mapper resource="mybatis/mappers/checkevent.xml" />
 	</mappers>
 </configuration>

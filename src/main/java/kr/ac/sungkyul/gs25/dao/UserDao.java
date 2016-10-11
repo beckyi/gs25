@@ -17,8 +17,9 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public void insert(UserVo vo) {
-		 sqlSession.insert("user.insert",vo);
+		sqlSession.insert("user.insert",vo);
 	}
+
 
 	public UserVo login(String email, String password) { // login
 		
@@ -34,7 +35,7 @@ public class UserDao {
 	public UserVo get(Long no) {	//회원 정보 수정 시 정보 가져옴
 		
 		UserVo vo = sqlSession.selectOne("user.getModify",no);
-		System.out.println("정보수정"+vo.toString());
+//		System.out.println("정보수정"+vo.toString());
 		return vo;
 	}
 

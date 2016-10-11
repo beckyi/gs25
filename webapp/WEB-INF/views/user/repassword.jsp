@@ -104,9 +104,9 @@ $(function(){
 		}
 		
 		var no = ${userno };
-		console.log(no);
+
 		var password = $("#password").val();	
-		console.log(password);
+
 		$.ajax({	
 			url: "/gs25/user/setPass",
 			type: "POST",

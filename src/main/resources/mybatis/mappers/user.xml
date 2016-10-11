@@ -83,6 +83,10 @@
 	]]>
 </select>
 
-
+<update id="setPoint" parameterType="uservo">
+   <![CDATA[
+   		update users set point= point + #{point } where no = #{no }
+   ]]>
+</update>
 
 </mapper>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,9 +22,20 @@
 
 	<jsp:include page="/WEB-INF/views/include/subheader.jsp" />
 	<div class="container">
-		<div class="title"><h1>매일매일 출석체크</h1></div>
-			<form class="event_cal" action="#">
-				<div class="count">나의 출석횟수:<em>0</em> &nbsp;회</div>
+		<div class="title">
+			<h1>매일매일 출석체크</h1>
+			<p>GS25 출석체크 이벤트!! 한달 내에 출결 횟수에 따라 다양한 선물이 주어집니다.</p>
+		</div>
+			<div class="inform">
+				<ul>
+					<li><p><strong id="stro1">10</strong>일 이상일 경우 : <strong id="stro2">1000</strong>원 이하 랜덤으로 선물 기프티콘으로 증정</p></li>
+					<li><p><strong id="stro1">20</strong>일 이상일 경우 : <strong id="stro2">2000</strong>원 이하  랜덤으로 선물 기프티콘으로 증정</p></li>
+					<li><p><strong id="stro1">모두</strong> 출결할 경우 : <strong id="stro2">5000</strong>원 GS25 상품권 증정</p></li>
+				</ul>
+				<div id="giftImg"></div>
+			</div>
+			<form class="event_cal">
+				<div class="count">나의 출석횟수:<em>${count }</em> &nbsp;회</div>
 			</form>
 		
 		<div class="float_clear"></div>
@@ -40,7 +53,7 @@
 						<th><div class="th_wrap">토요일</div></th>
 					</tr>
 				</thead>
-				
+				<!--도장  w 114px h 77px -->
 				<tbody>
 					<script>
 					var today = new Date();
@@ -77,7 +90,7 @@
 										"<div class='td_wrap' id="+date+" style='background-color: rgb(238, 251, 248);'>"+
 											"<div class='td_date'>"+date+"</div>"+
 											"<div class='td_img'>"+
-												"<img src='https://hpsimg.gsretail.com/medias/sys_master/images/images/h7f/h2e/8927663915038.png' width='114px' height='77px' id='giftImgNum_25'>"+
+												"<img src='https://hpsimg.gsretail.com/medias/sys_master/images/images/h7f/h2e/8927663915038.png' width='114px' height='77px' id='giftImgNum_25' style='margin-top:7px;'>"+
 											"</div>"+
 											"<div class='gift_txt' id='giftTitleNum_25'>"+
 											"</div>"+
@@ -97,21 +110,76 @@
 			</table>
 		</div>
 	</div>
-		
+				
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 <!-- 	<div class="fontTest">fontTestfontTest</div> -->
 </body>
 <script>
-$(function() {	
+$(function() {		
 	var today = new Date();
 	var y = today.getFullYear(); // 현재 연도
 	var m = today.getMonth(); // 현재 월
 	var d = today.getDate();
+	var i = 1;
+
+	console.log(d);
+	/* $("#"+d).append("<div id='toDbox'><p id='flag'></p><c:forEach var='checkeventvo' items='${checkeventvo }'><c:if test='+"dates"+ ne "+d+"'><input id='checkDate' type='button' value='출석체크'></c:if></c:forEach></div>"); */
 	
-	if( d == $("#email")){
-		document.write("<div class='td_wrap'>기간만료</div>"+"<div><input type="button" value="출석체크"></div>")
+	$("#"+d).append("<div id='toDbox'><p id='flag'></p><input id='checkDate' type='button' value='출석체크'></div>");
+	
+	//이전 date
+	if( i < d){
+		for(var k = i; k<d; k++){
+			$("#"+k).append("<div id='black'></div>");
+		}
 	}
+	//출석 체크 현황
+	<c:forEach var='checkeventvo' items='${checkeventvo }' varStatus='status'>
+		var dates = ${checkeventvo.dates };
+		$("#"+dates).append("<div id='stamp'></div>");
+		/* console.log('out');
+		console.log(dates);
+		console.log(d);
+		<c:if test="${d ne dates}">
+			console.log('in');
+			$("#"+d).append("<div id='toDbox'><p id='flag'></p><input id='checkDate' type='button' value='출석체크'></div>");
+		</c:if> */
+		
+	</c:forEach>
+	
+	
+	//출석체크 클릭 시
+	 $("#checkDate").on("click", function(){
+		 console.log('click');
+		 $.ajax({	
+				url: "/gs25/sub/checkDate",
+				type: "POST",
+				/* date:, */
+				dataType: "text",
+				success: function(result){	//비동기식으로 진행되어 결과와 상관 없이 submit되므로 계속 refres됨(따로 동기식으로 변경해야함)
+					console.log(result);
+					 if(result == "0"){
+						console.log(result);
+						alert("죄송합니다. 다시 시도해주세요")
+						return false;
+					}
+					
+					 if(result == "1"){
+						 alert("감사합니다. 출석되셨습니다.")
+					}
+					 
+					$("#checkDate").hide();
+					$("#"+d).append("<div id='stamp'></div>");
+				},
+				
+				error: function(jsXHR, status, e){
+					console.error("error:"+status+":"+e);
+				}
+			});
+		 
+	 });
+	
 });
 	
 </script>
-</html>
+</ht>
