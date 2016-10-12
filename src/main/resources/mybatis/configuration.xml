@@ -8,6 +8,7 @@
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.EventBoardVo" alias="eventboardvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.GuestbookVo" alias="guestbookvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.CheckeventVo" alias="checkeventvo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.GifticonVo" alias="gifticonvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
@@ -17,5 +18,6 @@
 		<mapper resource="mybatis/mappers/eventboard.xml" />		
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/checkevent.xml" />
+		<mapper resource="mybatis/mappers/gifticon.xml" />
 	</mappers>
 </configuration>

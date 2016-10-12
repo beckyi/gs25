@@ -97,10 +97,10 @@ public class ProductController {
 	@RequestMapping("/random1000")	//출석체크 클릭 시
 	public ProductVo random1000(HttpSession session){
 		
-//		UserVo uservo = (UserVo)session.getAttribute("authUser");
-//		Long user_no = uservo.getNo();
+		UserVo uservo = (UserVo)session.getAttribute("authUser");
+		Long user_no = uservo.getNo();
 		
-		ProductVo productvo = productservice.random1000();
+		ProductVo productvo = productservice.random1000(user_no);
 		
 		return productvo;
 	}
@@ -113,7 +113,6 @@ public class ProductController {
 //		Long user_no = uservo.getNo();
 		
 		ProductVo productvo = productservice.random2000();
-		
 		return productvo;
 	}
 	

@@ -47,7 +47,7 @@
 								<div id="login4_1">
 									<p id="username">${authUser.name } 님</p>
 									<div id = "login5">
-										<a href="/gs25/sub/event_check"><input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png"></a>
+										<input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png"></a>
 										<p id="point">포인트&nbsp;${authUser.point }점</p>
 										<input type="image" id="userbutton" src="/gs25/assets/images/login/cart.png">
 										<p id="point">찜목록&nbsp;${authUser.point }개</p>

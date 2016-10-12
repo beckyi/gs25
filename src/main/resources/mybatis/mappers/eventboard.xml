@@ -93,6 +93,7 @@
 		)
 	]]>
 	</insert>
+	
 	<!-- 이벤트의 첨부파일 삽입 -->
 	<insert id="insertAttachEvFile" parameterType="kr.ac.sungkyul.gs25.vo.AttachFileEvVO">
 	<![CDATA[

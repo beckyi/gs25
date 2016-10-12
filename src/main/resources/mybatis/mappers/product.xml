@@ -133,7 +133,7 @@
 	<!-- 상품 상세정보 -->
 	<select id="searchproduct" parameterType="long" resultType="productvo">
 		<![CDATA[
-		 SELECT a.no, a.name, a.price,  to_char(a.expiry_date,'yyyy/mm/dd') as expiry_date, a.maker, b.IMAGEURL 
+		 SELECT a.no, a.name, a.price,  to_char(a.expiry_date,'yyyy/mm/dd') as expiry_date, a.maker, b.orgname, b.IMAGEURL 
 		 FROM product a, boardsfilepr b  where a.no = b.no and a.no=#{no }
 		]]>
 	</select>

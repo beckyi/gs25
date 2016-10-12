@@ -12,8 +12,15 @@ public class ProductVo {
 	private String kind;
 	private int dispercent;
 	private String category;
+	private String orgname;
 	private String imageurl;
 	
+	public String getOrgname() {
+		return orgname;
+	}
+	public void setOrgname(String orgname) {
+		this.orgname = orgname;
+	}
 	public Long getNo() {
 		return no;
 	}
@@ -85,11 +92,12 @@ public class ProductVo {
 	public void setImageurl(String imageurl) {
 		this.imageurl = imageurl;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductVo [no=" + no + ", name=" + name + ", price=" + price + ", reg_date=" + reg_date
 				+ ", expiry_date=" + expiry_date + ", maker=" + maker + ", kind_no=" + kind_no + ", kind=" + kind
-				+ ", dispercent=" + dispercent + ", category=" + category + ", imageurl=" + imageurl + "]";
-	}
-	
+				+ ", dispercent=" + dispercent + ", category=" + category + ", orgname=" + orgname + ", imageurl="
+				+ imageurl + "]";
+	}	
 }

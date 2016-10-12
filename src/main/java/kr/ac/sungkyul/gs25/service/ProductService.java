@@ -24,6 +24,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import kr.ac.sungkyul.gs25.dao.ProductDao;
 import kr.ac.sungkyul.gs25.vo.AttachFilePrVo;
+import kr.ac.sungkyul.gs25.vo.GifticonDao;
 import kr.ac.sungkyul.gs25.vo.NblogVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
 
@@ -38,7 +39,13 @@ public class ProductService {
 
 	@Autowired
 	private ProductDao productdao;
+	
+	@Autowired
+	private GifticonDao gifticondao;
 
+	@Autowired
+	GificonService gifticonservice;
+	
 	public Map<String, Object> listBoard(String spage, String keyword) {
 
 		// 1. 페이지 값 받기
@@ -296,8 +303,13 @@ public class ProductService {
         return list;
     }
     // 1000원 이하 랜덤 상품 (출석체크 상품 증정)
- 	public ProductVo random1000() {
+ 	public ProductVo random1000(Long user_no) {
  		ProductVo vo = productdao.random1000();
+ 		
+ 		//기프티콘으로 저장
+ 		Long product_no = vo.getNo();
+ 		gifticonservice.insert(user_no, product_no);
+ 		
  		return vo;
  	}	
  	

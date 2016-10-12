@@ -100,8 +100,7 @@ public class UserService {
 	}
 	
 	 public String sendEmail( String email) throws Exception {
-	    	System.out.println("emailController: "+email);
-	    	
+	    		    	
 	    	String ranNum= random();	//해시암호화
 	    	
 	    	SimpleMailMessage message = new SimpleMailMessage();
@@ -118,12 +117,7 @@ public class UserService {
 	        String subject = "GS25편의점 회원님의 임시 비밀번호입니다.";
 	        String content = "안녕하세요. GS25편의점입니다. 회원님의 비밀번호를 새로 설정하실 수 있으시는 링크 입니다. \n" 
 	        				+ "http://localhost:8088/gs25/user/" + link +"/repassword";
-	        
-	        //random, id 값 session 전송
-//	        HttpSession session = new HttpSession(); //컨트롤러에서 전달해줄 수 있으나 세션은 불안정!(외부컴터 X)
-//	        session.setAttribute("rannum",ranNum);
-//	        session.setAttribute("userid",id);
-	    	
+	     	
 	        message.setFrom(sender);
 	        message.setTo(receiver);
 	        message.setSubject(subject);
@@ -136,14 +130,7 @@ public class UserService {
 	        return result;
 	 }
 	 
-	public String random() {
-		// StringBuffer buffer = new StringBuffer();
-		// for(int i =0;i<20;i++){
-		// int n = (int)(Math.random()*10);
-		// buffer.append(n);
-		// }
-		// System.out.println(buffer.toString());
-		// return buffer.toString();
+	public String random() { //현재 날짜를 해싱암호화하여 저장
 		
 		// (1) Calendar객체를 얻는다.
 		Calendar cal = Calendar.getInstance();
