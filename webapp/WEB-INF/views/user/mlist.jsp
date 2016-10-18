@@ -75,7 +75,6 @@ function InitializeStaticMenu() {
 	
 	<div id="content" style="padding: 80px 0;">
 	<div id="manage_wrap">
-	
 		<div id="title1">
 			<h1>회원관리</h1>
 			<h4>
@@ -106,7 +105,6 @@ function InitializeStaticMenu() {
 							<th>연락처</th>
 							<th>포인트</th>
 							<th>직책</th>
-
 							<th>삭제</th>
 						</tr>
 						<c:set var="firstIndex"	value="${map.totalCount - (map.currentPage - 1)*map.sizeList }" />

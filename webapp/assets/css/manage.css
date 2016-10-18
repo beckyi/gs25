@@ -170,7 +170,7 @@ ul.tabs li {
     text-align:center;
     cursor: pointer;
     width: 125px;
-    height: 31px;
+/*     height: 31px; */
     line-height: 31px;
     border: 1px solid #eee;
     border-left: none;

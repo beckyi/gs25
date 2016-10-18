@@ -9,7 +9,6 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="/gs25/assets/css/map.css" rel="stylesheet" type="text/css">
 
-
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=c0be589b60311ceeea226dd7d2e0e990"></script>
 <script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
 

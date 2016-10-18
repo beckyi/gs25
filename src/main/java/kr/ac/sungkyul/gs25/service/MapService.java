@@ -141,4 +141,16 @@ public class MapService {
 		storevo.setMap_no(map_no);
 		storedao.insertStore(storevo);	//후) 지점 삽입
 	}
+	
+	//메인창 출력
+	public List<StoreVo>  getlist(){
+		List<StoreVo> storevo =  mapdao.getlist();
+		System.out.println("service "+storevo);
+		return storevo;
+	}
+	
+	public List<MapVo> mainmaplist(){
+		List<MapVo> mapvo = mapdao.getmaplist();
+		return mapvo;
+	}
 }

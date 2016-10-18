@@ -138,4 +138,20 @@
      ]]>
 	</delete>
 	
+	<!--관리자 가게 정보 검색 (region_name 추가)-->
+   	<select id="getlistAll" resultType="storevo">
+   <![CDATA[
+ 	  select c.no, c.name, c.address, d.name as region_name, d.no as map_no
+	    from store c,(select a.no, b.name from map a, region b where a.REGION_NO = b.NO order by no) d 
+	  where c.MAP_NO = d.no
+   ]]>
+   </select>
+	
+	<!--메인창 지도 모두 츨력 -->
+   	<select id="getmapAll" resultType="mapvo">
+   <![CDATA[
+ 	  select * from map
+   ]]>
+   </select>
+	
 </mapper>

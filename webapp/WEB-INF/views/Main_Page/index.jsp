@@ -8,66 +8,170 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>main_index</title>
-<link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/manage.css" rel="stylesheet" type="text/css">
+<link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=c0be589b60311ceeea226dd7d2e0e990"></script>
 
-<!-- 지도-->
-<script>
+<!-- 관리자 리모콘 -->
+<script type="text/javascript">
+var stmnLEFT = 230; // 오른쪽 여백 
+var stmnGAP1 = 20; // 위쪽 여백 
+var stmnGAP2 = 150; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
+var stmnBASE = 150; // 스크롤 시작위치 
+var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
+var stmnScrollSpeed = 23; //스크롤 속도 (클수록 느림)
+var stmnTimer; 
+
+function RefreshStaticMenu() { 
+	 var stmnStartPoint, stmnEndPoint; 
+	 stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
+	 stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
+	 if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
+	 if (stmnStartPoint != stmnEndPoint) { 
+	  stmnScrollAmount = Math.ceil( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
+	  document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
+	  stmnRefreshTimer = stmnScrollSpeed; 
+	  }
+	 stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
+ } 
+ 
+function InitializeStaticMenu() {
+	 document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
+	 document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
+	 RefreshStaticMenu();
+ }
+ </script>
+ <!-- 지도 -->
+ <script>
 $(function(){
-	console.log(1);
-	console.log('${sessionScope.authUser }');
-	console.log('${authUser.position }');
-
-
-if('${map.keyword}'=='서울' || '${map.keyword}'== '서울역' || '${map.keyword}'== 'GS25서울역점'  || '${map.keyword}'== '' ){	
-	
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-mapOption = { 
-    center: new daum.maps.LatLng(37.5547992, 126.9684953),
-    level: 4 // 지도의 확대 레벨
-}; 
-
-var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-}else if('${map.keyword}'=='인천' || '${map.keyword}'=='GS25래미안아파트점' || '${map.keyword}'=='래미안아파트' ){	
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = { 
-	    center: new daum.maps.LatLng(37.503463, 126.72378),
-	    level: 4// 지도의 확대 레벨
-	};
-
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	}else if('${map.keyword}'=='안양' || '${map.keyword}'=='GS25성결점' || '${map.keyword}'=='성결대' ){	
-	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	mapOption = { 
-	    center: new daum.maps.LatLng(37.3800181, 126.9264755),
+	    center: new daum.maps.LatLng(37.5547992, 126.9684953),
 	    level: 4 // 지도의 확대 레벨
 	};
-
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-	}else if('${map2.keyword}'==null){
-		
+	
+	$("#maptab1").click(function (){
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = { 
 		    center: new daum.maps.LatLng(37.5547992, 126.9684953),
 		    level: 4 // 지도의 확대 레벨
 		};
-	}
+
+		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		var positions = [
+          	<c:forEach var = 'vo' items='${mapvo }' varStatus='s'>
+          	{
+          	   content: '${vo.name}', 
+          	   latlng: new daum.maps.LatLng('${vo.localx}', '${vo.localy}')
+          	},
+          	</c:forEach>
+          ];
+
+          for (var i = 0; i < positions.length; i ++) {
+              // 마커를 생성합니다
+          	  var marker = new daum.maps.Marker({
+          	        map: map, // 마커를 표시할 지도
+          	        position: positions[i].latlng // 마커의 위치
+          	        
+          	    });
+          	    // 마커에 표시할 인포윈도우를 생성합니다 
+          	    var infowindow = new daum.maps.InfoWindow({
+          	        content: positions[i].content // 인포윈도우에 표시할 내용
+          	    });
+          	    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+          	    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+          	    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+          	    daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+          	    daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+          	}
+	});
 	
+	$("#maptab2").click(function (){
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = { 
+		    center: new daum.maps.LatLng(37.3800181, 126.9264755),
+		    level: 4 // 지도의 확대 레벨
+		};
+
+		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		var positions = [
+           	<c:forEach var = 'vo' items='${mapvo }' varStatus='s'>
+           	{
+           	   content: '${vo.name}', 
+           	   latlng: new daum.maps.LatLng('${vo.localx}', '${vo.localy}')
+           	},
+           	</c:forEach>
+           ];
+
+           for (var i = 0; i < positions.length; i ++) {
+               // 마커를 생성합니다
+           	  var marker = new daum.maps.Marker({
+           	        map: map, // 마커를 표시할 지도
+           	        position: positions[i].latlng // 마커의 위치
+           	        
+           	    });
+           	    // 마커에 표시할 인포윈도우를 생성합니다 
+           	    var infowindow = new daum.maps.InfoWindow({
+           	        content: positions[i].content // 인포윈도우에 표시할 내용
+           	    });
+           	    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+           	    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+           	    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+           	    daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+           	    daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+           	}
+	});
+	
+	$("#maptab3").click(function (){
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = { 
+		    center: new daum.maps.LatLng(37.503463, 126.72378),
+		    level: 4// 지도의 확대 레벨
+		};
+
+		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		var positions = [
+         	<c:forEach var = 'vo' items='${mapvo }' varStatus='s'>
+         	{
+         	   content: '${vo.name}', 
+         	   latlng: new daum.maps.LatLng('${vo.localx}', '${vo.localy}')
+         	},
+         	</c:forEach>
+         ];
+
+         for (var i = 0; i < positions.length; i ++) {
+             // 마커를 생성합니다
+         	  var marker = new daum.maps.Marker({
+         	        map: map, // 마커를 표시할 지도
+         	        position: positions[i].latlng // 마커의 위치
+         	        
+         	    });
+         	    // 마커에 표시할 인포윈도우를 생성합니다 
+         	    var infowindow = new daum.maps.InfoWindow({
+         	        content: positions[i].content // 인포윈도우에 표시할 내용
+         	    });
+         	    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+         	    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+         	    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+         	    daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+         	    daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+         	}
+	});
+		
 //마커를 표시할 위치와 title 객체 배열입니다 
 var positions = [
-	<c:forEach var = 'vo' items='${map2.list}' varStatus='s'>
-	 
+	<c:forEach var = 'vo' items='${mapvo }' varStatus='s'>
 	{
 	   content: '${vo.name}', 
 	   latlng: new daum.maps.LatLng('${vo.localx}', '${vo.localy}')
-	    },
+	},
 	</c:forEach>
 ];
 
@@ -105,39 +209,10 @@ function makeOutListener(infowindow) {
 
 });
 </script>
-
-<!-- 관리자 리모콘 -->
-<script type="text/javascript">
-var stmnLEFT = 230; // 오른쪽 여백 
-var stmnGAP1 = 20; // 위쪽 여백 
-var stmnGAP2 = 150; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
-var stmnBASE = 150; // 스크롤 시작위치 
-var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
-var stmnScrollSpeed = 23; //스크롤 속도 (클수록 느림)
-var stmnTimer; 
-
-function RefreshStaticMenu() { 
-	 var stmnStartPoint, stmnEndPoint; 
-	 stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
-	 stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
-	 if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
-	 if (stmnStartPoint != stmnEndPoint) { 
-	  stmnScrollAmount = Math.ceil( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
-	  document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
-	  stmnRefreshTimer = stmnScrollSpeed; 
-	  }
-	 stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
- } 
  
-function InitializeStaticMenu() {
-	 document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
-	 document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
-	 RefreshStaticMenu();
- }
- </script>
 </head>
-<body onload="InitializeStaticMenu();">
 <div id="container">
+<body onload="InitializeStaticMenu();">
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <div id="content">
 	<c:if test="${authUser.position == 'HEADQUARTERS'}">
@@ -179,60 +254,125 @@ function InitializeStaticMenu() {
 		<div id="seperate">
 		<img src="/gs25/assets/images/index/gs25_03.gif"/>
 		</div>
+		<div id="map"></div>
 		<div id="text_index">
 		<h4 id="index_map">GS25 매장</h4>
 <!-- 		<p id="tit"></p> -->
 		</div>
-		<div id="map"></div>
-		<div id="tap_content" style="height: 800px;">
-		<div class="market_list">
-		<div class="markey_list_sub">
-			<ul class="market_list_area">
-				<c:forEach var='regionvo' items='${regionvo}' varStatus='status'>
-					<c:choose>
-					<c:when test="${status.index == 0}">
-						<li rel="tab1"><a class="active" id="tab1">${regionvo.name}</a></li>
-					</c:when>
-					<c:otherwise>
-						<li rel="tab${status.index + 1}"><a id="tab${status.index + 1}">${regionvo.name}</a></li>
-					</c:otherwise>
+		
+			<div id="tap_content" style="height: 500px;">
+			    <ul class="tabs" style="height: 57px;">
+			    	<c:forEach var='regionvo' items='${regionvo}' varStatus='status'>
+						<c:choose>
+							<c:when test="${status.index == 0}">
+								<li rel="tab1" class="on" id="maptab1">${regionvo.name}</li>
+							</c:when>
+							<c:otherwise>
+								<li rel="tab${status.index + 1}" id="maptab${status.index + 1}">${regionvo.name}</li>
+							</c:otherwise>
 					</c:choose>
 				</c:forEach>
-			</ul>
-			<div class="tab_containerI">
-	        <div id="tab1" class="tab_contentI">
-	        	<ul class="market_list_point">
-	        	<c:forEach var='regionvo' items='${regionvo}' varStatus='status'>
-					<li><a href="/gs25/sub/main?store_no=1">지점0</a></li>
-				</c:forEach>
-				</ul>
-	        </div>
-			<div id="tab2" class="tab_content">테스트
-				<ul class="market_list_point">
-					<li><a href="#" class="on">지점10</a></li>
-				</ul>
+			    </ul>
+			    <div class="tab_container">
+			        <div id="tab1" class="tab_content" style="height: 385px;">
+	       				<div class="market_list">
+						<div class="markey_list_sub">
+		       			<ul class="market_list_point" style="margin: 20px 5px;">
+		       				<c:forEach var='vo' items='${storevo}' varStatus='status'>
+		       					<c:if test="${vo.region_name  == '서울'}">
+			       				<c:choose>
+									<c:when test='${vo.no  == 0}'>
+									 	<li id="nopad"><a href="/gs25/main?" class="on">${vo.name }</a></li>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${status.index == 0}">
+												<li id="nopad"><a href="/gs25/sub/main?store_no=${vo.no }" class="on">${vo.name }</a></li>
+											</c:when>
+											<c:otherwise>
+												<li id="nopad"><a href="/gs25/sub/main?store_no=${vo.no }">${vo.name }</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								</c:if>
+							</c:forEach>
+						</ul>
+						</div>
+						</div>
+					</div>
+					<div id="tab2" class="tab_content" style="height: 385px;">
+						<div class="market_list">
+						<div class="markey_list_sub">
+		       			<ul class="market_list_point" style="margin: 20px 5px;">
+		       				<c:forEach var='vo' items='${storevo}' varStatus='status'>
+		       					<c:if test="${vo.region_name  == '안양'}">
+			       				<c:choose>
+									<c:when test='${vo.no  == 0}'>
+									 	<li id="nopad"><a href="/gs25/main?" class="on">${vo.name }</a></li>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${status.index == 0}">
+												<li id="nopad"><a href="/gs25/sub/main?store_no=${vo.no }" class="on">${vo.name }</a></li>
+											</c:when>
+											<c:otherwise>
+												<li id="nopad"><a href="/gs25/sub/main?store_no=${vo.no }">${vo.name }</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								</c:if>
+							</c:forEach>
+						</ul>
+						</div>
+						</div>
+					</div>
+					<div id="tab3" class="tab_content" style="height: 385px;">
+						<div class="market_list">
+						<div class="markey_list_sub">
+		       			<ul class="market_list_point" style="margin: 20px 5px;">
+		       				<c:forEach var='vo' items='${storevo}' varStatus='status'>
+		       					<c:if test="${vo.region_name  == '인천'}">
+			       				<c:choose>
+									<c:when test='${vo.no  == 0}'>
+									 	<li id="nopad"><a href="/gs25/main?" class="on">${vo.name }</a></li>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${status.index == 0}">
+												<li id="nopad"><a href="/gs25/sub/main?store_no=${vo.no }" class="on">${vo.name }</a></li>
+											</c:when>
+											<c:otherwise>
+												<li id="nopad"><a href="/gs25/sub/main?store_no=${vo.no }">${vo.name }</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								</c:if>
+							</c:forEach>
+						</ul>
+						</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			</div>
-			</div>
-			</div>
-		</div>
-	</div>	
-
-
+	</div>
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
-</div>
 </body>
 <script>
 $(function () {
-    $(".tab_contentI").hide();
-    $(".tab_contentI:first").show();
+    $(".tab_content").hide();
+    $(".tab_content:first-child").show();
     $("ul.tabs li").click(function () {
-        $("ul.tabs li").removeClass("active").css("color", "#333");
-        $(this).addClass("active").css("color", "darkred");
-        $(".tab_contentI").hide()
+        $("ul.tabs li").removeClass("on").css("color", "#333");
+        $(this).addClass("on").css("color", "#397ca8");
+        $(".tab_content").hide();
         var activeTab = $(this).attr("rel");
-        $("#" + activeTab).fadeIn()
+    	console.log(activeTab);
+        $("#" + activeTab).fadeIn();
     });
 });
 </script>
