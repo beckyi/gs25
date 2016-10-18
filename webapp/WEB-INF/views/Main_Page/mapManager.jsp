@@ -1,34 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>main_index</title>
-<link href="/gs25/assets/css/index.css" rel="stylesheet" type="text/css">
+<title>GS25</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link href="/gs25/assets/css/map.css" rel="stylesheet" type="text/css">
 <link href="/gs25/assets/css/manage.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"
+	src="//apis.daum.net/maps/maps3.js?apikey=c0be589b60311ceeea226dd7d2e0e990"></script>
+<script type="text/javascript"	src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
 
-<script type="text/javascript" src="/gs25/assets/js/jquery/jquery-1.9.0.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=c0be589b60311ceeea226dd7d2e0e990"></script>
-
-<!-- 지도-->
 <script>
 $(function(){
-	console.log(1);
-	console.log('${sessionScope.authUser }');
-	console.log('${authUser.position }');
-
 
 if('${map.keyword}'=='서울' || '${map.keyword}'== '서울역' || '${map.keyword}'== 'GS25서울역점'  || '${map.keyword}'== '' ){	
 	
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+var mapContainer = document.getElementById('mapM'), // 지도를 표시할 div 
 mapOption = { 
     center: new daum.maps.LatLng(37.5547992, 126.9684953),
     level: 4 // 지도의 확대 레벨
-}; 
+};
 
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
@@ -106,7 +100,6 @@ function makeOutListener(infowindow) {
 });
 </script>
 
-<!-- 관리자 리모콘 -->
 <script type="text/javascript">
 var stmnLEFT = 230; // 오른쪽 여백 
 var stmnGAP1 = 20; // 위쪽 여백 
@@ -135,119 +128,146 @@ function InitializeStaticMenu() {
 	 RefreshStaticMenu();
  }
  </script>
-</head>
-<body onload="InitializeStaticMenu();">
-<div id="container">
-<jsp:include page="/WEB-INF/views/include/header.jsp" />
-<div id="content">
-	<c:if test="${authUser.position == 'HEADQUARTERS'}">
-	 <div id="intro_main">
-		<div id="intro_sub">
-			<div id="STATICMENU">
-			<div class="myarea_wrap">
-			<div class="mymenu">
-				<div class="couwrap_off">
-					<p>
-					안녕하세요<br>
-					본사관리자님<br>
-					</p>
-					<p class="menu_tit">관리자 메뉴</p>
-				</div>
-				<ul class="my_lst">
-					<li>
-						<a href="/gs25/map/mlist" class="my_m0">매장관리</a>
-					</li>
-					<li>
-						<a href="/gs25/user/mlist" class="my_m1">회원관리</a>
-					</li>
-					<li>
-						<a href="/gs25/product/list" class="my_m2">상품관리</a>
-					</li>
-					<li>
-						<a href="/gs25/custom/customboardManager" class="my_m3">고객센터</a>
-					</li>
-				</ul>
-				<div class="menuwrap">
-					<p class="menu_tit"></p>
+ 
+<body>
+	<div id="container">
+		<jsp:include page="/WEB-INF/views/include/header.jsp" />
+			<c:if test="${authUser.position == 'HEADQUARTERS'}">
+			<div id="intro_main">
+				<div id="intro_sub">
+					<div id="STATICMENU" style="right: 130px;">
+						<div class="myarea_wrap">
+							<div class="mymenu">
+								<div class="couwrap_off">
+									<p>
+										안녕하세요<br> 본사관리자님<br>
+									</p>
+									<p class="menu_tit">관리자 메뉴</p>
+								</div>
+								<ul class="my_lst">
+									<li><a href="/gs25/map/mlist" class="my_m0">매장관리</a></li>
+									<li><a href="/gs25/user/mlist" class="my_m1">회원관리</a></li>
+									<li><a href="/gs25/product/list" class="my_m2">상품관리</a></li>
+									<li><a href="/gs25/custom/customboardManager" class="my_m3">고객센터</a></li>
+								</ul>
+								<div class="menuwrap">
+									<p class="menu_tit"></p>
+								</div>
+							</div>
+							<a href="#" class="top">TOP</a>
+						</div>
+					</div>
 				</div>
 			</div>
-			<a href="#" class="top">TOP</a>
-			</div>
-			</div></div></div>
-			</c:if>
-		<div class="container_index">
-		<div id="seperate">
-		<img src="/gs25/assets/images/index/gs25_03.gif"/>
-		</div>
-		<div id="text_index">
-		<h4 id="index_map">GS25 매장</h4>
-<!-- 		<p id="tit"></p> -->
-		</div>
-		<div id="map"></div>
-		<div id="tap_content" style="height: 800px;">
-		<div class="market_list">
-		<div class="markey_list_sub">
-			<ul class="market_list_area">
-				<c:forEach var='regionvo' items='${regionvo}' varStatus='status'>
-					<c:choose>
-					<c:when test="${status.index == 0}">
-						<li rel="tab1"><a class="active" id="tab1">${regionvo.name}</a></li>
-					</c:when>
-					<c:otherwise>
-						<li rel="tab${status.index + 1}"><a id="tab${status.index + 1}">${regionvo.name}</a></li>
-					</c:otherwise>
-					</c:choose>
-				</c:forEach>
-			</ul>
-			<div class="tab_containerI">
-	        <div id="tab1" class="tab_contentI">
-	        	<ul class="market_list_point">
-	        	<c:forEach var='regionvo' items='${regionvo}' varStatus='status'>
-					<li><a href="/gs25/sub/main?store_no=1">지점0</a></li>
-				</c:forEach>
-				</ul>
-	        </div>
-			<div id="tab2" class="tab_content">테스트
-				<ul class="market_list_point">
-					<li><a href="#" class="on">지점10</a></li>
-				</ul>
-			</div>
-			</div>
-			</div>
-			</div>
-		</div>
-	</div>	
+		</c:if>
+			
+		<div id="content">
+
+			<div class="container_map">
+				<div>
+					<div id="store_header">
+						<div id="store">
+							<h1 id="sub_h1">매장관리</h1>
+						</div>
+					</div>
+
+					<div id="search">
+						<form id="search_form" action="/gs25/map/mlist" method="get">
+							<input type="text" id="kwd" name="kwd" value="${map.keyword }">
+							<input type="submit" value="찾기">
+						</form>
+					</div>
+					
+					<div id="mapM"></div>
+					
+					<div id=map_container>
+						<div id="boardM">
+							<table class="tbl-exM">
+								<tr>
+									<th>지역</th>
+									<th>매장정보</th>
+									<th>주소/제공서비스</th>
+									<th>지점</th>
+									<th>삭제</th>
+								</tr>
+								<c:forEach var='vo' items='${map.list}' varStatus='status'>
+									<tr>
+										<td>${vo.region_name }</td>
+										<td>${vo.name }</td>
+										<td>${vo.address }</td>
+										<c:choose>
+											<c:when test='${vo.no  == 0}'>
+												<td><a href="/gs25/main">바로가기</a></td>
+											</c:when>
+											<c:otherwise>
+												<td><a href="/gs25/sub/main?store_no=${vo.no }">바로가기</a></td>
+											</c:otherwise>
+										</c:choose>
+										<td><a href="/gs25/map/delete?no=${vo.no }">삭제</a></td>
+									</tr>
+								</c:forEach>
+							</table>
+
+							<c:if test="${empty map.list}">
+								<div id="submap_right">
+									<div id="submap_risk">
+										<img src="/gs25/assets/images/customcenter/risk.png">
+									</div>
+									<p class="submap_list-right">
+										검색된 결과를 찾을 수 없습니다. <br>
+									</p>
+								</div>
+							</c:if>
+
+							<c:if test='${not empty map.list }'>
+								<!-- begin:paging -->
+								<div class="pager">
+									<ul>
+
+										<c:if test="${map.prevtoPage >= 0 }">
+											<li><a href="/gs25/map/mlist?p=${map.prevtoPage }">◀◀</a></li>
+										</c:if>
+
+										<c:if test="${map.prevPage >= 0 }">
+											<li><a href="/gs25/map/mlist?p=${map.prevPage }">◀</a></li>
+										</c:if>
 
 
-</div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-</div>
+										<c:forEach begin='${map.firstPage }' end='${map.lastPage }'
+											step='1' var='i'>
+											<c:choose>
+												<c:when test='${map.currentPage == i }'>
+													<li class="selected">${i }</li>
+												</c:when>
+
+												<c:when test='${i > map.pageCount }'>
+													<li>${i }</li>
+												</c:when>
+
+												<c:otherwise>
+													<li><a href="/gs25/map/mlist?p=${i }">${i }</a></li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+
+										<c:if test='${map.nextPage > 0 }'>
+											<li><a href="/gs25/map/mlist?p=${map.nextPage }">▶</a></li>
+										</c:if>
+										<c:if test='${map.nexttoPage > 0 }'>
+											<li><a href="/gs25/map/mlist?p=${map.nexttoPage }">▶▶</a></li>
+										</c:if>
+									</ul>
+								</div>
+							</c:if>
+						</div>
+					</div>
+					<div class="insert">
+						<a href="/gs25/map/insertForm" id="insertStore">매장등록</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
-<script>
-$(function () {
-    $(".tab_contentI").hide();
-    $(".tab_contentI:first").show();
-    $("ul.tabs li").click(function () {
-        $("ul.tabs li").removeClass("active").css("color", "#333");
-        $(this).addClass("active").css("color", "darkred");
-        $(".tab_contentI").hide()
-        var activeTab = $(this).attr("rel");
-        $("#" + activeTab).fadeIn()
-    });
-});
-</script>
-
-<script>
-	$( window ).scroll( function() {
-	    if ( $( this ).scrollTop() > 200 ) {
-	      $( '.top' ).fadeIn();
-	    } else {
-	      $( '.top' ).fadeOut();
-	    }
-	  } );
-	  $( '.top' ).click( function() {
-	    $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-	    return false;
-	  } );
-</script>
 </html>

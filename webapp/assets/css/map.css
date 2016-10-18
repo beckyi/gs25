@@ -195,3 +195,50 @@ a.del	{
  div.pager  ul li a:active { text-decoration: none; color:#555 } 
  div.pager  ul li a:hover { text-decoration: none; color:#f00 } 
 
+/*manager version*/
+#mapM {
+    width: 70%;
+    height: 350px;
+    margin: 0 auto 30px;
+}
+#boardM{
+    margin: 0px auto;
+    width: 70%;
+}
+.tbl-exM		{
+    width: 95%;
+    margin: 10px auto;
+    border-collapse: collapse;
+    border-bottom: 2px solid #333;
+}
+
+.tbl-exM th, 
+.tbl-exM td	{ 
+	padding:8px;
+	text-align:center; 	 
+}
+
+
+.tbl-exM th	{ 
+	border-top:1px solid #c0c0c0;
+	border-bottom:1px solid #c0c0c0; 
+	font-size:1.1em; 
+	background-color:#00A5FF;
+	color:#FFFFFF
+}
+
+.tbl-exM td {
+	border-top:1px dotted #333;
+	border-bottom:1px dotted #333; 
+}
+
+.insert #insertStore{
+    float: left;
+    margin: 15px 80px;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #E8ECF6;
+    color: #111;
+}

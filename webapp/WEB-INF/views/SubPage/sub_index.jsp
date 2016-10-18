@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,12 +10,15 @@
 <link href="/gs25/assets/css/sub.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<title>Insert title here</title>
+<title>Sub_Main</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/include/subheader.jsp" />
+<jsp:include page="/WEB-INF/views/include/subheader.jsp" />
 	<div class="container">
 		<div id="contents">
+		
+			<Strong id="storeName">GS ${StoreVo.storename }점</Strong>
+		
 			<div class="img">
 				<img src="/gs25/assets/images/subindex/gs25Main.png" width="600px">
 			</div>
@@ -47,10 +50,10 @@
 								<div id="login4_1">
 									<p id="username">${authUser.name } 님</p>
 									<div id = "login5">
-										<input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png"></a>
+										<input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png">
 										<p id="point">포인트&nbsp;${authUser.point }점</p>
 										<input type="image" id="userbutton" src="/gs25/assets/images/login/cart.png">
-										<p id="point">찜목록&nbsp;${authUser.point }개</p>
+										<p id="point"><a href="/gs25/cart/list">찜목록</a> ${authUser.point }개</p>
 									</div>
 									<p id="endP">아무개 매장에 찾아 주셔서 감사합니다.</p>
 								</div>
@@ -62,7 +65,8 @@
 										<input type="image" id="userbutton" src="/gs25/assets/images/login/coins.png">
 										<p id="point">포인트&nbsp;${authUser.point } 점</p>
 										<input type="image" id="userbutton" src="/gs25/assets/images/login/cart.png">
-										<p id="point">찜목록&nbsp;${authUser.point } 개</p>
+										<a href="/gs25/" id="userbutton" src="/gs25/assets/images/login/cart.png"></a>
+										<p id="point"><a href="/gs25/cart/list">찜목록</a> ${TotalCount } 개</p>
 									</div>
 									<p id="endP">아무개 매장에 찾아 주셔서 감사합니다.</p>
 								</div>
@@ -70,7 +74,7 @@
 							</c:choose>
 							</div>
 							</c:otherwise>
-						</c:choose>
+				</c:choose>
 				</div>
 			</div>
 		</div>
@@ -87,14 +91,60 @@
 			<div class="prod_list" id="list1">
 				<ul>
 					<c:set var='countList' value='${fn:length(list)}'/>
-               		<c:forEach var='vo' items='${vo }' varStatus='status'>
+               		<c:forEach var='expiryVo' items='${expiryVo }' varStatus='s'>
 						<li>
 							<div class='sbbox pro'>
-								<span class='tip typ1'><span>${countList }</span></span>
-								<a href="/gs25/product/view?no=${vo.no }&name=${vo.name }"><img src='${vo.imageurl }'></a>
-								<span class='title'>
-								<em class='mt'>${vo.maker})${vo.name }</em><em>${vo.price }원</em>
+								<span class='tip typ1'><span>D-day ${expiryVo.expiry_date }</span>
 								</span>
+								<a href="/gs25/product/view?no=${expiryVo.no }&&name=${expiryVo.name}"><img src='${expiryVo.imageurl }'></a>
+								<span class='title'>
+								<em class='mt'>
+							${expiryVo.maker})${expiryVo.name }</em>
+							
+							<c:choose>
+								<c:when test='${expiryVo.expiry_date==7 && (expiryVo.price-expiryVo.countprice)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice) }원</em>
+								</c:when>
+								
+								<c:when test='${expiryVo.expiry_date==6 && (expiryVo.price-expiryVo.countprice*2)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice*2) }원</em>
+								</c:when>
+								
+								<c:when test='${expiryVo.expiry_date==5 && (expiryVo.price-expiryVo.countprice*3)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice*3) }원</em>
+								</c:when>
+								
+								<c:when test='${expiryVo.expiry_date==4 && (expiryVo.price-expiryVo.countprice*4)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice*4) }원</em>
+								</c:when>
+								
+								<c:when test='${expiryVo.expiry_date==3 && (expiryVo.price-expiryVo.countprice*5)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice*5) }원</em>
+								</c:when>
+								
+								<c:when test='${expiryVo.expiry_date==2 && (expiryVo.price-expiryVo.countprice*6)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice*6) }원</em>
+								</c:when>
+								
+								<c:when test='${expiryVo.expiry_date==1 && (expiryVo.price-expiryVo.countprice*7)>=(expiryVo.price*0.5) }'>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.price-(expiryVo.countprice*7) }원</em>
+								</c:when>
+								
+								<c:otherwise>
+								<em id="price">${expiryVo.price }원</em>
+								<em>${expiryVo.halfprice }원</em>
+								</c:otherwise>
+							</c:choose>
+							
+							
+							</span>
 							</div>
 						</li>
 					</c:forEach>
@@ -102,13 +152,13 @@
 			</div>
 			<div class="prod_list" id="list2">
 				<ul>
-					<c:forEach begin="1" end="4" varStatus='status'>
+               		<c:forEach var='popularityVo' items='${popularityVo }' varStatus='s'>
 								<li>
 								<div class='sbbox pro'>
-								<span class='tip typ1'><span>"+i+"</span></span>
-								<a href='/gs25/product/view'><img src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8801056076719_002.jpg' alt='Y)오렌지스파클 상품'></a>
+								<span class='tip typ1'><span>조회수 ${popularityVo.count }</span></span>
+								<a href="/gs25/product/view?no=${popularityVo.no }&&name=${popularityVo.name}"><img src='${popularityVo.imageurl }'></a>
 								<span class='title'>
-								<em class='mt'>유어스)롯데오렌지스파클</em><em>1,700원</em>
+								<em class='mt'>${popularityVo.maker})${popularityVo.name }</em><em>${popularityVo.price }원</em>
 								</span>
 								</div>
 								</li>
@@ -119,13 +169,13 @@
 			<div class="prod_list" id="list3">
 				<ul>
 					<c:set var='countList' value='${fn:length(list)}'/>
-               		<c:forEach var='vo3' items='${vo3 }' varStatus='status'>
+               		<c:forEach var='newProductVo' items='${newProductVo }' varStatus='status'>
 						<li>
 							<div class='sbbox pro'>
-								<span class='tip typ1'><span>${countList }</span></span>
-								<a href="/gs25/product/view?no=${vo3.no }&name=${vo3.name }"><img src='${vo3.imageurl }'></a>
+								<!--  <span class='tip typ1'><span>${countList }</span></span>-->
+								<a href="/gs25/product/view?no=${newProductVo.no }&name=${newProductVo.name}"><img src='${newProductVo.imageurl }'></a>
 								<span class='title'>
-								<em class='mt'>${vo3.maker})${vo3.name }</em><em>${vo3.price }원</em>
+								<em class='mt'>${newProductVo.maker})${newProductVo.name }</em><em>${newProductVo.price }원</em>
 								</span>
 							</div>
 						</li>
@@ -135,12 +185,13 @@
 			<div class="prod_list" id="list4">
 				<ul>
 					<c:set var='countList' value='${fn:length(list)}'/>
-               		<c:forEach var='vo' items='${vo4 }' varStatus='status'>
+               		<c:forEach var='recommendVo' items='${recommendVo }' varStatus='status'>
 						<li>
 							<div class='sbbox pro'>
-								<a href="/gs25/product/view?no=${vo.no }&name=${vo.name }"><img src='${vo.imageurl }'></a>
+								<!-- <span class='tip typ1'><span>${countList }</span></span>-->
+								<a href="/gs25/product/view?no=${recommendVo.no }&name=${recommendVo.name}"><img src='${recommendVo.imageurl }'></a>
 								<span class='title'>
-								<em class='mt'>${vo.maker})${vo.name }</em><em>${vo.price }원</em>
+								<em class='mt'>${recommendVo.maker})${recommendVo.name }</em><em>${recommendVo.price }원</em>
 								</span>
 							</div>
 						</li>

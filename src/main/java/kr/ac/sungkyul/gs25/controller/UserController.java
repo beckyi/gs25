@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.sungkyul.gs25.service.UserService;
@@ -197,5 +198,28 @@ public class UserController {
 		Map<String, Object> map = userService.checkEmail(email);
 		
 		return map;
+	}
+	
+	//회원 관리 (본사관리자)
+	@RequestMapping(value = "mlist")
+	public String mlist(Model model, 
+			@RequestParam(value = "p", required = true, defaultValue = "1") String page,
+			@RequestParam(value = "kwd", required = false, defaultValue = "") String keyword){//Request 객체받음, script or DB 객체 분별
+		
+		Map<String, Object> map = userService.userManageC(page, keyword);	//customer
+		Map<String, Object> map2 = userService.userManageB(page);	//branch
+		Integer total =userService.totalMember();
+		
+		model.addAttribute("total",total);
+		model.addAttribute("map", map);
+		model.addAttribute("map2", map2);
+		
+		return "user/mlist";
+	}
+	
+	@RequestMapping(value = "userdelete")
+	public String userdelete(@RequestParam(value = "no", required = true) Long no){
+		userService.userdelete(no);
+		return "redirect:/user/mlist";
 	}
 }

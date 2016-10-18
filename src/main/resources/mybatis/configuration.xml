@@ -8,7 +8,11 @@
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.EventBoardVo" alias="eventboardvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.GuestbookVo" alias="guestbookvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.CheckeventVo" alias="checkeventvo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.CartVo" alias="cartvo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.MapVo" alias="mapvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.GifticonVo" alias="gifticonvo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.RegionVo" alias="regionvo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.StoreVo" alias="storevo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
@@ -19,5 +23,7 @@
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/checkevent.xml" />
 		<mapper resource="mybatis/mappers/gifticon.xml" />
+		<mapper resource="mybatis/mappers/cart.xml" />
+		<mapper resource="mybatis/mappers/region.xml" />
 	</mappers>
 </configuration>

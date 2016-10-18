@@ -11,16 +11,24 @@ public class ProductVo {
 	private Long kind_no;
 	private String kind;
 	private int dispercent;
-	private String category;
-	private String orgname;
+	private String category; // 인기 신상품
 	private String imageurl;
-	
+	private String orgname;
+	private int count;
+	private int countprice;
+	private int remainderdate;
+	private int maxcountprice;
 	public String getOrgname() {
 		return orgname;
 	}
 	public void setOrgname(String orgname) {
 		this.orgname = orgname;
 	}
+
+	private int remaindercountdate;
+	private int halfprice;
+	private int newdate;
+	
 	public Long getNo() {
 		return no;
 	}
@@ -85,7 +93,6 @@ public class ProductVo {
 		this.category = category;
 	}
 	
-	
 	public String getImageurl() {
 		return imageurl;
 	}
@@ -93,11 +100,60 @@ public class ProductVo {
 		this.imageurl = imageurl;
 	}
 	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	
+	public int getCountprice() {
+		return countprice;
+	}
+	public void setCountprice(int countprice) {
+		this.countprice = countprice;
+	}
+	public int getRemainderdate() {
+		return remainderdate;
+	}
+	public void setRemainderdate(int remainderdate) {
+		this.remainderdate = remainderdate;
+	}
+	public int getMaxcountprice() {
+		return maxcountprice;
+	}
+	public void setMaxcountprice(int maxcountprice) {
+		this.maxcountprice = maxcountprice;
+	}
+	
+	public int getRemaindercountdate() {
+		return remaindercountdate;
+	}
+	public void setRemaindercountdate(int remaindercountdate) {
+		this.remaindercountdate = remaindercountdate;
+	}
+	
+	public int getHalfprice() {
+		return halfprice;
+	}
+	public void setHalfprice(int halfprice) {
+		this.halfprice = halfprice;
+	}
+	
+	public int getNewdate() {
+		return newdate;
+	}
+	public void setNewdate(int newdate) {
+		this.newdate = newdate;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProductVo [no=" + no + ", name=" + name + ", price=" + price + ", reg_date=" + reg_date
 				+ ", expiry_date=" + expiry_date + ", maker=" + maker + ", kind_no=" + kind_no + ", kind=" + kind
-				+ ", dispercent=" + dispercent + ", category=" + category + ", orgname=" + orgname + ", imageurl="
-				+ imageurl + "]";
-	}	
+				+ ", dispercent=" + dispercent + ", category=" + category + ", imageurl=" + imageurl + ", orgname="
+				+ orgname + ", count=" + count + ", countprice=" + countprice + ", remainderdate=" + remainderdate
+				+ ", maxcountprice=" + maxcountprice + ", remaindercountdate=" + remaindercountdate + ", halfprice="
+				+ halfprice + ", newdate=" + newdate + "]";
+	}
 }

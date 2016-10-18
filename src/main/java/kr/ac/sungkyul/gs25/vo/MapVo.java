@@ -6,7 +6,7 @@ public class MapVo {
 	private String name;
 	private double localx;
 	private double localy;
-	private Long regionno;
+	private Long region_no;
 	
 	public Long getNo() {
 		return no;
@@ -32,15 +32,16 @@ public class MapVo {
 	public void setLocaly(double localy) {
 		this.localy = localy;
 	}
-	public Long getRegionno() {
-		return regionno;
+	public Long getRegion_no() {
+		return region_no;
 	}
-	public void setRegionno(Long regionno) {
-		this.regionno = regionno;
+	public void setRegion_no(Long region_no) {
+		this.region_no = region_no;
 	}
 	
-	
-	
-	
-
+	@Override
+	public String toString() {
+		return "MapVo [no=" + no + ", name=" + name + ", localx=" + localx + ", localy=" + localy + ", region_no="
+				+ region_no + "]";
+	}
 }

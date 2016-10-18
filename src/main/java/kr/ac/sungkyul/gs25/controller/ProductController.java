@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.sungkyul.gs25.service.ProductService;
+import kr.ac.sungkyul.gs25.vo.CartVo;
 import kr.ac.sungkyul.gs25.vo.NblogVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
 import kr.ac.sungkyul.gs25.vo.UserVo;
@@ -28,21 +29,29 @@ public class ProductController {
 	ProductService productservice;
 	
 	//상품 검색 리스트
-	@RequestMapping("/list")
-	public String productlist(Model model,
-			@RequestParam(value = "p", required = true, defaultValue = "1") String page,
-			@RequestParam(value = "kwd", required = false, defaultValue = "") String keyword) {
-		Map<String, Object> map = productservice.listBoard(page, keyword);
+		@RequestMapping("/list")
+		public String productlist(Model model,
+				@RequestParam(value = "p", required = true, defaultValue = "1") String page,
+				@RequestParam(value = "kwd", required = false, defaultValue = "") String keyword) {
+			
+			//상품 리스트
+			Map<String, Object> map = productservice.listBoard(page, keyword);
 
-		model.addAttribute("map", map);
+			//할인된 가격 계산
+			Map<String, Object> PriceMap=productservice.price();
+			
+			
+			model.addAttribute("PriceMap", PriceMap);
+			model.addAttribute("map", map);
 
-		return "/SubPage/product_search";
-	}
+			return "/Main_Page/product_search";
+		}
 	
 	//상품 등록 페이지 이동
 	@RequestMapping(value="/insert", method=RequestMethod.GET)
 	public String productinsertForm(){
-		return "/SubPage/product_insert";
+		
+		return "/Main_Page/product_insert";
 		}
 	
 	//상품 등록
@@ -50,6 +59,7 @@ public class ProductController {
 	public String productinsert(@ModelAttribute ProductVo vo, MultipartFile file) throws Exception{
 
 		productservice.insert(vo,file);
+		
 		return "redirect:/product/list";
 		}
 	
@@ -82,13 +92,33 @@ public class ProductController {
 	@RequestMapping(value="/view", method=RequestMethod.GET)
 	public String productView(Model model,
 			@RequestParam(value= "no") Long no,
-			@RequestParam(value= "name") String name){
+			@RequestParam(value="name") String name,
+			HttpSession session){
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser != null){
+		Long user_no = authUser.getNo();
+		
+		CartVo checkVo = new CartVo();
+		checkVo = productservice.maintainCheck(user_no, no);
+		model.addAttribute("checkVo", checkVo);
 		
 		ProductVo vo = productservice.productInfo(no);
 		model.addAttribute("prodvo", vo);
 		
+		}else{
+		
+		//상품 정보
+		ProductVo vo = productservice.productInfo(no);
+		model.addAttribute("prodvo", vo);
+		}
+		
 		List<NblogVo> nvo = productservice.searchNBlog(name);
 		model.addAttribute("nvo", nvo);
+		
+		//조회 수 증가
+		productservice.viewcountup(no);
 		
 		return "/SubPage/product_view";
 	}

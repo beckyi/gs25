@@ -5,6 +5,7 @@ public class CheckeventVo {
 	private Integer years;
 	private Integer months;
 	private Integer dates;
+	private Long store_no;
 	
 	public Long getUser_no() {
 		return user_no;
@@ -31,9 +32,16 @@ public class CheckeventVo {
 		this.dates = dates;
 	}
 	
+	public Long getStore_no() {
+		return store_no;
+	}
+	public void setStore_no(Long store_no) {
+		this.store_no = store_no;
+	}
+	
 	@Override
 	public String toString() {
 		return "CheckeventVo [user_no=" + user_no + ", years=" + years + ", months=" + months + ", dates=" + dates
-				+ "]";
+				+ ", store_no=" + store_no + "]";
 	}
 }

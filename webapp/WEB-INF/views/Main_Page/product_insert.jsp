@@ -12,9 +12,8 @@
 	type="text/css">
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/include/header.jsp" />
 	<div class="container">
-		<jsp:include page="/WEB-INF/views/include/subheader.jsp" />
-
 		<div id="content">
 			<div class="container_product">
 				<div class="container_productsub">
@@ -96,10 +95,7 @@
 
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-
 	</div>
-
-
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>

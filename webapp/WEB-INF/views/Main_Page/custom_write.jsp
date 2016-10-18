@@ -16,7 +16,7 @@ function getThumbnailPrivew(html, $target) {
         reader.onload = function (e) {
             $target.css('display', '');
             //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
-            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+            $target.html('<img src="' + e.target.result + '" border="0" alt="" width="300px" height="300px" />');
         }
         reader.readAsDataURL(html.files[0]);
     }
@@ -68,12 +68,9 @@ function getThumbnailPrivew(html, $target) {
 					</form>
 				</div>
 			</div>
-
 		</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-
 	</div>
-
 </body>
 </html>

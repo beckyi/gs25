@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.sungkyul.gs25.vo.AttachFilePrVo;
+import kr.ac.sungkyul.gs25.vo.CartVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
 
 @Repository
@@ -99,6 +100,14 @@ public class ProductDao {
 		return list;
 	}
 	
+	// 서브메인 - 인기상품4개
+	public List<ProductVo> getSubPopular() {
+
+		List<ProductVo> list = sqlSession.selectList("product.getSubPopular");
+		return list;
+	}
+
+	
 	//상품 상세정보 출력
 	public ProductVo productInfo(Long no){
 		ProductVo vo = sqlSession.selectOne("product.searchproduct",no);
@@ -115,8 +124,32 @@ public class ProductDao {
 	
 	// 2000원 이하 랜덤 상품 (출석체크 상품 증정)
 	public ProductVo random2000(){
-		
 		ProductVo vo = sqlSession.selectOne("product.random2000");
 		return vo;
+	}
+	
+
+	// 상품 조회수 증가
+	public void updateViewCount(Long no) {
+		sqlSession.update("product.updateViewCount", no);
+	}
+	
+	//할인된 가격계산
+	public Map<String, Object> price(){
+		List<ProductVo> PriceList=sqlSession.selectList("product.getPriceList");
+		Map<String, Object> PriceMap=new HashMap<String, Object>();
+		
+		PriceMap.put("PriceList", PriceList);
+	
+		return PriceMap;
+	}
+	
+	//카트 추가
+	public CartVo maintainCheck(Long user_no, Long product_no){
+		CartVo checkVo = new CartVo();
+		checkVo.setUser_no(user_no);
+		checkVo.setProduct_no(product_no);
+		checkVo = sqlSession.selectOne("product.maintainCheck", checkVo);
+		return checkVo;
 	}
 }

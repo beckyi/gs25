@@ -10,13 +10,15 @@
 
 #wrap{
 	margin-top:50px;
-	margin-left:150px;
+	margin-left:270px;
 	margin-bottom:40px;
 }
 
 #customBoard_sub{
-	margin-left:130px;
+	margin-left:10px;
 }
+
+
 
 #custom_wrap{
 	margin-top:50px;
@@ -124,7 +126,7 @@ h4{
 }
 
 #board{
-	margin-left:150px;
+	margin-left:260px;
 	width:1100px;
 }
 
@@ -174,10 +176,10 @@ a.del	{
 	display:block;
 	width:20px;
 	height:20px; 
-	background:url("/gs25/assets/images/customcenter/delete.png") no-repeat 0 0;
+	margin:0px auto;
+	background:url("/gs25/assets/images/login/delete.png") no-repeat 0 0;
 	font-size:0;
 }
-
 
 /*
 	게시판 리스트 페이징
@@ -189,6 +191,32 @@ div.pager {
 div.pager  ul {
 	height:20px; margin:10px auto;
 }
+
+#right{
+	margin-left:300px;
+	height:150px;
+}
+
+#search{
+	margin-top:150px;
+	margin-left:280px;
+	height:200px;
+}
+
+#search_risk{
+	float:left;
+	margin-top:70px;
+}
+
+#search p.search_list-right{
+	 margin-top:75px;
+	margin-left:30px;
+	float:left;
+	font-weight:bold;
+	font-size:1.5em;
+}
+
+
 #right{
 	margin-left:600px;
 	height:600px;
@@ -209,9 +237,9 @@ div.pager  ul {
 
 	 }
 div.pager  ul li 			{ display:inline-block; margin:	10px 8px; width:20px ; font-weight:bold; }
-div.pager  ul li.selected { text-decoration: underline; color:#f40808 }
+div.pager  ul li.selected { text-decoration: underline; color:#f00 }
 div.pager  ul li a,
 div.pager  ul li a:visited,
 div.pager  ul li a:link,
-div.pager  ul li a:active { text-decoration: none; color:#555 }
+div.pager  ul li a:active { text-decoration: none; color:#ff8080 }
 div.pager  ul li a:hover { text-decoration: none; color:#f00 }

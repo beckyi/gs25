@@ -35,28 +35,30 @@
 			</div>
 			<!-- //brandwrap -->
 			<!-- gnbwrap -->
-			<div class="gnbwrap">
+		<div class="gnbwrap">
 				<div class="gnbw">
 					<h1 class="logo">
-						<a href="/gs25/sub/main">GS25</a>
+						<a href="/gs25/sub/main?store_no=${store_no }">GS25</a>
 					</h1>
+					
 					<div class="gnb" id="gnb_menu">
 						<ul>
 							<li><h2>
 									<a href="/gs25/guestbook/list" class="on">방명록</a>
-							</h2></li>
+								</h2></li>
 							<li><h2>
-									<a href="/gs25/sub/event_check" class="on">출석체크</a>
-							</h2></li>
+									<a href="/gs25/sub/event_check?store_no=${store_no }" class="on">출석체크</a>
+								</h2></li>
 							<li><h2>
 									<a href="/gs25/event/eventlist">이벤트</a>
-							</h2></li>
+								</h2></li>
 							<li><h2>
 									<a href="/gs25/submap/sublist">매장검색</a>
-							</h2></li>
+								</h2></li>
 							<li><h2>
-									<a href="/gs25/product/list">상품</a>
-							</h2></li>
+									<a href="/gs25/product/list?store_no=${store_no }">상품</a>
+								</h2></li>
+								
 						</ul>
 					</div>
 				</div>

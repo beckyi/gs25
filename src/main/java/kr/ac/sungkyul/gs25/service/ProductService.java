@@ -24,6 +24,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import kr.ac.sungkyul.gs25.dao.ProductDao;
 import kr.ac.sungkyul.gs25.vo.AttachFilePrVo;
+import kr.ac.sungkyul.gs25.vo.CartVo;
 import kr.ac.sungkyul.gs25.vo.GifticonDao;
 import kr.ac.sungkyul.gs25.vo.NblogVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
@@ -46,17 +47,17 @@ public class ProductService {
 	@Autowired
 	GificonService gifticonservice;
 	
-	public Map<String, Object> listBoard(String spage, String keyword) {
-
-		// 1. 페이지 값 받기
-		int page = Integer.parseInt(spage);
-
+    public Map<String, Object> listBoard(String spage, String keyword){
+    	
+    	// 1. 페이지 값 받기
+		int page=Integer.parseInt(spage);
+		
 		// 2. 페이지를 그리기 위한 기초 작업
 		int totalCount = productdao.getTotalCount();
 		int pageCount = (int) Math.ceil((double) totalCount / LIST_PAGESIZE);
 		int blockCount = (int) Math.ceil((double) pageCount / LIST_BLOCKSIZE);
 		int currentBlock = (int) Math.ceil((double) page / LIST_BLOCKSIZE);
-
+		
 		// 3. page값 검증
 		if (page < 1) {
 			page = 1;
@@ -66,18 +67,19 @@ public class ProductService {
 			currentBlock = (int) Math.ceil((double) page / LIST_BLOCKSIZE);
 		}
 
+
 		// 4. 페이지를 그리기 위한 값 계산
 		int startPage = (currentBlock - 1) * LIST_BLOCKSIZE + 1;
 		int endPage = (startPage - 1) + LIST_BLOCKSIZE;
-		int prevPage = (page >= startPage) ? (page - 1) : (currentBlock - 1) * LIST_BLOCKSIZE;
-		int nextPage = (page <= endPage) ? (page + 1) : currentBlock * LIST_BLOCKSIZE + 1;
+		int prevPage = (page >= startPage) ? (page-1) : (currentBlock - 1) * LIST_BLOCKSIZE;
+		int nextPage = (page <= endPage) ? (page+1) : currentBlock * LIST_BLOCKSIZE + 1;
 		int nexttoPage = (currentBlock < blockCount) ? currentBlock * LIST_BLOCKSIZE + 1 : page;
-		int prevtoPage = (currentBlock > 1) ? startPage - 3 : page;
-
-		List<ProductVo> list = productdao.getList(page, LIST_PAGESIZE, keyword);
-
+		int prevtoPage = (currentBlock > 1) ? startPage-3  : page;
+		
+		List<ProductVo> list=productdao.getList(page, LIST_PAGESIZE, keyword);
+		
 		// 5. map에 객체 담기
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("sizeList", LIST_PAGESIZE);
 		map.put("firstPage", startPage);
 		map.put("lastPage", endPage);
@@ -90,58 +92,58 @@ public class ProductService {
 		map.put("keyword", keyword);
 		map.put("nexttoPage", nexttoPage);
 		map.put("prevtoPage", prevtoPage);
-
+		
+		
 		return map;
 	}
+    
+    //상품 등록
+	public void insert(ProductVo vo, MultipartFile file) throws Exception{
 
-	// 상품 등록
-	public void insert(ProductVo vo, MultipartFile file) throws Exception {
+			// 1. 게시물의 번호 얻기
+			Long no=productdao.insert(vo);
 
-		// 1. 게시물의 번호 얻기
-		Long no = productdao.insert(vo);
+	       // 2. orgName
+			String orgName =file.getOriginalFilename();
+		
+			// 3. fileSize
+			long fileSize =file.getSize();
+			
+			// 4. saveName
+			String saveName = orgName;
+			
+			// 5. path 경로 정하기
+		    String path ="C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\gs25\\assets\\images\\product";
 
-		// 2. orgName
-		String orgName = file.getOriginalFilename();
-
-		// 3. fileSize
-		long fileSize = file.getSize();
-
-		// 4. saveName
-		String saveName = orgName;
-
-		// 5. path 경로 정하기
-		String path = "C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\gs25\\assets\\images\\product";
-
-		// 6. imageurl 경로
-		String imageurl = "/gs25/assets/images/product/" + saveName;
-
-		// 7. 첨부파일 객체에 담기
-		AttachFilePrVo attachFilePrVO = new AttachFilePrVo();
-		attachFilePrVO.setNo(no);
-		attachFilePrVO.setPath(path);
-		attachFilePrVO.setOrgName(orgName);
-		attachFilePrVO.setSaveName(saveName);
-		attachFilePrVO.setFileSize(fileSize);
-		attachFilePrVO.setImageurl(imageurl);
-		System.out.println(attachFilePrVO);
-
-		// 8. 첨부파일 삽입
-		productdao.insertAttachPrFile(attachFilePrVO);
-
-		// 9. 파일 복사 및 이동
-		File target = new File(path, saveName);
-		FileCopyUtils.copy(file.getBytes(), target);
-
+		    // 6. imageurl 경로
+			String imageurl="/gs25/assets/images/product/" + saveName;
+			
+			//7. 첨부파일 객체에 담기
+		    AttachFilePrVo attachFilePrVO = new AttachFilePrVo();
+			attachFilePrVO.setNo(no);
+			attachFilePrVO.setPath(path);
+			attachFilePrVO.setOrgName(orgName);
+			attachFilePrVO.setSaveName(saveName);
+			attachFilePrVO.setFileSize(fileSize);
+			attachFilePrVO.setImageurl(imageurl);
+			
+			//8. 첨부파일 삽입
+			productdao.insertAttachPrFile(attachFilePrVO);
+			
+			//9. 파일 복사 및 이동
+			File target = new File(path, saveName);
+			FileCopyUtils.copy(file.getBytes(),target);
+		
 	}
-
-	// 상품 첨부파일 삭제
-	public void deletefile(Long no) {
+	
+	//상품 첨부파일 삭제
+	public void deletefile(Long no){
 		productdao.deletefile(no);
 	}
-
-	// 상품 삭제
-	public void delete(Long no) {
-
+	
+	//상품 삭제
+	public void delete(Long no){
+		
 		productdao.delete(no);
 	}
 	// 상품 유통기한별 리스트
@@ -151,11 +153,18 @@ public class ProductService {
 		return list;
 	}
 
-	// public List<ProductVo> getSubPopular(){
-	// List<ProductVo> list = productdao.getSubPopular();
-	// System.out.println("service: "+list.toString());
-	// return list;
-	// }
+	//상품 조회수 증가
+	public void viewcountup(Long no) {
+
+		productdao.updateViewCount(no);
+	}
+	
+	//할인된 가격계산
+    public Map<String, Object> price(){
+    	
+    	Map<String, Object> PriceMap=productdao.price();
+    	return PriceMap;
+    }
 	
 	// 상품 신상품별 리스트
 	public List<ProductVo> getSubNew() {
@@ -170,18 +179,7 @@ public class ProductService {
 		// System.out.println("service: "+list.toString());
 		return list;
 	}
-	
-	// 유통기한 계산
-//	public void countDate() {
-//		List<ProductVo> list = productdao.getSubDate();
-//		String expiry_date = vo.getExpiry_date();
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-//		String todate = formatter.format(new Date());
-//		
-//		System.out.println(expiry_date);
-//		System.out.println(todate);
-//	}
-	
+		
 	// 할인가격 계산
 	public ProductVo countPrice(Long no) {
 		ProductVo vo = productdao.productInfo(no);
@@ -194,7 +192,7 @@ public class ProductService {
 		return vo;
 	}	
 	
-	//네이버 검색 API 연공(XML파싱 방법)
+	//네이버 검색 API 연동(XML파싱 방법)
 	private static String clientID = "l4imIq5y2XeyyT7P16JT"; //api 사용 신청시 제공되는 아이디
     private static String clientSecret = "u4oZj43QzL"; //패스워드
  
@@ -204,8 +202,10 @@ public class ProductService {
         int start = 1;
         List<NblogVo> list = null;
         
+        System.out.println("!"+keyword);
+        
         keyword = "편의점 " + keyword;
-        System.out.println(keyword);
+        System.out.println("2"+keyword);
         
         try {
             url = new URL("https://openapi.naver.com/v1/search/blog.xml?query=" + URLEncoder.encode(keyword, "UTF-8")
@@ -318,4 +318,10 @@ public class ProductService {
   		ProductVo vo = productdao.random2000();
   		return vo;
   	}
+  	
+  	//카트
+  	public CartVo maintainCheck(Long user_no, Long product_no){
+		CartVo checkVo = productdao.maintainCheck(user_no, product_no);
+		return checkVo;
+	}
 }

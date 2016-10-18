@@ -1,5 +1,9 @@
 package kr.ac.sungkyul.gs25.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -98,5 +102,59 @@ public class UserDao {
 		
 		PassLinkVo plVo = sqlSession.selectOne("user.passlink",link); // no 가져옴
 		return plVo;
+	}
+	
+	//본사관리자 조회 - 총 인원수
+	public int totalMember(){
+		return sqlSession.selectOne("user.totalCount");
+	}
+	
+	//본사관리자 조회 - CUSTOMER 인원수
+	public int getTotalCountC(){
+		return sqlSession.selectOne("user.totalCountC");
+	}
+	
+	//본사관리자 조회 - BRANCH 인원수
+	public int getTotalCountB(){
+		return sqlSession.selectOne("user.totalCountB");
+	}
+	
+	public List<UserVo> getListC(int page, int pagesize, String keyword) {
+		Map<String, Object> map = new HashMap<>();
+
+		// 키보드가 null or 비어있을 때 리스트 가져오기
+		if (keyword == null || "".equals(keyword)) {
+
+			map.put("page_top", (page - 1) * pagesize + 1);
+			map.put("page_bottom", page * pagesize);
+
+			List<UserVo> list = sqlSession.selectList("user.getListC", map);
+			System.out.println(list);
+			return list;
+
+			// 검색된 리스트 가져오기
+		} else {
+			map.put("keyword", "%" + keyword + "%");
+			map.put("page_top", (page - 1) * pagesize + 1);
+			map.put("page_bottom", page * pagesize);
+
+			List<UserVo> list = sqlSession.selectList("user.getListKeyword", map);
+			return list;
+		}
+	}
+	
+	public List<UserVo> getListB(int page, int pagesize) {
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("page_top", (page - 1) * pagesize + 1);
+		map.put("page_bottom", page * pagesize);
+
+		List<UserVo> listB = sqlSession.selectList("user.getListB", map);
+		System.out.println(listB);
+		return listB;
+	}
+	
+	public void userdelete(Long no){
+		sqlSession.delete("user.userdelete",no);
 	}
 }

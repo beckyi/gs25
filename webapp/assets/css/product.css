@@ -1,21 +1,17 @@
 @CHARSET "UTF-8";
 @import "gs25site.css";
 
-.container_product {margin: 0 auto; width: 1500px;}
 .container{
-	width:960px;
-	margin: 0 auto;
+    width: 1020px;
+    margin: 0 auto;
+
 }
 
-
-.container_productsub{
-	margin-left:80px;
-}
+.container_product {margin: 0 auto; width: 1500px;}
 
 /*상품 등록*/
 #wrap{
 	margin-top:50px;
-	margin-left:150px;
 	margin-bottom:40px;
 }
 
@@ -84,7 +80,7 @@
 }
 
 #board{
-	margin-left:150px;
+/* 	margin-left:150px; */
 	width:1100px;
 }
 

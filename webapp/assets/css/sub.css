@@ -176,10 +176,15 @@ input[type=text], input[type=password] {
 }
 #point{
     margin-left: 25px;
-    padding: 9px 18px;
+    padding: 9px 14px;
 }
 #endP{
 	text-align: center;
 	margin: 5px 0;
 	color: #a5a4a4;
+}
+
+#storeName{
+	font-size:2em;
+	color:#b366ff;
 }
