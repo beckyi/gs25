@@ -58,7 +58,7 @@ public class MapDao {
 	//지도 리스트 가져오기
 	public List<MapVo> getList(String keyword, Long reno) { 
 		  Map<String, Object> map = new HashMap<>();
-
+		  	
 		  	//키보드가 null or 비어있을 때 지도 리스트 가져오기
 			if (keyword == null || "".equals(keyword)) {
 				map.put("reno", reno);
@@ -66,10 +66,11 @@ public class MapDao {
 				return list;
 				
 			} else {
-				
+				System.out.println("da "+keyword);
 				//검색된 지도 리스트 가져오기
 				map.put("keyword", "%" + keyword + "%");
 				List<MapVo> list=sqlSession.selectList("store.getMapListKeyword",map);
+				System.out.println(list);
 				return list;
 			}
 	}

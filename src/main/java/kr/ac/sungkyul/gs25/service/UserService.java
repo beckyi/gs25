@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -291,5 +293,15 @@ public class UserService {
 	 
 	 public void userdelete(Long no){
 		 usersdao.userdelete(no);
+	 }
+	 
+	 //포인트 차감 (상품 구매 사용)
+	 public String pointuse(Long no, Integer point, Integer product_price){
+
+		 point = point - product_price;	//포인트 차감
+		 
+		 Integer resultInt = usersdao.pointuse(no, point);
+		 String result = String.valueOf(resultInt); // String 변환
+		 return result;
 	 }
 }

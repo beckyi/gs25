@@ -6,7 +6,7 @@
 	<!-- 기프티콘 삽입 -->
 	<insert id="insert" parameterType="gifticonvo">
 	<![CDATA[
-		insert into gifticon values(seq_gifticon.nextval, #{user_no}, #{product_no}, to_date(sysdate,'yyyy-mm-dd'))
+		insert into gifticon values(seq_gifticon.nextval, to_date(sysdate,'yyyy-mm-dd'), #{user_no}, #{storeproduct_no})
 	]]>
 	</insert>
 	

@@ -70,7 +70,7 @@ public class MapService {
 	}
 	
 	public Map<String, Object> maplist(String keyword, Long no){
-		
+		System.out.println("ser "+keyword);
 		List<MapVo> list= mapdao.getList(keyword, no);
 		Map<String, Object> map2=new HashMap<String, Object>();
 		map2.put("list", list);

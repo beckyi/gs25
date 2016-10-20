@@ -84,6 +84,7 @@ public class SubMainController {
 		
 		model.addAttribute("count", count);
 		model.addAttribute("checkeventvo", checkeventvo);
+		model.addAttribute("store_no", store_no);
 		
 		return "SubPage/event_check";
 	}

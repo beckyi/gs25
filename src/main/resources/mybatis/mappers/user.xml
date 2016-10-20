@@ -60,7 +60,6 @@
 	<update id="setPass" parameterType="passlinkvo">
 	   <![CDATA[
 	   	update users set password=#{password } where no=#{no }
-	  	update passlink set state=#{state } where user_no=#{user_no }
 	   ]]>
 	</update>
 	
@@ -144,5 +143,12 @@
 		DELETE from users where no=#{no }
 	]]>
 	</delete>
+	
+	<!-- 포인트 차감 -->
+	<update id="pointuse" parameterType="map">
+	   <![CDATA[
+	   	update users set point=#{point } where no=#{no }
+	   ]]>
+	</update>
 	
 </mapper>

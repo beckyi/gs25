@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.sungkyul.gs25.service.GificonService;
 import kr.ac.sungkyul.gs25.service.UserService;
 import kr.ac.sungkyul.gs25.vo.UserVo;
 
@@ -26,6 +27,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	GificonService gifticonservice;
 	
 	@RequestMapping("/joinform")
 	public String joinform(){
@@ -221,5 +225,24 @@ public class UserController {
 	public String userdelete(@RequestParam(value = "no", required = true) Long no){
 		userService.userdelete(no);
 		return "redirect:/user/mlist";
+	}
+	
+	//포인트로 상품 결제
+	@ResponseBody
+	@RequestMapping(value="/pointuse", method = RequestMethod.POST)
+	public String pointuse(HttpSession session, Model model,
+							Long product_no, Integer product_price, Long store_no){
+		
+		UserVo temp = (UserVo)session.getAttribute("authUser");
+		Long no = temp.getNo();
+		Integer point = temp.getPoint();
+		
+		//포인트 차감
+		String result = userService.pointuse(no, point, product_price);
+		
+		//기프티콘 전송
+		gifticonservice.insert(no, product_no, store_no); //storeproduct_no = product_no
+		
+		return result;
 	}
 }

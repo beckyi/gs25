@@ -19,6 +19,7 @@ import kr.ac.sungkyul.gs25.service.ProductService;
 import kr.ac.sungkyul.gs25.vo.CartVo;
 import kr.ac.sungkyul.gs25.vo.NblogVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
+import kr.ac.sungkyul.gs25.vo.StoreProductVo;
 import kr.ac.sungkyul.gs25.vo.UserVo;
 
 @Controller
@@ -28,24 +29,42 @@ public class ProductController {
 	@Autowired
 	ProductService productservice;
 	
-	//상품 검색 리스트
-		@RequestMapping("/list")
-		public String productlist(Model model,
-				@RequestParam(value = "p", required = true, defaultValue = "1") String page,
-				@RequestParam(value = "kwd", required = false, defaultValue = "") String keyword) {
-			
-			//상품 리스트
-			Map<String, Object> map = productservice.listBoard(page, keyword);
+	//상품 검색 리스트 (관리자)
+	@RequestMapping("/list")
+	public String productlist(Model model,
+			@RequestParam(value = "p", required = true, defaultValue = "1") String page,
+			@RequestParam(value = "kwd", required = false, defaultValue = "") String keyword) {
+		
+		//상품 리스트
+		Map<String, Object> map = productservice.listBoard(page, keyword);
 
-			//할인된 가격 계산
-			Map<String, Object> PriceMap=productservice.price();
-			
-			
-			model.addAttribute("PriceMap", PriceMap);
-			model.addAttribute("map", map);
+		//할인된 가격 계산
+		Map<String, Object> PriceMap=productservice.price();
+		
+		
+		model.addAttribute("PriceMap", PriceMap);
+		model.addAttribute("map", map);
 
-			return "/Main_Page/product_search";
-		}
+		return "/Main_Page/product_search";
+	}
+	
+	//상품 검색 리스트 서브메인
+	@RequestMapping("/sublist")
+	public String productlist(Model model,
+			@RequestParam(value = "p", required = true, defaultValue = "1") String page,
+			@RequestParam(value = "kwd", required = false, defaultValue = "") String keyword,
+			HttpSession session,
+			@RequestParam("store_no") Long store_no) {
+		
+		model.addAttribute("store_no", store_no);
+		
+		//상품 리스트
+		Map<String, Object> map = productservice.listBoard(page, keyword,store_no);
+
+		model.addAttribute("map", map);
+
+		return "/SubPage/product_search";
+	}
 	
 	//상품 등록 페이지 이동
 	@RequestMapping(value="/insert", method=RequestMethod.GET)
@@ -93,6 +112,7 @@ public class ProductController {
 	public String productView(Model model,
 			@RequestParam(value= "no") Long no,
 			@RequestParam(value="name") String name,
+			@RequestParam(value="store_no") Long store_no,
 			HttpSession session){
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -100,17 +120,23 @@ public class ProductController {
 		if(authUser != null){
 		Long user_no = authUser.getNo();
 		
+		//매장번호 넘기기
+		model.addAttribute("store_no", store_no);
+		
 		CartVo checkVo = new CartVo();
 		checkVo = productservice.maintainCheck(user_no, no);
 		model.addAttribute("checkVo", checkVo);
 		
-		ProductVo vo = productservice.productInfo(no);
+		StoreProductVo vo = productservice.productInfo(no,store_no);
 		model.addAttribute("prodvo", vo);
 		
 		}else{
+			
+		//매장번호 넘기기
+		model.addAttribute("store_no", store_no);	
 		
 		//상품 정보
-		ProductVo vo = productservice.productInfo(no);
+		StoreProductVo vo = productservice.productInfo(no,store_no);
 		model.addAttribute("prodvo", vo);
 		}
 		
@@ -125,25 +151,25 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping("/random1000")	//출석체크 클릭 시
-	public ProductVo random1000(HttpSession session){
+	public StoreProductVo random1000(HttpSession session, Long store_no){
 		
 		UserVo uservo = (UserVo)session.getAttribute("authUser");
 		Long user_no = uservo.getNo();
 		
-		ProductVo productvo = productservice.random1000(user_no);
+		StoreProductVo storeproductvo = productservice.random1000(user_no, store_no);
 		
-		return productvo;
+		return storeproductvo;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/random2000")	//출석체크 클릭 시
-	public ProductVo random2000(HttpSession session){
+	public StoreProductVo random2000(HttpSession session, Long store_no){
 		
-//		UserVo uservo = (UserVo)session.getAttribute("authUser");
-//		Long user_no = uservo.getNo();
+		UserVo uservo = (UserVo)session.getAttribute("authUser");
+		Long user_no = uservo.getNo();
 		
-		ProductVo productvo = productservice.random2000();
-		return productvo;
+		StoreProductVo storeproductvo = productservice.random2000(user_no, store_no);
+		return storeproductvo;
 	}
 	
 }

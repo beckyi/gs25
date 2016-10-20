@@ -3,7 +3,7 @@ package kr.ac.sungkyul.gs25.vo;
 public class GifticonVo {
 	private Long no;
 	private Long user_no;
-	private Long product_no;
+	private Long storeproduct_no;
 	private String receive_date;
 	
 	public Long getNo() {
@@ -18,11 +18,11 @@ public class GifticonVo {
 	public void setUser_no(Long user_no) {
 		this.user_no = user_no;
 	}
-	public Long getProduct_no() {
-		return product_no;
+	public Long getStoreproduct_no() {
+		return storeproduct_no;
 	}
-	public void setProduct_no(Long product_no) {
-		this.product_no = product_no;
+	public void setStoreproduct_no(Long storeproduct_no) {
+		this.storeproduct_no = storeproduct_no;
 	}
 	public String getReceive_date() {
 		return receive_date;
@@ -33,7 +33,7 @@ public class GifticonVo {
 	
 	@Override
 	public String toString() {
-		return "GifticonVo [no=" + no + ", user_no=" + user_no + ", product_no=" + product_no + ", receive_date="
-				+ receive_date + "]";
+		return "GifticonVo [no=" + no + ", user_no=" + user_no + ", storeproduct_no=" + storeproduct_no
+				+ ", receive_date=" + receive_date + "]";
 	}
 }

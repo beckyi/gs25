@@ -17,6 +17,7 @@ import kr.ac.sungkyul.gs25.dao.ProductDao;
 import kr.ac.sungkyul.gs25.vo.GifticonDao;
 import kr.ac.sungkyul.gs25.vo.GifticonVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
+import kr.ac.sungkyul.gs25.vo.StoreProductVo;
 
 @Service
 public class GificonService {
@@ -31,21 +32,21 @@ public class GificonService {
 	private JavaMailSender mailSender; // xml에 등록한 bean autowired
 	
 	// 기프티콘 삽입
- 	public void insert(Long user_no, Long product_no) {
+ 	public void insert(Long user_no, Long storeproduct_no, Long store_no) {
  		
  		GifticonVo gifticonvo = new GifticonVo();
 		
 		gifticonvo.setUser_no(user_no);
-		gifticonvo.setProduct_no(product_no);
+		gifticonvo.setStoreproduct_no(storeproduct_no);
  		
 		//기프티콘 테이블 삽입
  		gifticondao.insert(gifticonvo);
  		
  		//이메일에 보낼 상품 정보
- 		ProductVo productvo = productdao.productInfo(product_no);
- 		System.out.println(productvo);
+ 		StoreProductVo storeproductvo = productdao.giftprductInfo(store_no, storeproduct_no);
+
  		try {
-			emailGift(user_no, productvo);
+			emailGift(user_no, storeproductvo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +55,7 @@ public class GificonService {
  	}
  	
  	// 기프티콘 이메일 전송
-  	public void emailGift(Long user_no, ProductVo productvo) throws Exception {
+  	public void emailGift(Long user_no, StoreProductVo storeproductvo) throws Exception {
   		 
   		 MimeMessage message = mailSender.createMimeMessage();
          try {
@@ -65,8 +66,9 @@ public class GificonService {
             		 			+ "<div style=\"background-image:url('cid:back'); height: 930px; width: 525px; background-repeat: no-repeat;\">"
 //            		 			+ "<img style=\"width:300px; margin: 100px 0 0 117px; position: relative;\" src=\"cid:product\">"
 								+ "<img style=\"width: 210px; height: 276px; margin: 90px 0 0 148px; position: relative; margin-bottom: 20px;\" src=\"cid:product\"><br>"
-            		 			+ "<strong style=\"font-size: 30px; color: #24809c; letter-spacing: -1px; margin-bottom: 10px; margin-left: 40px;\">"+productvo.getName()+"</strong><br>"
-            		 			+ "<p style=\"font-size: 16px; margin-left: 55px;\">(주): "+productvo.getMaker()+"</p></div>";
+            		 			+ "<strong style=\"font-size: 30px; color: #24809c; letter-spacing: -1px; margin-bottom: 10px; margin-left: 40px;\">"+storeproductvo.getName()+"</strong><br>"
+            		 			+ "<p style=\"font-size: 16px; margin-left: 55px;\">(주): "+storeproductvo.getMaker()+"</p>"
+            		 			+ "<p style=\"font-size: 16px; margin-left: 55px;\">지점: "+storeproductvo.getStorename()+"</p></div>";
 //             +"<img src=\"cid:cde\">" ;
              messageHelper.setText(htmlContent, true);
              messageHelper.setFrom("GS25@gmail.com", "GS25");
@@ -74,7 +76,7 @@ public class GificonService {
              
              //내장 이미지 전송
              FileSystemResource res = new FileSystemResource(new File("C:\\Users\\S401-14\\git\\gs25\\webapp\\assets\\images\\subindex\\giftiBack.png"));
-             FileSystemResource res2 = new FileSystemResource(new File("C:\\Users\\S401-14\\git\\gs25\\webapp\\assets\\images\\product\\"+productvo.getOrgname()));
+             FileSystemResource res2 = new FileSystemResource(new File("C:\\Users\\S401-14\\git\\gs25\\webapp\\assets\\images\\product\\"+storeproductvo.getOrgname()));
              
              messageHelper.addInline("back", res);
              messageHelper.addInline("product", res2);

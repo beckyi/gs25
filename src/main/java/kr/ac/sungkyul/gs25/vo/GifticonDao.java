@@ -11,8 +11,7 @@ public class GifticonDao {
 	
 	// 기프티콘 삽입 (출첵 상품증정)
 	public void insert(GifticonVo gifticonvo) {
-				
+		
 		sqlSession.insert("gifticon.insert",gifticonvo);
 	}
-	
 }

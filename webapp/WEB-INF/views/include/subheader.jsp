@@ -56,7 +56,7 @@
 									<a href="/gs25/submap/sublist">매장검색</a>
 								</h2></li>
 							<li><h2>
-									<a href="/gs25/product/list?store_no=${store_no }">상품</a>
+									<a href="/gs25/product/sublist?store_no=${store_no }">상품</a>
 								</h2></li>
 								
 						</ul>

@@ -10,6 +10,7 @@ public class StoreProductVo {
 	private String expiry_date;
 	private int newdate;
 	private String imageurl;
+	private String orgname;
 	private int remainderdate;
 	private int countprice;
 	private int halfprice;
@@ -123,12 +124,20 @@ public class StoreProductVo {
 	public void setRemaindercountdate(int remaindercountdate) {
 		this.remaindercountdate = remaindercountdate;
 	}
+	public String getOrgname() {
+		return orgname;
+	}
+	public void setOrgname(String orgname) {
+		this.orgname = orgname;
+	}
+	
 	@Override
 	public String toString() {
 		return "StoreProductVo [no=" + no + ", storename=" + storename + ", name=" + name + ", price=" + price
 				+ ", maker=" + maker + ", reg_date=" + reg_date + ", expiry_date=" + expiry_date + ", newdate="
-				+ newdate + ", imageurl=" + imageurl + ", remainderdate=" + remainderdate + ", countprice=" + countprice
-				+ ", halfprice=" + halfprice + ", count=" + count + ", store_no=" + store_no + ", product_no="
-				+ product_no + ", mount=" + mount + ", remaindercountdate=" + remaindercountdate + "]";
+				+ newdate + ", imageurl=" + imageurl + ", orgname=" + orgname + ", remainderdate=" + remainderdate
+				+ ", countprice=" + countprice + ", halfprice=" + halfprice + ", count=" + count + ", store_no="
+				+ store_no + ", product_no=" + product_no + ", mount=" + mount + ", remaindercountdate="
+				+ remaindercountdate + "]";
 	}
 }

@@ -28,7 +28,7 @@ var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니�
 
 }else if('${map.keyword}'=='인천' || '${map.keyword}'=='GS25래미안아파트점' || '${map.keyword}'=='래미안아파트' ){	
 	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	var mapContainer = document.getElementById('mapM'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new daum.maps.LatLng(37.503463, 126.72378),
 	    level: 4// 지도의 확대 레벨
@@ -37,7 +37,7 @@ var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니�
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	}else if('${map.keyword}'=='안양' || '${map.keyword}'=='GS25성결점' || '${map.keyword}'=='성결대' ){	
 	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	var mapContainer = document.getElementById('mapM'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new daum.maps.LatLng(37.3800181, 126.9264755),
 	    level: 4 // 지도의 확대 레벨
@@ -47,7 +47,7 @@ var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니�
 
 	}else if('${map2.keyword}'==null){
 		
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		var mapContainer = document.getElementById('mapM'), // 지도를 표시할 div 
 		mapOption = { 
 		    center: new daum.maps.LatLng(37.5547992, 126.9684953),
 		    level: 4 // 지도의 확대 레벨

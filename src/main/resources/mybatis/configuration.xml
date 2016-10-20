@@ -13,6 +13,7 @@
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.GifticonVo" alias="gifticonvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.RegionVo" alias="regionvo"/>
 		<typeAlias type="kr.ac.sungkyul.gs25.vo.StoreVo" alias="storevo"/>
+		<typeAlias type="kr.ac.sungkyul.gs25.vo.StoreProductVo" alias="storeproductvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />

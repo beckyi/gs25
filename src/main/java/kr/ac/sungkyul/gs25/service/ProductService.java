@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +27,7 @@ import kr.ac.sungkyul.gs25.vo.CartVo;
 import kr.ac.sungkyul.gs25.vo.GifticonDao;
 import kr.ac.sungkyul.gs25.vo.NblogVo;
 import kr.ac.sungkyul.gs25.vo.ProductVo;
+import kr.ac.sungkyul.gs25.vo.StoreProductVo;
 
 @Service
 public class ProductService {
@@ -180,17 +180,17 @@ public class ProductService {
 		return list;
 	}
 		
-	// 할인가격 계산
-	public ProductVo countPrice(Long no) {
-		ProductVo vo = productdao.productInfo(no);
-		return vo;
-	}
+//	// 할인가격 계산
+//	public ProductVo countPrice(Long no) {
+//		ProductVo vo = productdao.productInfo(no);
+//		return vo;
+//	}
 	
 	// 상품 상세보기
-	public ProductVo productInfo(Long no) {
-		ProductVo vo = productdao.productInfo(no);
+	public StoreProductVo productInfo(Long no,Long store_no) {
+		StoreProductVo vo = productdao.productInfo(no,store_no);
 		return vo;
-	}	
+	}
 	
 	//네이버 검색 API 연동(XML파싱 방법)
 	private static String clientID = "l4imIq5y2XeyyT7P16JT"; //api 사용 신청시 제공되는 아이디
@@ -291,37 +291,94 @@ public class ProductService {
         } catch (XmlPullParserException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        String title =  list.get(0).getTitle();
-        try {
-        	title = URLDecoder.decode(title, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}        
+        }  
         
         return list;
     }
     // 1000원 이하 랜덤 상품 (출석체크 상품 증정)
- 	public ProductVo random1000(Long user_no) {
- 		ProductVo vo = productdao.random1000();
+ 	public StoreProductVo random1000(Long user_no, Long store_no) {
+ 		
+ 		StoreProductVo vo = productdao.random1000(store_no);
  		
  		//기프티콘으로 저장
- 		Long product_no = vo.getNo();
- 		gifticonservice.insert(user_no, product_no);
+ 		Long storeproduct_no = vo.getNo();
+ 		gifticonservice.insert(user_no, storeproduct_no, store_no);
+ 		
+ 		//수량 감소
+ 		productdao.cutmount(storeproduct_no);
  		
  		return vo;
  	}	
  	
  	// 2000원 이하 랜덤 상품 (출석체크 상품 증정)
-  	public ProductVo random2000() {
-  		ProductVo vo = productdao.random2000();
-  		return vo;
+  	public StoreProductVo random2000(Long user_no, Long store_no) {
+  		
+  		StoreProductVo vo = productdao.random2000(store_no);
+ 		
+ 		//기프티콘으로 저장
+ 		Long storeproduct_no = vo.getNo();
+ 		gifticonservice.insert(user_no, storeproduct_no, store_no);
+ 		
+ 		//수량 감소
+ 		productdao.cutmount(storeproduct_no);
+ 		
+ 		return vo;
   	}
   	
   	//카트
   	public CartVo maintainCheck(Long user_no, Long product_no){
 		CartVo checkVo = productdao.maintainCheck(user_no, product_no);
 		return checkVo;
+	}
+  	
+  //서브 상품 검색 리스트
+    public Map<String, Object> listBoard(String spage, String keyword,Long StoreNo){
+    	
+    	// 1. 페이지 값 받기
+		int page=Integer.parseInt(spage);
+		
+		// 2. 페이지를 그리기 위한 기초 작업
+		int totalCount = productdao.getTotalCount(StoreNo);
+		int pageCount = (int) Math.ceil((double) totalCount / LIST_PAGESIZE);
+		int blockCount = (int) Math.ceil((double) pageCount / LIST_BLOCKSIZE);
+		int currentBlock = (int) Math.ceil((double) page / LIST_BLOCKSIZE);
+		
+		// 3. page값 검증
+		if (page < 1) {
+			page = 1;
+			currentBlock = 1;
+		} else if (page > pageCount) {
+			page = pageCount;
+			currentBlock = (int) Math.ceil((double) page / LIST_BLOCKSIZE);
+		}
+
+
+		// 4. 페이지를 그리기 위한 값 계산
+		int startPage = (currentBlock - 1) * LIST_BLOCKSIZE + 1;
+		int endPage = (startPage - 1) + LIST_BLOCKSIZE;
+		int prevPage = (page >= startPage) ? (page-1) : (currentBlock - 1) * LIST_BLOCKSIZE;
+		int nextPage = (page <= endPage) ? (page+1) : currentBlock * LIST_BLOCKSIZE + 1;
+		int nexttoPage = (currentBlock < blockCount) ? currentBlock * LIST_BLOCKSIZE + 1 : page;
+		int prevtoPage = (currentBlock > 1) ? startPage-3  : page;
+		
+		List<StoreProductVo> list= productdao.getList(page, LIST_PAGESIZE, keyword,StoreNo);
+		
+		// 6. map에 객체 담기
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("sizeList", LIST_PAGESIZE);
+		map.put("firstPage", startPage);
+		map.put("lastPage", endPage);
+		map.put("prevPage", prevPage);
+		map.put("nextPage", nextPage);
+		map.put("currentPage", page);
+		map.put("pageCount", pageCount);
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		map.put("keyword", keyword);
+		map.put("nexttoPage", nexttoPage);
+		map.put("prevtoPage", prevtoPage);
+		
+		
+		return map;
 	}
 }

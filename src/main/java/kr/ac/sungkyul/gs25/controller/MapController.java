@@ -56,7 +56,9 @@ public class MapController {
 			@RequestParam(value="no", required=true, defaultValue="1") Long no){//Request 객체받음, script or DB 객체 분별
 		
 		Map<String, Object> map = mapservice.mlist(page, keyword);
+		System.out.println("maplist1 "+keyword);
 		Map<String, Object> map2=mapservice.maplist(keyword, no); //지도 리스트
+		System.out.println(map2.toString());
 		
 		model.addAttribute("map", map);
 		model.addAttribute("map2", map2);

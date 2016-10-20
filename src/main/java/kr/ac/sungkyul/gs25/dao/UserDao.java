@@ -157,4 +157,13 @@ public class UserDao {
 	public void userdelete(Long no){
 		sqlSession.delete("user.userdelete",no);
 	}
+	
+	public Integer pointuse(Long no, Integer point){
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("point", point);
+		
+		Integer result = sqlSession.update("user.pointuse",map);
+		return result;
+	}
 }
